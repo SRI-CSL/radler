@@ -1,0 +1,59 @@
+
+
+t1 : topic { FIELDS
+    x1 : int32 0
+    f : float32 0
+    i8 : array { TYPE "int8" VALUES 0 1 0 2 0 3 0 6 }
+    s : struct { FIELDS a : int32 0  i2 : array { VALUES 42 42 }}
+}
+
+t2 = t1
+
+n : node {
+    SUBSCRIBES
+        i1 { TOPIC test_alias.t2 MAXLATENCY 1msec}
+    PUBLISHES
+        o1 { TOPIC test_alias.t1 }
+    PERIOD 50msec
+    PATH "src"
+    CXX { HEADER "id1.h"
+          CLASS "identity_1" }
+}
+
+#mname : type -> typename
+#m2 : type -> { type * }
+
+#tarjan m2
+#for each cycle:
+#  struct decl all el with typename
+#  struct def them
+ 
+
+
+
+#struct test_alias_t {
+#  struct l1_t {
+#    char PATH[15];
+#    char CMAKE_MODULE[3];
+#  } l1;
+
+#  struct boost_t {
+#    char CMAKE_MODULE[6];
+#    union { char s1[8]; char s2[6]; } COMPONENTS[2];
+#  } boost;
+
+#  struct t1_t {
+#    int32_t i;
+#    float32_t f;
+#    int8_t i8[8];
+#    struct s_t { int32_t a; int8_t i2[2]; } s;
+#  } t1;
+
+#  struct t1_t t2;
+
+#  struct n_t {
+#    union { struct t1_t { const test_alias_t.t1_t * TOPIC; per}
+#  } n;
+#} test_alias;
+
+#name for struct is necessary for pointer (aliases, recursives defs, not in order defs)

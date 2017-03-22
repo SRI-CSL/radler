@@ -1,0 +1,24 @@
+a : int8 -128
+b : int8 127
+c : int8 0
+d : uint8 0
+e : uint8 255
+
+f : int16 -32768
+g : int16 32767
+h : int16 0
+k : uint16 0
+l : uint16 65535
+
+m : float32 -0.0
+n : float32 -4387.56e-7
+
+#subtyping arrays
+
+a1 : array { TYPE "int16" VALUES
+	42
+	int8 127
+	a
+	h
+}
+

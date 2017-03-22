@@ -1,0 +1,51 @@
+ts_topic : topic {
+    FIELDS 
+	on : bool false  
+}
+
+detector : node {
+    DEFS
+        print_data: bool true
+        android_ip: string "192.168.42.129" 
+        master_ip: string "192.168.42.11" 
+    PATH "src" 
+    SUBSCRIBES
+        ts_status { TOPIC ts_topic MAXLATENCY 1000msec }
+    PERIOD 1000msec
+    CXX { HEADER "detector.h" FILENAME "detector.cpp" CLASS "Detector" }  
+}
+
+touch : node {
+    DEFS
+        print_data: bool true
+        android_ip: string "192.168.42.129" 
+        master_ip: string "192.168.42.11" 
+	ts_event: string "0"
+    PATH "src" 
+    PUBLISHES
+        ts_status { TOPIC ts_topic }
+    PERIOD 1000msec
+    CXX { HEADER "touch.h" FILENAME "touch.cpp" CLASS "Touch" }
+}
+
+plant : plant {
+  MACHINES
+    machine2 {
+      OS linux {
+        NODES_UID 1000
+        IMG "linux.img"
+        IP 192.168.42.129
+        NODES
+          touch 
+       }
+    }
+    machine3 {
+      OS linux {
+        NODES_UID 1000
+        IMG "linux.img"
+        IP 192.168.42.129
+        NODES
+          detector 
+       }
+    }
+}

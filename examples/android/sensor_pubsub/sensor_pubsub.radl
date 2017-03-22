@@ -1,0 +1,117 @@
+gps_topic : topic {
+    FIELDS 
+        lat : float32 0
+        lon : float32 0    
+}
+
+touch_topic : topic {
+    FIELDS 
+	x : int32 0  
+        y : int32 0 
+ 	width : int32 1
+	height : int32 1   
+}
+
+compass_topic : topic {
+    FIELDS 
+	azimuth : int32 0
+}
+
+speaker_topic : topic {
+    FIELDS 
+	volume : float32 0 
+}
+
+touch : node {
+    DEFS
+        print_data: bool true
+        android_ip: string "192.168.42.129"
+        master_ip: string "192.168.42.11" 
+    PATH "src" 
+    PUBLISHES
+        touch_status { TOPIC touch_topic }
+    PERIOD 1000msec
+    CXX { HEADER "touch.h" FILENAME "touch.cpp" CLASS "Touch" }
+}
+
+controller : node {
+    DEFS
+        print_data: bool true
+        android_ip: string "192.168.42.129"
+        master_ip: string "192.168.42.11"
+    PATH "src"
+    PUBLISHES
+        speaker_status { TOPIC speaker_topic }
+    SUBSCRIBES 
+        gps_status { TOPIC gps_topic MAXLATENCY 1000msec }
+        compass_status { TOPIC compass_topic MAXLATENCY 1000msec }
+        touch_status { TOPIC touch_topic MAXLATENCY 1000msec }
+    PERIOD 1000msec
+    CXX { HEADER "controller.h" FILENAME "controller.cpp" CLASS "Controller" }
+}
+
+gps : node {
+    DEFS
+        print_data: bool true
+        android_ip: string "192.168.42.129"
+        master_ip: string "192.168.42.11" 
+    PATH "src" 
+    PUBLISHES
+        gps_status { TOPIC gps_topic }
+    PERIOD 1000msec
+    CXX { HEADER "gps.h" FILENAME "gps.cpp" CLASS "GPS" }  
+}
+
+
+compass : node {
+    DEFS
+        print_data: bool true
+        android_ip: string "192.168.42.129"
+        master_ip: string "192.168.42.11"
+    PATH "src"
+    PUBLISHES
+        compass_status { TOPIC compass_topic }
+    PERIOD 1000msec
+    CXX { HEADER "compass.h" FILENAME "compass.cpp" CLASS "Compass" }
+} 
+
+
+plant : plant {
+  MACHINES
+    machine1 {
+      OS linux {
+        NODES_UID 1000
+        IMG "linux.img"
+        IP 192.168.42.11 
+        NODES 
+          gps
+       }
+    }
+    machine2 {
+      OS linux {
+        NODES_UID 1000
+        IMG "linux.img"
+        IP 192.168.42.11
+        NODES
+          compass
+       }
+    }
+    machine3 {
+      OS linux {
+        NODES_UID 1000
+        IMG "linux.img"
+        IP 192.168.42.11
+        NODES
+          touch
+       }
+    }
+    machine4 {
+      OS linux {
+        NODES_UID 1000
+        IMG "linux.img"
+        IP 192.168.42.11
+        NODES
+          controller
+       }
+    }
+}

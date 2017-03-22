@@ -1,0 +1,11 @@
+
+
+s1 : struct { FIELDS
+  v : int32 42
+  s2
+}
+
+
+s2 : struct { FIELDS
+  s1
+}

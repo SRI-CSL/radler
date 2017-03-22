@@ -1,0 +1,5 @@
+t : topic { FIELDS
+	p : struct { FIELDS x : int32 0 y : int32 0 }
+}
+
+

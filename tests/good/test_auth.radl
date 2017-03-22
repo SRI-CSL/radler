@@ -1,0 +1,95 @@
+
+# The "t" topic. Need three instances of it: the original, un-authenticated
+# topic from the source to the auth node, the authenticated version of the topic
+# from the auth node to the deauth node, and the second un-authenticated version
+# of the topic from the deauth node to the sink node.
+
+# The default value used for hmac signing
+hmac_default : array { SIZE 32 # To make sure we did not mess up
+                                    TYPE "int8" # To be able to not specify the type when writing the values
+                                    VALUES 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 } 
+
+# The topic we want to authenticate ( note that it is now a simple struct )
+data_topic : struct { FIELDS
+  data : array { SIZE 40 TYPE "int8" VALUES 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 }
+}
+
+# The new topic declaration which encapsulate the old topic
+t_auth_msg : topic { FIELDS
+  auth_data :  array { SIZE 40 TYPE "int8" VALUES 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 }
+  hmac = hmac_default
+}
+
+# The topic used to send session keys back to the ocu
+session_key : topic { FIELDS
+  key : array { SIZE 64 TYPE "uint8" VALUES 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 }
+}
+
+t_sink : topic { FIELDS
+  sink_data : array { SIZE 40 TYPE "int8" VALUES 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 }
+}
+
+t_source : topic { FIELDS 
+  source_data : array { SIZE 40 TYPE "int8" VALUES 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 }
+}
+
+openssl_lib : cmake_library {
+	  CMAKE_MODULE "OpenSSL"
+	  CMAKE_VAR_LIBRARIES "OPENSSL_LIBRARIES"
+	  CMAKE_VAR_INCLUDE_DIRS "OPENSSL_INCLUDE_DIRS"
+        }
+
+auth : node {
+  SUBSCRIBES i1 { TOPIC t_source MAXLATENCY 1sec }
+  SUBSCRIBES key { TOPIC session_key MAXLATENCY 2sec }
+  PUBLISHES o1 { TOPIC t_auth_msg }
+  PERIOD 40msec
+  C { HEADER "auth_node.h" FILENAME "HACMS_hmac.c" "HACMS_sha.c" LIB openssl_lib }
+}
+
+deauth : node {
+  SUBSCRIBES i1 { TOPIC t_auth_msg MAXLATENCY 1sec }
+  PUBLISHES o1 { TOPIC t_sink }
+  PUBLISHES key { TOPIC session_key }
+  PERIOD 30msec
+  C { HEADER "deauth_node.h" FILENAME "HACMS_hmac.c" "HACMS_sha.c"  LIB openssl_lib }
+}
+
+source : node {
+  PUBLISHES o1 {TOPIC t_source } 
+  PERIOD 50msec
+  C { HEADER "count_message.h" }
+}
+
+sink : node {
+  SUBSCRIBES i1 { TOPIC t_sink MAXLATENCY 1sec}
+  PERIOD 50msec
+  C { HEADER "print_message.h" }
+}
+
+l1 : linux {
+	IP 127.0.0.1
+	NODES_UID 1000
+	IMG "linux.img"
+	NODES source auth
+}
+
+l2 : linux {
+	IP 127.0.0.1
+	NODES_UID 1000
+	IMG "linux.img"
+	NODES deauth sink
+}
+
+plant : plant { MACHINES
+	computer1 { OS
+		hypervisor1 : lynxsecure { VMS vm1 { OS l1 } }
+	}
+	computer2 { OS
+		hypervisor2 : lynxsecure { VMS vm2 { OS l2 } }
+	}
+}
+
+settings : module_settings {
+  MODULE_BASE_PATH "src"
+}

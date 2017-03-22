@@ -1,0 +1,6 @@
+
+n : node {
+    SUBSCRIBES s1 { TOPIC s1 MAXLATENCY 10msec }
+    PERIOD 10msec
+    CXX { HEADER "h.h" CLASS "H" }
+}

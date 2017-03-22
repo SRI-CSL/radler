@@ -1,0 +1,13 @@
+
+s : struct { FIELDS
+	x : int32 0
+	y : int32 0
+}
+
+t : topic { FIELDS
+	p1 = s
+	p2 : struct { FIELDS x : int32 0 }
+	p3 : struct { FIELDS x : int32 0 y : int32 0 }
+}
+
+

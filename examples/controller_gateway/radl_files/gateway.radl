@@ -1,0 +1,47 @@
+
+#
+# Existing RADL things
+#
+
+device_value : topic { FIELDS
+  data : int32 0
+}
+
+controller_output : topic { FIELDS
+  data : float32 0
+}
+
+device_node : node {
+  PERIOD 2sec
+  PUBLISHES o1 {
+    TOPIC device_value
+  }
+  CXX { HEADER "radl_device_node.h" CLASS "Intpub" }
+}
+
+actuator_node : node {
+  PERIOD 2sec
+  SUBSCRIBES i1 {
+    TOPIC controller_output
+    MAXLATENCY 10msec
+  }
+  CXX { HEADER "radl_actuator_node.h" CLASS "Floatsub" }
+}
+
+
+#
+# Gateway for controller node
+#
+
+controller_gateway : node {
+  PERIOD 1sec
+  PUBLISHES output1 {
+    TOPIC controller_output
+  }
+  SUBSCRIBES input1 {
+    TOPIC device_value
+    MAXLATENCY 10msec
+  }
+  CXX { HEADER "gateway.h" CLASS "Gateway" }
+}
+

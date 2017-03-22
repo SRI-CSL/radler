@@ -1,0 +1,31 @@
+####
+# This file demonstrate the stale flag
+#
+# The subscriber twice_as_fast is expected to have the stale flag every two activations since its frequency is twice the one of the publisher.
+#
+# The subscriber never_stale should never have a stale flag since its period is longer than the publisher's one plus the channel latency. Note that at the beginning it may be started before the publisher, in which case it will have stale flags at the beginning.
+
+t : topic { FIELDS
+  x : uint16 0
+}
+
+publisher : node {
+  PUBLISHES o1 { TOPIC t }
+  CXX { CLASS "Pub" HEADER "src/flag_demo_pub.hpp" } 
+  PERIOD 500msec
+}
+
+twice_as_fast : node {
+  SUBSCRIBES i1 { TOPIC t MAXLATENCY 1msec }
+  CXX { CLASS "Sub" HEADER "src/flag_demo_sub.hpp" }
+  PERIOD 250msec
+}
+
+never_stale : node {
+  SUBSCRIBES i1 { TOPIC t MAXLATENCY 1msec }
+  CXX { CLASS "Sub" HEADER "src/flag_demo_sub.hpp" }
+  PERIOD 600msec
+}
+
+plant : plant { MACHINES
+  m { OS l { NODES_UID 1000 NODES publisher twice_as_fast never_stale IMG "14.04.img"}}}

@@ -1,0 +1,58 @@
+
+basic_rate : duration 50msec
+
+thermometer : node {
+    PUBLISHES
+        temp { TOPIC thermometer_data }
+    CXX { HEADER "thermometer.h"
+          FILENAME "thermometer.cpp"
+          CLASS "Thermometer" }
+    DEVICES
+        temperature_sensor
+    PERIOD
+        basic_rate
+}
+
+temperature_sensor : device_interface {
+  DEFS
+    name : string "/dev/thermometer"
+}
+
+thermometer_data : topic { FIELDS temp : float32 75 }
+
+base : node {
+    PUBLISHES thermo { TOPIC thermostat_setting }
+    CXX { HEADER "base.h" FILENAME "base.cpp" CLASS "Base" }
+    DEVICES temperature_setting_button
+    PERIOD basic_rate
+}
+temperature_setting_button : device_interface {
+  DEFS
+    name : string "/dev/button"
+}
+
+thermostat_setting : topic { FIELDS temp : float32 75 }
+
+thermostat : node {
+    SUBSCRIBES
+        setting { TOPIC thermostat_setting MAXLATENCY 1msec }
+        thermom { TOPIC thermometer_data MAXLATENCY 1msec }
+    PUBLISHES control { TOPIC thermostat_control }
+    CXX { HEADER "thermostat.h" FILENAME "thermostat.cpp" CLASS "Thermostat" }
+    PERIOD basic_rate
+}
+
+thermostat_control : topic { FIELDS switch_on : bool true }
+
+heater : node {
+    SUBSCRIBES
+        thermo { TOPIC thermostat_control MAXLATENCY 1msec}
+    CXX { HEADER "heater.h" FILENAME "heater.cpp" CLASS "Heater" }
+    DEVICES heater_device
+    PERIOD basic_rate
+}
+
+heater_device : device_interface {
+  DEFS
+    name : string "/dev/heater"
+}

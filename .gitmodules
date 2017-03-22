@@ -1,0 +1,9 @@
+[submodule "parsimonious"]
+	path = external_libs/parsimonious
+	url = https://github.com/lgerardSRI/parsimonious.git
+[submodule "ardronelib"]
+	path = examples/drone/sridrone_ardronelib/ardronelib
+	url = https://github.com/AutonomyLab/ardronelib.git
+[submodule "pydot"]
+	path = external_libs/pydot
+	url = https://github.com/lgerardSRI/pydot.git

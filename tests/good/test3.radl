@@ -1,0 +1,17 @@
+n : node {
+  SUBSCRIBES i1 { TOPIC test_alias.t1 MAXLATENCY 10msec }
+  PUBLISHES o1 { TOPIC t }
+  PERIOD 5msec
+  CXX {HEADER "src/id1.h" CLASS "identity_1"}
+}
+
+t = test_alias.t2
+
+n2 : node {
+  PUBLISHES o1 { TOPIC test_alias.t2 }
+  PERIOD 5msec
+  CXX {HEADER "src/f1.h" CLASS "N1"}
+}
+
+
+plant : plant { MACHINES { OS { NODES_UID 1000 NODES n n2 test_alias.n} } }

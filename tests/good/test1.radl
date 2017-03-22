@@ -1,0 +1,10 @@
+i : int8 7
+ii : int16 77
+iii : int32 777
+iiii : int64 7777
+
+int32 7
+
+a = i
+
+7

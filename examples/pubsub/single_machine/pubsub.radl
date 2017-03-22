@@ -1,0 +1,37 @@
+settings : module_settings {
+    MODULE_BASE_PATH "src"
+}
+
+basic_rate : duration 500msec
+
+chatter_data : topic {
+    FIELDS
+        data : int64 0
+}
+
+talker : node {
+    PUBLISHES
+        chatter { TOPIC chatter_data }
+    PERIOD basic_rate
+    CXX { HEADER "talker.h" FILENAME "talker.cpp" CLASS "Talker" }
+}
+
+listener : node {
+    SUBSCRIBES
+        chatter { TOPIC chatter_data MAXLATENCY 100msec }
+    PERIOD basic_rate
+    CXX { HEADER "listener.h" FILENAME "listener.cpp" CLASS "Listener" }
+}
+
+sys1 : linux {
+  NODES_UID 1000
+  IMG "linux.img"
+  IP 192.168.10.201
+  NODES
+   talker listener 
+}
+
+plant : plant {
+  MACHINES
+    host_computer { OS sys1 }
+}

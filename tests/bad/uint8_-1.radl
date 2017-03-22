@@ -1,0 +1,4 @@
+
+# should be rejected because uint8 is positive.
+
+x : uint8 -1

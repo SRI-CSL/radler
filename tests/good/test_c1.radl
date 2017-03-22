@@ -1,0 +1,31 @@
+
+settings : module_settings {
+  MODULE_BASE_PATH "src"
+}
+
+source : node {
+  PUBLISHES o1 { TOPIC t EACH 5}
+  PERIOD 100msec
+  C { HEADER "count_int_o1.h" }
+}
+
+t : topic { FIELDS
+  data : int32 -42
+}
+
+printer1 : node {
+  SUBSCRIBES i1 { TOPIC t MAXLATENCY 10msec}
+  PERIOD 100msec
+  C { HEADER "print_int_i1.h" }
+}
+
+printer2 : node {
+  SUBSCRIBES i1 { TOPIC t MAXLATENCY 10msec}
+  PERIOD 100msec
+  C { HEADER "print_int_i1.h" }
+}
+
+
+plant : plant { MACHINES
+  m { OS l { NODES source printer1 printer2 NODES_UID 1000 IMG "linux.img" IP 127.0.0.1}}
+}

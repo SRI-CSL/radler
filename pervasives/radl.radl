@@ -1,0 +1,16 @@
+
+
+# Node starting time.
+#   At starting time of the node, this will be updated by a call radl_gettime()
+#   Note that this value will differ between nodes.
+
+
+start_time : time 0sec
+
+
+
+settings : module_settings {
+    HEADER "src/radl.h"
+    FILENAME "src/radl.c"
+    POST_INIT_HOOK "pervasives_init_hook"
+}

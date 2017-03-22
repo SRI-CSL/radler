@@ -1,0 +1,4 @@
+
+This include directory provide the radl_lib headers.
+
+Files without extension are meant to be C++ headers while .h files are C headers.

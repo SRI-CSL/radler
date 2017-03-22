@@ -1,0 +1,41 @@
+
+t : topic { FIELDS
+	x1 : int32 0
+}
+
+n1 : node {
+	PUBLISHES o1 { TOPIC t }
+	PERIOD 500msec
+	CXX { CLASS "N1" HEADER "f1.h" }
+}
+
+n2 : node {
+	SUBSCRIBES i2 { TOPIC t MAXLATENCY 1sec }
+	PERIOD 500msec
+	CXX { CLASS "N2" HEADER "f2.h" }
+}
+
+l1 : linux {
+	NODES_UID 1000
+	IMG "linux.img"
+	NODES n1
+}
+
+l2 : linux {
+	NODES_UID 1000
+	IMG "linux.img"
+	NODES n2
+}
+
+plant : plant { MACHINES
+	computer1 { OS
+		hypervisor1 : certikos { VMS
+			vm1 { OS l1 }
+			vm2 { OS l2 }
+		}
+	}
+}
+
+settings : module_settings {
+	MODULE_BASE_PATH "src"
+}

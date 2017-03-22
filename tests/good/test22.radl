@@ -1,0 +1,43 @@
+n1 : node {
+  PUBLISHES o1 {TOPIC t }
+  PERIOD 500msec
+  CXX {HEADER "f1.h" CLASS "N1"}
+}
+
+t : topic { FIELDS
+  x1 : float32 42
+  timestamp = radl.start_time
+}
+
+r : node {
+  SUBSCRIBES i1 { TOPIC t MAXLATENCY 2msec }
+  PUBLISHES o1 { TOPIC tt }
+  PERIOD 10msec
+  CXX { HEADER "id1.h" CLASS "identity_1" }
+}
+
+tt = t
+
+n2 : node {
+  SUBSCRIBES i2 {TOPIC tt MAXLATENCY 2msec }
+  PERIOD 300msec
+  CXX {HEADER "f2.h" CLASS "N2"}
+}
+
+n3 : node {
+  SUBSCRIBES i2 {TOPIC tt MAXLATENCY 1msec }
+  PERIOD 300msec
+  CXX {HEADER "f2.h" CLASS "N2"}
+}
+
+plant : plant {
+  MACHINES
+    ocu { OS { IP 192.168.15.112 NODES n1 NODES_UID 1000 IMG "linux.img" } }
+    bb { OS lynxsecure { VMS
+     comm { OS { IP 192.168.15.121 NODES r n2 NODES_UID 1000 IMG "linux.img" } }
+     sri { OS { NODES n3 NODES_UID 1000 IMG "linux.img" } }
+}}}
+
+settings : module_settings {
+  MODULE_BASE_PATH "src"
+}

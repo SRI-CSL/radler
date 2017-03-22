@@ -1,0 +1,5 @@
+s : string "bonjour"
+
+t : topic { FIELDS
+    s2 = s
+}
