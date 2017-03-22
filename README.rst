@@ -19,7 +19,7 @@ First time after cloning::
 
 To get radler working on a clean version of Ubuntu 14.04::
 
-	sudo apt-get install cmake python3-pip ipython
+	sudo apt-get install cmake python3-pip
 	sudo pip3 install tarjan
 
 To install ROS:: 
