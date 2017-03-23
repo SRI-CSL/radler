@@ -447,49 +447,49 @@ void SRIDrone::step(const radl_in_t * in, const radl_in_flags_t* iflags,
 		break;
 	    case KEY_UP: // up 'u' 
 		vp_os_mutex_lock(&twist_lock);
-		lx = 0.0; ly = 0.0; lz = 0.1; ax = 0.0; ay = 0.0; az = 0.0;
+		lx = 0.0; ly = 0.0; lz = 1.0; ax = 0.0; ay = 0.0; az = 0.0;
 		vp_os_mutex_unlock(&twist_lock);
 		std::cout << "up by teleop" << std::endl; 	
 		break;
 	    case KEY_DOWN: // down 'd' 
 		vp_os_mutex_lock(&twist_lock);
-		lx = 0.0; ly = 0.0; lz = -0.1; ax = 0.0; ay = 0.0; az = 0.0;
+		lx = 0.0; ly = 0.0; lz = -1.0; ax = 0.0; ay = 0.0; az = 0.0;
 		vp_os_mutex_unlock(&twist_lock);
 		std::cout << "down by teleop" << std::endl; 	
 		break;
 	    case KEY_FORWARD: // forward 'f' 
 		vp_os_mutex_lock(&twist_lock);
-		lx = 0.1; ly = 0.0; lz = 0.0; ax = 0.0; ay = 0.0; az = 0.0;
+		lx = 1.0; ly = 0.0; lz = 0.0; ax = 0.0; ay = 0.0; az = 0.0;
 		vp_os_mutex_unlock(&twist_lock);
 		std::cout << "forward by teleop" << std::endl; 	
 		break;
 	    case KEY_BACKWARD: // backward 'b' 
 		vp_os_mutex_lock(&twist_lock);
-		lx = -0.1; ly = 0.0; lz = 0.0; ax = 0.0; ay = 0.0; az = 0.0;
+		lx = -1.0; ly = 0.0; lz = 0.0; ax = 0.0; ay = 0.0; az = 0.0;
 		vp_os_mutex_unlock(&twist_lock);
 		std::cout << "backward by teleop" << std::endl; 	
 		break;
 	    case KEY_LEFT: // left 'l' 
 		vp_os_mutex_lock(&twist_lock);
-		lx = 0.0; ly = 0.1; lz = 0.0; ax = 0.0; ay = 0.0; az = 0.0;
+		lx = 0.0; ly = 1.0; lz = 0.0; ax = 0.0; ay = 0.0; az = 0.0;
 		vp_os_mutex_unlock(&twist_lock);
 		std::cout << "left by teleop" << std::endl; 	
 		break;
 	    case KEY_RIGHT: // right 'r' 
 		vp_os_mutex_lock(&twist_lock);
-		lx = 0.0; ly = -0.1; lz = 0.0; ax = 0.0; ay = 0.0; az = 0.0;
+		lx = 0.0; ly = -1.0; lz = 0.0; ax = 0.0; ay = 0.0; az = 0.0;
 		vp_os_mutex_unlock(&twist_lock);
 		std::cout << "right by teleop" << std::endl; 	
 		break;
 	    case KEY_TURNLEFT: // turn left '[' 
 		vp_os_mutex_lock(&twist_lock);
-		lx = 0.0; ly = 0.0; lz = 0.0; ax = 0.0; ay = 0.0; az = 0.1;
+		lx = 0.0; ly = 0.0; lz = 0.0; ax = 0.0; ay = 0.0; az = 1.0;
 		vp_os_mutex_unlock(&twist_lock);
 		std::cout << "turn left by teleop" << std::endl; 	
 		break;
 	    case KEY_TURNRIGHT: // turn right ']' 
 		vp_os_mutex_lock(&twist_lock);
-		lx = 0.0; ly = 0.0; lz = 0.0; ax = 0.0; ay = 0.0; az = -0.1;
+		lx = 0.0; ly = 0.0; lz = 0.0; ax = 0.0; ay = 0.0; az = -1.0;
 		vp_os_mutex_unlock(&twist_lock);
 		std::cout << "turn right by teleop" << std::endl; 	
 		break;

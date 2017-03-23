@@ -39,7 +39,7 @@ void Key::step(const radl_in_t * in, const radl_in_flags_t* iflags,
 	key = getch(); 
 
 	if ( *RADL_THIS->print_data ) {
-        	cout << "key = " << key << endl;
+        	cout << "key = " << (char)key << endl;
 	}
 
 	out->key_event->key = key;
