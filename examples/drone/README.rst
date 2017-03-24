@@ -19,11 +19,6 @@ Demos using AR.Drone on ROS/Secure\_ROS
 | Each demo can run on **ROS** and **Secure\_ROS**.
 
 .. image:: sridrone_rqt_graph.png  
-   :alt: ""
-
-.. image:: ../examples/drone/sridrone_rqt_graph.png  
-   :width: 600px 
-   :alt: ""
 
 Some additional links:
 
