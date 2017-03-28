@@ -40,12 +40,6 @@ On machine 192.168.10.201:
 
    roscore 
 
-In case of using **Secure\_ROS**, set environmental variable *ROS\_AUTH\_FILE*. *sros_cfg.yaml* can be found in */tmp/catkin_ws/src/ros/pubsub/sros_cfg.yaml*.
-
-:: 
-
-   ROS_AUTH_FILE=/path/to/sros_cfg.yaml roscore 
-
 On machine 192.168.10.202:
 
 :: 

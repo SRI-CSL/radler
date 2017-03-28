@@ -1,4 +1,4 @@
-Demos using AR.Drone on ROS/Secure\_ROS
+Demos using AR.Drone on ROS
 =======================================
 
 | Demos are available for two types of AR.Drone drivers: Demo \#1 with **ardronelib**
@@ -16,7 +16,6 @@ Demos using AR.Drone on ROS/Secure\_ROS
 | Demo \#1 additionaly supports for three other nodes: **key**, **timer**, and **landing**.  
   The **key** node provides drone flight control using keyboard. The **timer** node provides timer-based drone flight control, e.g., landing after 2 seconds of hovering over 50cm. 
   The **landing** node provides altitude-based landing, e.g., landing if the altitude is less than 50cm.  
-| Each demo can run on **ROS** and **Secure\_ROS**.
 
 .. image:: sridrone_rqt_graph.png  
 
@@ -132,82 +131,3 @@ Run ros image\_view node to check the camera feed.
     rosrun image_view image_view image:=/ardrone/front/image_raw
     rosrun image_view image_view image:=/ardrone/bottom/image_raw
 
-Demo #3 on Secure_ROS
----------------------
-
-.. raw:: html
-
-   <!--
-   Edit *vagrant/vagrant_configuration.yaml* to be on the same subnet with AR.Drone. The default AR.Drone IP address is 192.168.1.1.
-   ```yaml
-   ip_addr_prefix: 192.168.1
-   ```
-   Edit *vagrant/Vagrantfile* to set up a bridged network. 
-   ```
-   # machine.vm.network "private_network",  ip: ip_addr
-   machine.vm.network "public_network", bridge: "en0: Wi-Fi (AirPort)",  ip: ip_addr
-   ```
-
-   Add two lines in *vagrant/Vagrantfile* to set up X11 forwarding. 
-   ```
-   Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-      config.vm.box = "ubuntu/trusty64"
-   +  config.ssh.forward_agent = true
-   +  config.ssh.forward_x11 = true
-   ```
-   -->
-
-Refer */tmp/catkin_\ws/src/ros/sros\_cfg.ymal* with the
-list of IP addresses that are authorized to publish/subscribe each topic
-if needed. For example, **navdata** is published by **sridrone**
-(192.168.1.202) node and subscribed by **led** (192.168.1.203),  
-**camera** (192.168.1.204), **timer** and **landing** (both 192.168.1.202) nodes. ROS master
-is hosted on a node with IP address of 192.168.1.201.
-
-::
-
-    topics:
-        - name: /sridrone_ardronelib/navdata_topic
-          publishers: [192.168.1.202]
-          subscribers: [192.168.1.202, 192.168.1.203, 192.168.1.204]
-        - name: /sridrone_ardronelib/led_topic
-          publishers: [192.168.1.203]
-          subscribers: [192.168.1.202]
-        - name: /sridrone_ardronelib/camera_topic
-          publishers: [192.168.1.204]
-          subscribers: [192.168.1.202]
-        - name: /sridrone_ardronelib/key_topic
-          publishers: [192.168.1.202]
-          subscribers: [192.168.1.202]
-        - name: /sridrone_ardronelib/timer_topic
-          publishers: [192.168.1.202]
-          subscribers: [192.168.1.202]
-        - name: /sridrone_ardronelib/landing_topic
-          publishers: [192.168.1.202]
-          subscribers: [192.168.1.202]
-
-Copy executables to the corresponding machines. 
-
-::
-
-    scp /tmp/catkin_ws/devel/lib/sridrone_ardronelib/sridrone 192.168.1.202:~  
-    scp /tmp/catkin_ws/devel/lib/sridrone_ardronelib/led 192.168.1.203:~ 
-    scp /tmp/catkin_ws/devel/lib/sridrone_ardronelib/camera 192.168.1.204:~  
-    scp /tmp/catkin_ws/devel/lib/sridrone_ardronelib/key 192.168.1.202:~  
-    scp /tmp/catkin_ws/devel/lib/sridrone_ardronelib/timer 192.168.1.202:~  
-    scp /tmp/catkin_ws/devel/lib/sridrone_ardronelib/landing 192.168.1.202:~  
-
-On machine 192.168.1.201: 
-
-:: 
-
-    ROS_AUTH_FILE=/path/to/sros_cfg.yaml roscore 
-
-On each machine, run radler node(s). For example, on machine 192.168.1.202: 
- 
-:: 
-
-    ./sridrone 
-   
-We use Wi-Fi Protected Access (WPA2) solution from https://github.com/daraosn/ardrone-wpa2 for the link between **sridrone** and AR.Drone.  
-Refer "Hacking and securing the AR.Drone 2.0 quadcopter: investigations for improving the security of a toy" by Johann-Sebastian Pleban; Ricardo Band; Reiner Creutzburg, Proc. SPIE 9030, Mobile Devices and Multimedia: Enabling Technologies, Algorithms, and Applications 2014, 90300L (18 February 2014). 

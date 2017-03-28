@@ -31,20 +31,6 @@ To install ROS::
 	(echo ; echo "# Setup for ROS" ; echo "source /opt/ros/indigo/setup.bash" ) >> ~/.bashrc
 	source ~/.bashrc
 
-To use **Secure\_ROS**, download .deb file from http://radler.csl.sri.com/deb/secure-ros-indigo-ros-comm_1.11.20_amd64.deb. You can also create .deb file by following instructions from https://github.com/SRI-CSL/secure_ros. 
-To enable **Secure\_ROS**:    
-
-::
-
-    source /opt/secure_ros/indigo/setup.bash
-    export ROS_IP=<IP_ADDR> 
-
-You can switch back to ROS: 
-
-:: 
-
-    source /opt/ros/indigo/setup.bash 
-
 
 To compile and run  
 ----------------------------
