@@ -1,0 +1,86 @@
+
+navdata_topic : topic { FIELDS
+    roll     : float32 0
+    pitch    : float32 0
+    yaw      : float32 0
+    altitude : float32 0
+    vx       : float32 0
+    vy       : float32 0
+    vz       : float32 0
+    battery  : int32 0
+}
+
+led_topic : topic { FIELDS
+    id   : int16 0
+    freq : float32 4
+    span : int16 5
+}
+
+camera_topic : topic { FIELDS
+    mode : int16 0
+}
+
+sridrone : node {
+    PUBLISHES
+        navdata { TOPIC navdata_topic }
+    SUBSCRIBES
+        led_anim { TOPIC led_topic MAXLATENCY 10msec }
+        camera_param { TOPIC camera_topic MAXLATENCY 10msec }
+    PERIOD 30msec 
+    CXX { HEADER   "sridrone.h"
+          FILENAME "sridrone.cpp"
+          CLASS "SRIDrone" }
+}
+
+led : node {
+    PUBLISHES
+        led_anim { TOPIC led_topic }
+    SUBSCRIBES
+        navdata { TOPIC navdata_topic MAXLATENCY 10msec }
+    PERIOD 1000msec
+    CXX { HEADER "led.h" FILENAME "led.cpp" CLASS "Led" }
+}
+
+camera : node {
+    PUBLISHES
+        camera_param { TOPIC camera_topic }
+    SUBSCRIBES
+        navdata { TOPIC navdata_topic MAXLATENCY 10msec }
+    PERIOD 1000msec
+    CXX { HEADER "camera.h" FILENAME "camera.cpp" CLASS "Camera" }
+}
+
+plant : plant {
+  MACHINES
+    machine2 {
+      OS linux {
+        NODES_UID 1000
+        IMG "linux.img"
+        IP 192.168.1.202
+        NODES
+          sridrone
+       }
+    }
+    machine3 {
+      OS linux {
+        NODES_UID 1000
+        IMG "linux.img"
+        IP 192.168.1.203
+        NODES
+          led
+       }
+    }
+    machine4 {
+      OS linux {
+        NODES_UID 1000
+        IMG "linux.img"
+        IP 192.168.1.204
+        NODES
+          camera
+      }
+   }
+}
+
+settings : module_settings {
+    MODULE_BASE_PATH "src"
+}
