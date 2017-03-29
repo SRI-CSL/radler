@@ -2,15 +2,11 @@
 
 
 .. toctree::
-..   :maxdepth: 3
+..   :maxdepth: 2
 
 Introduction 
 ++++++++++++ 
 .. include:: ../README.rst 
-
-`radler` language specification 
-+++++++++++++++++++++++++++++++
-.. include:: radler_language.rst		
 
 `radler` usage 
 ++++++++++++++
@@ -27,8 +23,12 @@ Examples
 .. include:: ../examples/raspberrypi/README.rst			
 .. include:: ../examples/android/README.rst			
 
+`radler` language specification 
++++++++++++++++++++++++++++++++
+.. include:: radler_language.rst		
+
 .. Indices and tables
-.. ==================
+.. ++++++++++++++++++
 
 .. * :ref:`genindex`
 .. * :ref:`modindex`
