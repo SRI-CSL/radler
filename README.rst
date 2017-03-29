@@ -10,11 +10,15 @@ The radler supports a publish/subscribe architecture where nodes
 communicate by publishing on certain topics and subscribing
 to other topics.
 
+Find the documentation at https://sri-csl.github.io/radler/
+
 To install  
 ----------
 
-First time after cloning::
+First time checkout::
 
+        git clone https://github.com/SRI-CSL/radler.git
+	cd radler
 	git submodule update --init --recursive
 
 To get radler working on a clean version of Ubuntu 14.04::
