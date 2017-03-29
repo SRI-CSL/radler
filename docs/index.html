@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to Radler’s documentation! &#8212; RadlerManual 1 documentation</title>
+    <title>Introduction &#8212; RadlerManual 1 documentation</title>
     
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -17,15 +17,15 @@
         VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
-        HAS_SOURCE:  true,
-        SOURCELINK_SUFFIX: '.txt'
+        HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="RadlerManual 1 documentation" href="#" /> 
   </head>
   <body role="document">
     <div class="related" role="navigation" aria-label="related navigation">
@@ -43,13 +43,12 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="welcome-to-radler-s-documentation">
-<h1>Welcome to Radler&#8217;s documentation!<a class="headerlink" href="#welcome-to-radler-s-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound">
+  <div class="toctree-wrapper compound">
 </div>
-</div>
+<div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="getting-started">
-<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
 <p>The radler framework takes its inspiration from the Robot
 Operating System (ROS). In the radler framework, the sensors,
 controllers, and actuators are constructed from functional
@@ -59,7 +58,7 @@ The radler supports a publish/subscribe architecture where nodes
 communicate by publishing on certain topics and subscribing
 to other topics.</p>
 <div class="section" id="to-install">
-<h2>To install<a class="headerlink" href="#to-install" title="Permalink to this headline">¶</a></h2>
+<h3>To install<a class="headerlink" href="#to-install" title="Permalink to this headline">¶</a></h3>
 <p>First time after cloning:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">submodule</span> <span class="n">update</span> <span class="o">--</span><span class="n">init</span> <span class="o">--</span><span class="n">recursive</span>
 </pre></div>
@@ -80,9 +79,9 @@ to other topics.</p>
 </div>
 </div>
 <div class="section" id="to-compile-and-run">
-<h2>To compile and run<a class="headerlink" href="#to-compile-and-run" title="Permalink to this headline">¶</a></h2>
+<h3>To compile and run<a class="headerlink" href="#to-compile-and-run" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="compile">
-<h3>Compile<a class="headerlink" href="#compile" title="Permalink to this headline">¶</a></h3>
+<h4>Compile<a class="headerlink" href="#compile" title="Permalink to this headline">¶</a></h4>
 <p>Radler generates files from the RADL file into a usual ROS catkin structure, then a call to <cite>catkin_make</cite> will generate the executables as usual.
 (e.g. for <cite>examples/pubsub/pubsub.radl</cite>):</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">catkin_ws</span><span class="o">/</span><span class="n">src</span>
@@ -93,7 +92,7 @@ to other topics.</p>
 </div>
 </div>
 <div class="section" id="run">
-<h3>Run<a class="headerlink" href="#run" title="Permalink to this headline">¶</a></h3>
+<h4>Run<a class="headerlink" href="#run" title="Permalink to this headline">¶</a></h4>
 <p>Since <cite>pubsub</cite> defines a plant, radler has generated a launch file to run the requested nodes.
 Simplest way of running it is to source the catkin workspace we just compiled and use <cite>roslaunch</cite>:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="n">devel</span><span class="o">/</span><span class="n">setup</span><span class="o">.</span><span class="n">bash</span>
@@ -105,13 +104,16 @@ Simplest way of running it is to source the catkin workspace we just compiled an
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="radler-language-specification">
+<h1><cite>radler</cite> language specification<a class="headerlink" href="#radler-language-specification" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="file-constraints">
-<h1>File constraints<a class="headerlink" href="#file-constraints" title="Permalink to this headline">¶</a></h1>
+<h2>File constraints<a class="headerlink" href="#file-constraints" title="Permalink to this headline">¶</a></h2>
 <p>A radl description file is a text file, preferably encoded in utf8, with
 extension &#8221;.radl&#8221;. Such a file is called in short a radl file.</p>
 </div>
 <div class="section" id="meta-syntax-rules">
-<h1>Meta syntax rules<a class="headerlink" href="#meta-syntax-rules" title="Permalink to this headline">¶</a></h1>
+<h2>Meta syntax rules<a class="headerlink" href="#meta-syntax-rules" title="Permalink to this headline">¶</a></h2>
 <p>A radl file define a module whose name is the file name. A module is a
 set of value declarations. A declaration may be an alias, used to
 declare a value equal to another one but with a new name. The name of a
@@ -121,7 +123,7 @@ ambiguous, the inference will choose one. When defining a class field,
 one may declare a new value or refer to another value by its
 identifier.</p>
 <div class="section" id="grammar">
-<h2>Grammar<a class="headerlink" href="#grammar" title="Permalink to this headline">¶</a></h2>
+<h3>Grammar<a class="headerlink" href="#grammar" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>module := decl*
 decl := alias | NAME? (&#39;:&#39; TYPE)? TYPEVALUE | NAME? (&#39;:&#39; CLASS)? class_value
 alias := NAME = identifier
@@ -134,7 +136,7 @@ root_name := NAME
 </div>
 </div>
 <div class="section" id="grammar-terminals">
-<h2>Grammar terminals<a class="headerlink" href="#grammar-terminals" title="Permalink to this headline">¶</a></h2>
+<h3>Grammar terminals<a class="headerlink" href="#grammar-terminals" title="Permalink to this headline">¶</a></h3>
 <p>The <code class="docutils literal"><span class="pre">NAME</span></code> terminal is a spaceless word beginning with a letter which
 may contain numbers and underscore (the regex
 <code class="docutils literal"><span class="pre">[a-zA-Z][a-zA-Z0-9_]*</span></code>). <code class="docutils literal"><span class="pre">NAME</span></code> is also restricted not to be a
@@ -150,24 +152,24 @@ declarations of the form</p>
 </div>
 </div>
 <div class="section" id="keywords">
-<h2>Keywords<a class="headerlink" href="#keywords" title="Permalink to this headline">¶</a></h2>
+<h3>Keywords<a class="headerlink" href="#keywords" title="Permalink to this headline">¶</a></h3>
 <p>Keywords are all <code class="docutils literal"><span class="pre">TYPE</span></code>, <code class="docutils literal"><span class="pre">CLASS</span></code> and <code class="docutils literal"><span class="pre">FIELDNAME</span></code> plus the
 <code class="docutils literal"><span class="pre">extra_keywords</span></code> entry of
 <a class="reference external" href="https://github.com/SRI-CSL/radler/blob/master/radler/radlr/language.py">language.py</a>.</p>
 </div>
 <div class="section" id="white-spaces">
-<h2>White spaces<a class="headerlink" href="#white-spaces" title="Permalink to this headline">¶</a></h2>
+<h3>White spaces<a class="headerlink" href="#white-spaces" title="Permalink to this headline">¶</a></h3>
 <p>The syntax requires all terminals to be whitespace separated. A whitespace is any number greater than 1 of space, tabulation and end of line.</p>
 </div>
 <div class="section" id="comments">
-<h2>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+<h3>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h3>
 <p>After <code class="docutils literal"><span class="pre">#</span></code>, any character is discarded up to the end of line.</p>
 </div>
 </div>
 <div class="section" id="identifier-scoping-rules">
-<h1>Identifier scoping rules<a class="headerlink" href="#identifier-scoping-rules" title="Permalink to this headline">¶</a></h1>
+<h2>Identifier scoping rules<a class="headerlink" href="#identifier-scoping-rules" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="scoping-regions">
-<h2>Scoping regions<a class="headerlink" href="#scoping-regions" title="Permalink to this headline">¶</a></h2>
+<h3>Scoping regions<a class="headerlink" href="#scoping-regions" title="Permalink to this headline">¶</a></h3>
 <p>A file <code class="docutils literal"><span class="pre">MODULE</span></code>.radl defines an implicit scoping region for its
 content whose name is <code class="docutils literal"><span class="pre">MODULE</span></code>. Sub-regions are defined by class
 values. A class value declaration defines one and only one nested
@@ -175,24 +177,26 @@ scoping region, syntactically delimited by matching braces, whose name
 is the declaration <code class="docutils literal"><span class="pre">NAME</span></code>.</p>
 </div>
 <div class="section" id="local-unicity-of-names">
-<h2>Local unicity of names<a class="headerlink" href="#local-unicity-of-names" title="Permalink to this headline">¶</a></h2>
+<h3>Local unicity of names<a class="headerlink" href="#local-unicity-of-names" title="Permalink to this headline">¶</a></h3>
 <p>Inside each region (not comprising its sub-regions), <code class="docutils literal"><span class="pre">NAME</span></code> of each
 declarations are unique. Moreover, each module name <code class="docutils literal"><span class="pre">MODULE</span></code> is
 ensured to be unique.</p>
 </div>
 <div class="section" id="global-unicity-of-qualified-names">
-<h2>Global unicity of qualified names<a class="headerlink" href="#global-unicity-of-qualified-names" title="Permalink to this headline">¶</a></h2>
+<h3>Global unicity of qualified names<a class="headerlink" href="#global-unicity-of-qualified-names" title="Permalink to this headline">¶</a></h3>
 <p>A qualified name (qname) is an identifier whose <code class="docutils literal"><span class="pre">root_name</span></code> is a
 module name. By unicity of module names and declaration names, a qname
 defines a value uniquely.</p>
 </div>
 <div class="section" id="resolution-of-identifiers-to-qualified-names">
-<h2>Resolution of identifiers to qualified names<a class="headerlink" href="#resolution-of-identifiers-to-qualified-names" title="Permalink to this headline">¶</a></h2>
+<h3>Resolution of identifiers to qualified names<a class="headerlink" href="#resolution-of-identifiers-to-qualified-names" title="Permalink to this headline">¶</a></h3>
 <p>When resolving an identifier, the first step is the resolution of its
 <code class="docutils literal"><span class="pre">root_name</span></code>, which is match with the closest enclosing scoping region
 or in last resort to another module name. At that point, the
 <code class="docutils literal"><span class="pre">root_name</span></code> is replaced by the qualified name of its matching region
 and the identifier becomes a qualified name.</p>
+<div class="section" id="example">
+<h4>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">----</span> <span class="n">file</span><span class="p">:</span> <span class="n">module1</span><span class="o">.</span><span class="n">radl</span> <span class="o">----</span>
 <span class="n">x</span> <span class="p">:</span> <span class="n">int32</span> <span class="mi">0</span>
 <span class="n">s</span> <span class="p">:</span> <span class="n">struct</span> <span class="p">{</span> <span class="n">FIELDS</span> <span class="n">x</span> <span class="p">:</span> <span class="n">int32</span> <span class="mi">42</span> <span class="p">}</span>
@@ -229,11 +233,14 @@ and replacing it to get <code class="docutils literal"><span class="pre">module2
 found to be a module name meaning that these identifiers are already
 qualified names.</p>
 </div>
+</div>
 <div class="section" id="shadowing">
-<h2>Shadowing<a class="headerlink" href="#shadowing" title="Permalink to this headline">¶</a></h2>
+<h3>Shadowing<a class="headerlink" href="#shadowing" title="Permalink to this headline">¶</a></h3>
 <p>While using qualified names for identifiers permit to overcome most
 possible shadowings, a region will shadow any module with identical
 name.</p>
+<div class="section" id="id1">
+<h4>Example<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">---</span> <span class="n">file</span><span class="p">:</span> <span class="n">module3</span><span class="o">.</span><span class="n">radl</span> <span class="o">---</span>
 
 <span class="n">module1</span> <span class="p">:</span> <span class="n">struct</span> <span class="p">{</span> <span class="n">FIELDS</span>
@@ -250,10 +257,11 @@ Note that in this example, since <code class="docutils literal"><span class="pre
 declared, the compiler will complain about it missing.</p>
 </div>
 </div>
+</div>
 <div class="section" id="the-radler-language">
-<h1>The radler language<a class="headerlink" href="#the-radler-language" title="Permalink to this headline">¶</a></h1>
+<h2>The radler language<a class="headerlink" href="#the-radler-language" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="logical-level">
-<h2>Logical level<a class="headerlink" href="#logical-level" title="Permalink to this headline">¶</a></h2>
+<h3>Logical level<a class="headerlink" href="#logical-level" title="Permalink to this headline">¶</a></h3>
 <p>The two main classes used to describe the logical level are node and
 topic. Their full definitions may be found in
 <a class="reference external" href="https://github.com/SRI-CSL/radler/blob/master/radler/radlr/language.py">language.py</a>. The most
@@ -270,6 +278,8 @@ important elements are:</p>
            <span class="nb">bool</span><span class="o">/</span><span class="n">struct</span><span class="o">/</span><span class="n">array</span><span class="o">/</span><span class="n">duration</span><span class="o">/</span><span class="n">time</span> <span class="o">+</span>
 </pre></div>
 </div>
+<div class="section" id="nodes">
+<h4>Nodes<a class="headerlink" href="#nodes" title="Permalink to this headline">¶</a></h4>
 <p>When creating a node, radler will construct one instance of the
 provided C++ class (the <code class="docutils literal"><span class="pre">CXX</span></code> field). The step method of this
 instance will be called at a fixed frequency defined by the node&#8217;s
@@ -278,24 +288,36 @@ to have a worst case execution time inferior to the one described
 here in the <code class="docutils literal"><span class="pre">WCET</span></code> field. At each call, the step function is
 provided with the messages received from its subscriptions and is
 required to write the messages it has to publish.</p>
+</div>
+<div class="section" id="topics">
+<h4>Topics<a class="headerlink" href="#topics" title="Permalink to this headline">¶</a></h4>
 <p>A topic (defined uniquely by its name) is a purely logical way to
 define point to point communications between one producer and
 multiple consumers. There needs to be one and only one node
 publishing to a topic while as many as needed nodes subscribing to
 it.</p>
 </div>
+</div>
 <div class="section" id="external-files-and-path">
-<h2>External files and <code class="docutils literal"><span class="pre">PATH</span></code><a class="headerlink" href="#external-files-and-path" title="Permalink to this headline">¶</a></h2>
+<h3>External files and <code class="docutils literal"><span class="pre">PATH</span></code><a class="headerlink" href="#external-files-and-path" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="file-reference">
+<h4>File reference<a class="headerlink" href="#file-reference" title="Permalink to this headline">¶</a></h4>
 <p>An external file is described by a string representing its path. This
 path may be absolute (for example &#8220;/etc/example.cfg&#8221;) or relative
 (&#8220;src/defs.h&#8221;). Relative paths are resolved relatively to the working
 directory of the scoping region. Absolute path files are not
 recommended, but may be useful in very specific cases.</p>
+</div>
+<div class="section" id="working-directory-of-a-region-path-and-module-base-path">
+<h4>Working directory of a region, <code class="docutils literal"><span class="pre">PATH</span></code> and <code class="docutils literal"><span class="pre">MODULE_BASE_PATH</span></code><a class="headerlink" href="#working-directory-of-a-region-path-and-module-base-path" title="Permalink to this headline">¶</a></h4>
 <p>If a <code class="docutils literal"><span class="pre">PATH</span></code> field exists in a region, it is used to set the working
 directory of this region relatively to the parent region&#8217;s working
 directory. The module working directory is the directory of the
 module file except when it is redefined by the <code class="docutils literal"><span class="pre">MODULE_BASE_PATH</span></code>
 of the <code class="docutils literal"><span class="pre">module_settings</span></code> value.</p>
+</div>
+<div class="section" id="id2">
+<h4>Example<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">----</span> <span class="n">file</span><span class="p">:</span> <span class="n">path1</span><span class="o">.</span><span class="n">radl</span> <span class="o">----</span>
 <span class="n">n</span><span class="p">:</span> <span class="n">node</span> <span class="p">{</span>
     <span class="n">PATH</span> <span class="s2">&quot;nodes/example&quot;</span>
@@ -322,14 +344,20 @@ and the file refered by &#8220;n.cpp&#8221; is
 <p>By adding this <code class="docutils literal"><span class="pre">module_settings</span></code> value, &#8220;n.cpp&#8221; refers to
 &#8220;/usr/pathexample/nodes/example/src/n.cpp&#8221;.</p>
 </div>
+</div>
 <div class="section" id="libraries">
-<h2>Libraries<a class="headerlink" href="#libraries" title="Permalink to this headline">¶</a></h2>
+<h3>Libraries<a class="headerlink" href="#libraries" title="Permalink to this headline">¶</a></h3>
 <p>Any user code needing libraries has to be declared as using a library
 with the <code class="docutils literal"><span class="pre">LIB</span></code> field. This field allows two forms of libraries,
 <code class="docutils literal"><span class="pre">cmake_library</span></code> and <code class="docutils literal"><span class="pre">static_library</span></code>.</p>
+<div class="section" id="static-library">
+<h4>Static library<a class="headerlink" href="#static-library" title="Permalink to this headline">¶</a></h4>
 <p>Static libraries are of the simplest form, gathering a set of source
 files in their <code class="docutils literal"><span class="pre">CXX</span></code> field while the library header files are found
 in the <code class="docutils literal"><span class="pre">HEADER_PATHS</span></code> paths.</p>
+</div>
+<div class="section" id="cmake-library">
+<h4>Cmake library<a class="headerlink" href="#cmake-library" title="Permalink to this headline">¶</a></h4>
 <p>The cmake library enables the use of arbitrarily complex libraries
 since it is a user defined cmake script. The <code class="docutils literal"><span class="pre">CMAKE_MODULE</span></code> field
 provide the cmake module name used to find it in the working
@@ -342,16 +370,25 @@ include directories. Both variable names can be specified if their
 naming doesn&#8217;t follow this convention, respectively with the fields
 <code class="docutils literal"><span class="pre">CMAKE_VAR_LIBRARIES</span></code> and <code class="docutils literal"><span class="pre">CMAKE_VAR_INCLUDE_DIRS</span></code>.</p>
 </div>
+</div>
 <div class="section" id="typing">
-<h2>Typing<a class="headerlink" href="#typing" title="Permalink to this headline">¶</a></h2>
+<h3>Typing<a class="headerlink" href="#typing" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="inference">
+<h4>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h4>
 <p>When a value is type annotated, it is checked to be of this type. If no
 type annotation is provided, the kind of the value is looked among
 the ones possible in the value declaration context. If there is an
 ambiguity, is chosen the first fitting in the order of declaration
 in <a class="reference external" href="https://github.com/SRI-CSL/radler/blob/master/radler/radlr/language.py">language.py</a>.</p>
+</div>
+<div class="section" id="checking">
+<h4>Checking<a class="headerlink" href="#checking" title="Permalink to this headline">¶</a></h4>
 <p>User values are checked to be correct with their type with the
 function <code class="docutils literal"><span class="pre">check_type</span></code> found in
 <a class="reference external" href="https://github.com/SRI-CSL/radler/blob/master/radler/radlr/language.py">language.py</a>.</p>
+</div>
+<div class="section" id="subtyping">
+<h4>Subtyping<a class="headerlink" href="#subtyping" title="Permalink to this headline">¶</a></h4>
 <p>Subtyping allows for example to use a 16bits integer (<code class="docutils literal"><span class="pre">int16</span></code>)
 where a 32bits integer is required (<code class="docutils literal"><span class="pre">int32</span></code>). For now, subtyping is
 only done on <code class="docutils literal"><span class="pre">sized_types</span></code> by allowing a type to be used in a
@@ -361,13 +398,19 @@ are checked to fit the type&#8217;s size with the function
 <code class="docutils literal"><span class="pre">check_type_size</span></code>.</p>
 </div>
 </div>
+</div>
 <div class="section" id="user-code">
-<h1>User code<a class="headerlink" href="#user-code" title="Permalink to this headline">¶</a></h1>
+<h2>User code<a class="headerlink" href="#user-code" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="compilation">
-<h2>Compilation<a class="headerlink" href="#compilation" title="Permalink to this headline">¶</a></h2>
+<h3>Compilation<a class="headerlink" href="#compilation" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="include-directories">
+<h4>Include directories<a class="headerlink" href="#include-directories" title="Permalink to this headline">¶</a></h4>
 <p>The generated code is setup so that user code is compiled with the
 necessary include folders, meaning specified libraries header folders
 and the working directory of the file references.</p>
+</div>
+<div class="section" id="compiler-definitions">
+<h4>Compiler definitions<a class="headerlink" href="#compiler-definitions" title="Permalink to this headline">¶</a></h4>
 <p>The user code is compiled with the following definitions:</p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">IN_RADL_GENERATED_CONTEXT</span></code> : the basic definition to detect if the code is compiled within RADL compilation chain.</li>
@@ -382,8 +425,9 @@ and the working directory of the file references.</p>
 <li><code class="docutils literal"><span class="pre">RADL_FINISH_FUN</span></code> : the default name to be used for the C finish function (if not specified in the radl file).</li>
 </ul>
 </div>
+</div>
 <div class="section" id="c-node-definition">
-<h2>C++ node definition<a class="headerlink" href="#c-node-definition" title="Permalink to this headline">¶</a></h2>
+<h3>C++ node definition<a class="headerlink" href="#c-node-definition" title="Permalink to this headline">¶</a></h3>
 <p>Every node is a mealy machine. The user provide a class which will be
 instantiated with the default constructor to generate an instance
 representing the state of the machine. Then, the <code class="docutils literal"><span class="pre">step</span></code> method of this
@@ -394,20 +438,29 @@ signature of the <code class="docutils literal"><span class="pre">step</span></c
 </div>
 <p>The four argument types are structures defined in the generated header
 file.</p>
+<div class="section" id="the-input-structure-radl-in-t">
+<h4>The input structure <code class="docutils literal"><span class="pre">radl_in_t</span></code><a class="headerlink" href="#the-input-structure-radl-in-t" title="Permalink to this headline">¶</a></h4>
 <p>This structure has one field per subscription of the node. The field
 name is the radl name of the subscription. Each field is in turn a
 structure reflecting the topic of the subscription, whose fields are
 the name of the radl topic <code class="docutils literal"><span class="pre">FIELDS</span></code>.</p>
+</div>
+<div class="section" id="the-output-structure-radl-out-t">
+<h4>The output structure <code class="docutils literal"><span class="pre">radl_out_t</span></code><a class="headerlink" href="#the-output-structure-radl-out-t" title="Permalink to this headline">¶</a></h4>
 <p>It is similar to the input structure except that is is used by the
 step function to publish its publications. To this effect, the step
 function has to fill the output structure.</p>
+</div>
+<div class="section" id="the-flag-structures-radl-in-flags-t-radl-out-flags-t">
+<h4>The flag structures <code class="docutils literal"><span class="pre">radl_in_flags_t</span></code>, <code class="docutils literal"><span class="pre">radl_out_flags_t</span></code><a class="headerlink" href="#the-flag-structures-radl-in-flags-t-radl-out-flags-t" title="Permalink to this headline">¶</a></h4>
 <p>Similarly to the input and output structures, these have a field for
 each subscription (resp. publication). The type of each field is a
 <code class="docutils literal"><span class="pre">radl_flags_t</span></code> as described in
 <a class="reference external" href="https://github.com/SRI-CSL/radler/blob/master/radl_lib/include/radl_flags.h">radl_flags.h</a>.</p>
 </div>
-<div class="section" id="id1">
-<h2>C node definition<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id3">
+<h3>C node definition<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>Idem as the C++, except that instead of a class, the user needs to
 provide 4 things. To describe them, we use the default names provided by
 radl, but those may be decided in the radl file.</p>
@@ -421,7 +474,9 @@ radl, but those may be decided in the radl file.</p>
 </ul>
 </div>
 <div class="section" id="the-flags">
-<h2>The flags<a class="headerlink" href="#the-flags" title="Permalink to this headline">¶</a></h2>
+<h3>The flags<a class="headerlink" href="#the-flags" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="computation-of-the-output-flags">
+<h4>Computation of the output flags<a class="headerlink" href="#computation-of-the-output-flags" title="Permalink to this headline">¶</a></h4>
 <p>The main idea of flags is to have some boolean metadata attached to
 messages, which by default propagate through nodes. To this effect,
 the default value of the output flags of each publication of a node
@@ -439,6 +494,9 @@ while the pre set output flags are provided to the step function to
 give it a chance to turn on or off the desired flags. So, if the step
 function doesn&#8217;t change the output flags, they will propagate the
 input flags.</p>
+</div>
+<div class="section" id="computation-of-the-input-flag-radl-stale">
+<h4>Computation of the input flag <code class="docutils literal"><span class="pre">radl_STALE</span></code><a class="headerlink" href="#computation-of-the-input-flag-radl-stale" title="Permalink to this headline">¶</a></h4>
 <p>The so called stale flag has the broad meaning that its associated
 value isn&#8217;t &#8220;fresh&#8221;. More precisely, it either means that the
 publisher of the value flagged it as stale (by automatic propagation
@@ -447,6 +505,9 @@ the step function. In the latter case, the step function gets the
 same input value (the mailbox hasn&#8217;t changed) but it is flagged as
 stale. To check if a subscription <code class="docutils literal"><span class="pre">s</span></code> is stale, one simply calls
 <code class="docutils literal"><span class="pre">radl_is_stale(in_flags-&gt;s)</span></code> which returns a boolean.</p>
+</div>
+<div class="section" id="computation-of-the-input-flag-radl-timeout">
+<h4>Computation of the input flag <code class="docutils literal"><span class="pre">radl_TIMEOUT</span></code><a class="headerlink" href="#computation-of-the-input-flag-radl-timeout" title="Permalink to this headline">¶</a></h4>
 <p>The so called timeout flag has the broad meaning that its associated
 value has violated the timing constraints. More precisely, it either
 means that the publisher of the value flagged it as timeout (by
@@ -455,6 +516,9 @@ message since period of the publisher plus the maxlatency. In the
 latter case, timing constraints are exceeded and something unexpected
 is happening. To check if a subscription <code class="docutils literal"><span class="pre">s</span></code> is timeout, one simply
 calls <code class="docutils literal"><span class="pre">radl_is_timeout(in_flags-&gt;s)</span></code> which returns a boolean.</p>
+</div>
+<div class="section" id="turning-off-on-output-flags">
+<h4>Turning off/on output flags<a class="headerlink" href="#turning-off-on-output-flags" title="Permalink to this headline">¶</a></h4>
 <p>The function <code class="docutils literal"><span class="pre">radl_turn_on</span></code> is used to turn on a flag. For example
 to turn on the stale flag of the publication <code class="docutils literal"><span class="pre">p</span></code>, we would do:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">radl_turn_on</span><span class="p">(</span><span class="n">rald_STALE</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">out_flags</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">);</span>
@@ -463,27 +527,42 @@ to turn on the stale flag of the publication <code class="docutils literal"><spa
 <p>To turn off flags, the similar function <code class="docutils literal"><span class="pre">rald_turn_off</span></code> should be
 used.</p>
 </div>
+</div>
 <div class="section" id="introspection">
-<h2>Introspection<a class="headerlink" href="#introspection" title="Permalink to this headline">¶</a></h2>
+<h3>Introspection<a class="headerlink" href="#introspection" title="Permalink to this headline">¶</a></h3>
 <p>To allow more robust and generic user code, it is possible to access
 values defined in the radl description.</p>
+<div class="section" id="modules-root-entries">
+<h4>Modules root entries<a class="headerlink" href="#modules-root-entries" title="Permalink to this headline">¶</a></h4>
 <p>The generic way of doing so is to use the generated module root ast
 access functions. For example if we want to read the radl value of
 qname <code class="docutils literal"><span class="pre">module1.x</span></code>, one will first call the <code class="docutils literal"><span class="pre">radlast_module1</span></code>
 function to get to the module root entry.</p>
+</div>
+<div class="section" id="shortcuts">
+<h4>Shortcuts<a class="headerlink" href="#shortcuts" title="Permalink to this headline">¶</a></h4>
 <p>Instead of needing to know the current module name and call the
 corresponding root ast access function, one can use the provided
 macro <code class="docutils literal"><span class="pre">RADL_MODULE</span></code>. When writing a step function, one can directly
 access the node it is used in by using the <code class="docutils literal"><span class="pre">RADL_THIS</span></code> macro.</p>
+</div>
+<div class="section" id="field-access">
+<h4>Field access<a class="headerlink" href="#field-access" title="Permalink to this headline">¶</a></h4>
 <p>The generic rule is that fields of values are the names of the
 declared value inside this value. This name is in turn</p>
 <ul class="simple">
 <li>a pointer to the value (the generic case)</li>
 <li>the value itself (for a <code class="docutils literal"><span class="pre">topic</span></code>, a <code class="docutils literal"><span class="pre">struct</span></code> or inside them).</li>
 </ul>
+</div>
+<div class="section" id="the-defs-field">
+<h4>The <code class="docutils literal"><span class="pre">DEFS</span></code> field<a class="headerlink" href="#the-defs-field" title="Permalink to this headline">¶</a></h4>
 <p>To allow the user to define values which are not radl relevant, but
 that should be statically defined and shared, we added the <code class="docutils literal"><span class="pre">DEFS</span></code>
 field in the <code class="docutils literal"><span class="pre">node</span></code> and <code class="docutils literal"><span class="pre">topic</span></code> classes.</p>
+</div>
+<div class="section" id="id4">
+<h4>Example<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
 <p>Let us consider we have the following radl description.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">----</span> <span class="n">file</span><span class="p">:</span> <span class="n">introspec</span><span class="o">.</span><span class="n">radl</span> <span class="o">----</span>
 <span class="n">x</span> <span class="p">:</span> <span class="n">int32</span> <span class="mi">1</span>
@@ -535,25 +614,34 @@ writing the step function of <code class="docutils literal"><span class="pre">n<
 </div>
 </div>
 </div>
+</div>
+</div>
+<div class="section" id="radler-usage">
+<h1><cite>radler</cite> usage<a class="headerlink" href="#radler-usage" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="commands">
-<h1>Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h1>
+<h2>Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="radler-sh">
-<h2>radler.sh<a class="headerlink" href="#radler-sh" title="Permalink to this headline">¶</a></h2>
+<h3>radler.sh<a class="headerlink" href="#radler-sh" title="Permalink to this headline">¶</a></h3>
 <p>radler.sh is a simple bash script used to run the actual python radler
 script radler/main.py</p>
 </div>
 <div class="section" id="the-radler-script">
-<h2>The radler script<a class="headerlink" href="#the-radler-script" title="Permalink to this headline">¶</a></h2>
+<h3>The radler script<a class="headerlink" href="#the-radler-script" title="Permalink to this headline">¶</a></h3>
 <p>The script may be used to do handle object files with the subcommands
 <code class="docutils literal"><span class="pre">obj_version</span></code> and <code class="docutils literal"><span class="pre">obj_compatible</span></code> or to compile a radl description
 with the <code class="docutils literal"><span class="pre">compile</span></code> subcommand. The script has two levels of arguments.
 The arguments before the subcommand and the one after, specific to the
 subcommand.</p>
+<div class="section" id="generic-arguments">
+<h4>Generic arguments<a class="headerlink" href="#generic-arguments" title="Permalink to this headline">¶</a></h4>
 <p>The full list of arguments is provided by the <code class="docutils literal"><span class="pre">--help</span></code> argument.</p>
 <p><code class="docutils literal"><span class="pre">--ws_dir</span></code></p>
 <p>This is used to specify where is the workspace directory. The
 workspace directory is where the files are generated. This is by
 default equal to <code class="docutils literal"><span class="pre">src</span></code>.</p>
+</div>
+<div class="section" id="compile-subcommand">
+<h4>Compile subcommand<a class="headerlink" href="#compile-subcommand" title="Permalink to this headline">¶</a></h4>
 <p>The full list of arguments for the <code class="docutils literal"><span class="pre">compile</span></code> subcommand is available
 as the <code class="docutils literal"><span class="pre">--help</span></code> argument to the subcommand
 (<code class="docutils literal"><span class="pre">radler.sh</span> <span class="pre">compile</span> <span class="pre">--help</span></code>).</p>
@@ -569,20 +657,22 @@ written at the root of the workspace directory. This command allows
 to change the name and directory of the generated object file.</p>
 </div>
 </div>
+</div>
+</div>
 <div class="section" id="examples">
 <h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
-<p>Each directory contains:</p>
+<p>The following examples demonstrate the features of <cite>radler</cite>.</p>
 <ul class="simple">
 <li>pubsub: how to write pub/sub on single/multi machine</li>
-<li>house_thermo: Toy example of a distributed house heating system modeling</li>
+<li>house_thermo: toy example of a distributed house heating system modeling</li>
 <li>controller_gateway: how to write a gateway to forward back and forth messages between the radler world and a local sandboxed ROS</li>
 <li>drone: AR.Drone demos using ardronelib sdk and ardrone_autonomy ROS driver</li>
 <li>raspberrypi: Raspberry Pi 2/B+ demo using GPIO</li>
 <li>android: Android demos via ROS-enabled Android application and Android NDK</li>
 </ul>
-<div class="section" id="pub-sub">
-<h2>Pub/Sub<a class="headerlink" href="#pub-sub" title="Permalink to this headline">¶</a></h2>
-<p>This simple examples demonstrate how to write pub/sub on single/multi machine.</p>
+<div class="section" id="pubsub">
+<h2>Pubsub<a class="headerlink" href="#pubsub" title="Permalink to this headline">¶</a></h2>
+<p>This simple examples demonstrate how to write pubsub on single/multi machine.</p>
 <p>To generate the files from the radl description, do:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">catkin_ws</span><span class="o">/</span><span class="n">src</span>
 <span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">radler</span>
@@ -621,7 +711,8 @@ to change the name and directory of the generated object file.</p>
 </div>
 <div class="section" id="house-thermo">
 <h2>House_thermo<a class="headerlink" href="#house-thermo" title="Permalink to this headline">¶</a></h2>
-<p>This example ....</p>
+<p>Toy example modeling a distributed house heating system.
+It is using the same radler features as the <cite>pubsub</cite> example.</p>
 </div>
 <div class="section" id="controller-gateway">
 <h2>Controller_Gateway<a class="headerlink" href="#controller-gateway" title="Permalink to this headline">¶</a></h2>
@@ -650,9 +741,8 @@ to change the name and directory of the generated object file.</p>
 </pre></div>
 </div>
 </div>
-</div>
 <div class="section" id="demos-using-ar-drone-on-ros">
-<h1>Demos using AR.Drone on ROS<a class="headerlink" href="#demos-using-ar-drone-on-ros" title="Permalink to this headline">¶</a></h1>
+<h2>Demos using AR.Drone on ROS<a class="headerlink" href="#demos-using-ar-drone-on-ros" title="Permalink to this headline">¶</a></h2>
 <div class="line-block">
 <div class="line">Demos are available for two types of AR.Drone drivers: Demo #1 with <strong>ardronelib</strong>
 (AR.Drone sdk) and Demo #2 with <strong>ardrone_autonomy</strong> (ROS driver).</div>
@@ -681,7 +771,7 @@ The <strong>landing</strong> node provides altitude-based landing, e.g., landing
 <a class="reference external" href="http://gauth.fr/2011/09/control-the-ar-drone-leds/">http://gauth.fr/2011/09/control-the-ar-drone-leds/</a></li>
 </ul>
 <div class="section" id="demo-1-with-sridrone-ardronelib">
-<h2>Demo #1 with sridrone_ardronelib<a class="headerlink" href="#demo-1-with-sridrone-ardronelib" title="Permalink to this headline">¶</a></h2>
+<h3>Demo #1 with sridrone_ardronelib<a class="headerlink" href="#demo-1-with-sridrone-ardronelib" title="Permalink to this headline">¶</a></h3>
 <p>Compile up-to-date ardronelib sdk.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">submodule</span> <span class="n">update</span> <span class="o">--</span><span class="n">init</span> <span class="o">--</span><span class="n">recursive</span>
 <span class="n">cd</span> <span class="n">examples</span><span class="o">/</span><span class="n">drone</span><span class="o">/</span><span class="n">sridrone_ardronelib</span><span class="o">/</span><span class="n">ardronelib</span>
@@ -717,7 +807,7 @@ your drone&#8217;s IP if needed.</p>
 </div>
 </div>
 <div class="section" id="demo-2-with-sridrone-ardrone-autonomy">
-<h2>Demo #2 with sridrone_ardrone_autonomy<a class="headerlink" href="#demo-2-with-sridrone-ardrone-autonomy" title="Permalink to this headline">¶</a></h2>
+<h3>Demo #2 with sridrone_ardrone_autonomy<a class="headerlink" href="#demo-2-with-sridrone-ardrone-autonomy" title="Permalink to this headline">¶</a></h3>
 <p>Download and install ROS ardrone_driver from
 <a class="reference external" href="https://github.com/AutonomyLab/ardrone_autonomy.git">https://github.com/AutonomyLab/ardrone_autonomy.git</a>.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">ros</span><span class="o">-</span><span class="n">indigo</span><span class="o">-</span><span class="n">ardrone</span><span class="o">-</span><span class="n">autonomy</span>
@@ -763,7 +853,7 @@ the default IP address.</p>
 </div>
 </div>
 <div class="section" id="demos-using-raspberry-pi-2-b">
-<h1>Demos using Raspberry Pi 2/B+<a class="headerlink" href="#demos-using-raspberry-pi-2-b" title="Permalink to this headline">¶</a></h1>
+<h2>Demos using Raspberry Pi 2/B+<a class="headerlink" href="#demos-using-raspberry-pi-2-b" title="Permalink to this headline">¶</a></h2>
 <div class="line-block">
 <div class="line">The demo consists of two nodes <strong>led</strong>, and
 <strong>button</strong>, and one topic <strong>button_status</strong>. The <strong>button</strong> node publishes <strong>button_status</strong> and
@@ -782,7 +872,7 @@ subscribes it to turn the led light when the button is pressed.</div>
 <a class="reference external" href="http://www.extellisys.com/articles/python-on-debian-wheezy">http://www.extellisys.com/articles/python-on-debian-wheezy</a></li>
 </ul>
 <div class="section" id="preparing-your-raspberry-pi">
-<h2>Preparing your Raspberry Pi<a class="headerlink" href="#preparing-your-raspberry-pi" title="Permalink to this headline">¶</a></h2>
+<h3>Preparing your Raspberry Pi<a class="headerlink" href="#preparing-your-raspberry-pi" title="Permalink to this headline">¶</a></h3>
 <p>On your host Linux machine, insert the microSD card that comes with Raspberry Pi to extract its disk image.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">lsblk</span>
 <span class="n">sudo</span> <span class="n">dd</span> <span class="n">bs</span><span class="o">=</span><span class="mi">4</span><span class="n">M</span> <span class="k">if</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdb</span> <span class="o">|</span> <span class="n">gzip</span> <span class="o">&gt;</span> <span class="n">raspbian</span><span class="o">.</span><span class="n">img</span><span class="o">.</span><span class="n">gz</span>
@@ -799,12 +889,12 @@ subscribes it to turn the led light when the button is pressed.</div>
 </div>
 </div>
 <div class="section" id="preparing-led-and-button">
-<h2>Preparing LED and Button<a class="headerlink" href="#preparing-led-and-button" title="Permalink to this headline">¶</a></h2>
+<h3>Preparing LED and Button<a class="headerlink" href="#preparing-led-and-button" title="Permalink to this headline">¶</a></h3>
 <p>Understand GPIO on Raspberry Pi. We use GPIO 4 and 17 for the LED output and for the Button input, respectively.</p>
 <p>We use GPIOClass from <a class="reference external" href="http://www.hertaville.com/introduction-to-accessing-the-raspberry-pis-gpio-in-c.html">http://www.hertaville.com/introduction-to-accessing-the-raspberry-pis-gpio-in-c.html</a>.</p>
 </div>
 <div class="section" id="installing-radler-on-raspberry-pi">
-<h2>Installing Radler on Raspberry Pi<a class="headerlink" href="#installing-radler-on-raspberry-pi" title="Permalink to this headline">¶</a></h2>
+<h3>Installing Radler on Raspberry Pi<a class="headerlink" href="#installing-radler-on-raspberry-pi" title="Permalink to this headline">¶</a></h3>
 <p>Install Python 3.4 on the Raspberry Pi.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>sudo apt-get install libncurses5-dev libncursesw5-dev libreadline6-dev
 tar -zxf /path/to/your/Python-3.4.3.tgz
@@ -859,7 +949,7 @@ export PATH=$PATH:/usr/local/opt/python-3.4.3/bin
 </div>
 </div>
 <div class="section" id="demos-using-android">
-<h1>Demos using Android<a class="headerlink" href="#demos-using-android" title="Permalink to this headline">¶</a></h1>
+<h2>Demos using Android<a class="headerlink" href="#demos-using-android" title="Permalink to this headline">¶</a></h2>
 <p>Demo #1 implements sensing (of GPS, compass, touch screen) and controlloing (of speaker volume) of Android device via ROS-enabled Android application using gradle-android studio environment.
 This demo is sensing GPS, compass, and touch screen coordinate from Android device, and publishing those under android_gps, android_compass, and android_touch topics, respectively.
 The radler nodes (named as gps, compass, and touch on the workstation side) are subscribing corresponding topics and publishing them in the radler world.
@@ -877,7 +967,7 @@ The controller rader node subscribes topics from gps, compass, and touch radler 
 <a class="reference external" href="https://developer.android.com/ndk">https://developer.android.com/ndk</a></li>
 </ul>
 <div class="section" id="demo-1-sensing-and-controlloing-of-android-device-via-ros-enabled-android-application-using-gradle-android-studio-environment">
-<h2>Demo #1 Sensing and controlloing of Android device via ROS-enabled Android application using gradle-android studio environment<a class="headerlink" href="#demo-1-sensing-and-controlloing-of-android-device-via-ros-enabled-android-application-using-gradle-android-studio-environment" title="Permalink to this headline">¶</a></h2>
+<h3>Demo #1 Sensing and controlloing of Android device via ROS-enabled Android application using gradle-android studio environment<a class="headerlink" href="#demo-1-sensing-and-controlloing-of-android-device-via-ros-enabled-android-application-using-gradle-android-studio-environment" title="Permalink to this headline">¶</a></h3>
 <p>Our example included in android_core directory is based on the tutorial example (android_tutorial_pubsub) from
 <a class="reference external" href="https://github.com/rosjava/android_core">https://github.com/rosjava/android_core</a>.</p>
 <p>Install Android studio, and import android_core project to compile/generate/install signed apk file via Android studio (recommended).</p>
@@ -925,7 +1015,7 @@ The controller rader node subscribes topics from gps, compass, and touch radler 
 You can now observe your compass and GPS coordinates on the top of the screen. When you touch the screen, the ringtone sound will be played with volume that is proportional to the ratio of current x-coordinate and screen width.</p>
 </div>
 <div class="section" id="demo-2-touchscreen-event-detector-using-android-ndk">
-<h2>Demo #2 Touchscreen event detector using Android NDK<a class="headerlink" href="#demo-2-touchscreen-event-detector-using-android-ndk" title="Permalink to this headline">¶</a></h2>
+<h3>Demo #2 Touchscreen event detector using Android NDK<a class="headerlink" href="#demo-2-touchscreen-event-detector-using-android-ndk" title="Permalink to this headline">¶</a></h3>
 <p>Prepare build environment to build native ROS nodes using the Android NDK as described in <a class="reference external" href="http://wiki.ros.org/android_ndk/Tutorials/BuildingNativeROSPackages">http://wiki.ros.org/android_ndk/Tutorials/BuildingNativeROSPackages</a>. <em>do_docker.sh</em> takes some time to complete.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">ekumenlabs</span><span class="o">/</span><span class="n">roscpp_android</span><span class="o">.</span><span class="n">git</span>
 <span class="n">cd</span> <span class="n">roscpp_android</span>
@@ -979,6 +1069,7 @@ The <em>android_ip</em> is your Android device&#8217;s IP (<em>192.168.42.129</e
 <p>Now you will see <strong>O</strong> on both windows (i.e., Android Terminal Emulator and ADB shell) when you touch your Android&#8217;s screen. Otherwise <strong>X</strong> will be displayed.</p>
 </div>
 </div>
+</div>
 
 
           </div>
@@ -988,7 +1079,7 @@ The <em>android_ip</em> is your Android device&#8217;s IP (<em>192.168.42.129</e
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Welcome to Radler&#8217;s documentation!</a></li>
+<li><a class="reference internal" href="#">Introduction</a><ul>
 <li><a class="reference internal" href="#getting-started">Getting Started</a><ul>
 <li><a class="reference internal" href="#to-install">To install</a></li>
 <li><a class="reference internal" href="#to-compile-and-run">To compile and run</a><ul>
@@ -998,6 +1089,9 @@ The <em>android_ip</em> is your Android device&#8217;s IP (<em>192.168.42.129</e
 </li>
 </ul>
 </li>
+</ul>
+</li>
+<li><a class="reference internal" href="#radler-language-specification"><cite>radler</cite> language specification</a><ul>
 <li><a class="reference internal" href="#file-constraints">File constraints</a></li>
 <li><a class="reference internal" href="#meta-syntax-rules">Meta syntax rules</a><ul>
 <li><a class="reference internal" href="#grammar">Grammar</a></li>
@@ -1011,36 +1105,89 @@ The <em>android_ip</em> is your Android device&#8217;s IP (<em>192.168.42.129</e
 <li><a class="reference internal" href="#scoping-regions">Scoping regions</a></li>
 <li><a class="reference internal" href="#local-unicity-of-names">Local unicity of names</a></li>
 <li><a class="reference internal" href="#global-unicity-of-qualified-names">Global unicity of qualified names</a></li>
-<li><a class="reference internal" href="#resolution-of-identifiers-to-qualified-names">Resolution of identifiers to qualified names</a></li>
-<li><a class="reference internal" href="#shadowing">Shadowing</a></li>
+<li><a class="reference internal" href="#resolution-of-identifiers-to-qualified-names">Resolution of identifiers to qualified names</a><ul>
+<li><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#shadowing">Shadowing</a><ul>
+<li><a class="reference internal" href="#id1">Example</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#the-radler-language">The radler language</a><ul>
-<li><a class="reference internal" href="#logical-level">Logical level</a></li>
-<li><a class="reference internal" href="#external-files-and-path">External files and <code class="docutils literal"><span class="pre">PATH</span></code></a></li>
-<li><a class="reference internal" href="#libraries">Libraries</a></li>
-<li><a class="reference internal" href="#typing">Typing</a></li>
+<li><a class="reference internal" href="#logical-level">Logical level</a><ul>
+<li><a class="reference internal" href="#nodes">Nodes</a></li>
+<li><a class="reference internal" href="#topics">Topics</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#external-files-and-path">External files and <code class="docutils literal"><span class="pre">PATH</span></code></a><ul>
+<li><a class="reference internal" href="#file-reference">File reference</a></li>
+<li><a class="reference internal" href="#working-directory-of-a-region-path-and-module-base-path">Working directory of a region, <code class="docutils literal"><span class="pre">PATH</span></code> and <code class="docutils literal"><span class="pre">MODULE_BASE_PATH</span></code></a></li>
+<li><a class="reference internal" href="#id2">Example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#libraries">Libraries</a><ul>
+<li><a class="reference internal" href="#static-library">Static library</a></li>
+<li><a class="reference internal" href="#cmake-library">Cmake library</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#typing">Typing</a><ul>
+<li><a class="reference internal" href="#inference">Inference</a></li>
+<li><a class="reference internal" href="#checking">Checking</a></li>
+<li><a class="reference internal" href="#subtyping">Subtyping</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#user-code">User code</a><ul>
-<li><a class="reference internal" href="#compilation">Compilation</a></li>
-<li><a class="reference internal" href="#c-node-definition">C++ node definition</a></li>
-<li><a class="reference internal" href="#id1">C node definition</a></li>
-<li><a class="reference internal" href="#the-flags">The flags</a></li>
-<li><a class="reference internal" href="#introspection">Introspection</a></li>
+<li><a class="reference internal" href="#compilation">Compilation</a><ul>
+<li><a class="reference internal" href="#include-directories">Include directories</a></li>
+<li><a class="reference internal" href="#compiler-definitions">Compiler definitions</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#c-node-definition">C++ node definition</a><ul>
+<li><a class="reference internal" href="#the-input-structure-radl-in-t">The input structure <code class="docutils literal"><span class="pre">radl_in_t</span></code></a></li>
+<li><a class="reference internal" href="#the-output-structure-radl-out-t">The output structure <code class="docutils literal"><span class="pre">radl_out_t</span></code></a></li>
+<li><a class="reference internal" href="#the-flag-structures-radl-in-flags-t-radl-out-flags-t">The flag structures <code class="docutils literal"><span class="pre">radl_in_flags_t</span></code>, <code class="docutils literal"><span class="pre">radl_out_flags_t</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id3">C node definition</a></li>
+<li><a class="reference internal" href="#the-flags">The flags</a><ul>
+<li><a class="reference internal" href="#computation-of-the-output-flags">Computation of the output flags</a></li>
+<li><a class="reference internal" href="#computation-of-the-input-flag-radl-stale">Computation of the input flag <code class="docutils literal"><span class="pre">radl_STALE</span></code></a></li>
+<li><a class="reference internal" href="#computation-of-the-input-flag-radl-timeout">Computation of the input flag <code class="docutils literal"><span class="pre">radl_TIMEOUT</span></code></a></li>
+<li><a class="reference internal" href="#turning-off-on-output-flags">Turning off/on output flags</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#introspection">Introspection</a><ul>
+<li><a class="reference internal" href="#modules-root-entries">Modules root entries</a></li>
+<li><a class="reference internal" href="#shortcuts">Shortcuts</a></li>
+<li><a class="reference internal" href="#field-access">Field access</a></li>
+<li><a class="reference internal" href="#the-defs-field">The <code class="docutils literal"><span class="pre">DEFS</span></code> field</a></li>
+<li><a class="reference internal" href="#id4">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#radler-usage"><cite>radler</cite> usage</a><ul>
 <li><a class="reference internal" href="#commands">Commands</a><ul>
 <li><a class="reference internal" href="#radler-sh">radler.sh</a></li>
-<li><a class="reference internal" href="#the-radler-script">The radler script</a></li>
+<li><a class="reference internal" href="#the-radler-script">The radler script</a><ul>
+<li><a class="reference internal" href="#generic-arguments">Generic arguments</a></li>
+<li><a class="reference internal" href="#compile-subcommand">Compile subcommand</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#examples">Examples</a><ul>
-<li><a class="reference internal" href="#pub-sub">Pub/Sub</a></li>
+<li><a class="reference internal" href="#pubsub">Pubsub</a></li>
 <li><a class="reference internal" href="#house-thermo">House_thermo</a></li>
 <li><a class="reference internal" href="#controller-gateway">Controller_Gateway</a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#demos-using-ar-drone-on-ros">Demos using AR.Drone on ROS</a><ul>
 <li><a class="reference internal" href="#demo-1-with-sridrone-ardronelib">Demo #1 with sridrone_ardronelib</a></li>
 <li><a class="reference internal" href="#demo-2-with-sridrone-ardrone-autonomy">Demo #2 with sridrone_ardrone_autonomy</a></li>
@@ -1058,11 +1205,13 @@ The <em>android_ip</em> is your Android device&#8217;s IP (<em>192.168.42.129</e
 </ul>
 </li>
 </ul>
+</li>
+</ul>
 
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="_sources/index.rst.txt"
+      <li><a href="_sources/index.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
@@ -1091,7 +1240,7 @@ The <em>android_ip</em> is your Android device&#8217;s IP (<em>192.168.42.129</e
     </div>
     <div class="footer" role="contentinfo">
         &#169; Copyright 2016, SRI International.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.5.2.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.4.8.
     </div>
   </body>
 </html>

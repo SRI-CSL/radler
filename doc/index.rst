@@ -1,14 +1,24 @@
 .. radler documentation master file
 
-Welcome to Radler's documentation!
-=====================================
 
 .. toctree::
 ..   :maxdepth: 3
 
+Introduction 
+++++++++++++ 
 .. include:: ../README.rst 
+
+`radler` language specification 
++++++++++++++++++++++++++++++++
 .. include:: radler_language.rst		
+
+`radler` usage 
+++++++++++++++
 .. include:: commands.rst			
+
+Examples 
+++++++++
+
 .. include:: ../examples/README.rst		
 .. include:: ../examples/pubsub/README.rst	
 .. include:: ../examples/house_thermo/README.rst			

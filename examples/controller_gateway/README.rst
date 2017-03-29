@@ -1,5 +1,5 @@
 Controller_Gateway   
-------------------
+==================
 
 This example demonstrates how to write a gateway to forward back and forth messages between the radler world and a local sandboxed ROS.
 

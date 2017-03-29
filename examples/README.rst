@@ -1,11 +1,8 @@
-Examples  
-========
-
-Each directory contains: 
+The following examples demonstrate the features of `radler`.
 
 - pubsub: how to write pub/sub on single/multi machine 
 
-- house_thermo: Toy example of a distributed house heating system modeling
+- house_thermo: toy example of a distributed house heating system modeling
 
 - controller_gateway: how to write a gateway to forward back and forth messages between the radler world and a local sandboxed ROS
 

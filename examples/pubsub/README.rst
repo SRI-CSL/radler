@@ -1,7 +1,7 @@
-Pub/Sub  
--------
+Pubsub  
+=======
 
-This simple examples demonstrate how to write pub/sub on single/multi machine. 
+This simple examples demonstrate how to write pubsub on single/multi machine. 
 
 To generate the files from the radl description, do:
 

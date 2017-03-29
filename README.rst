@@ -36,16 +36,17 @@ To compile and run
 ----------------------------
 
 Compile
-^^^^^^^^
+~~~~~~~~
 Radler generates files from the RADL file into a usual ROS catkin structure, then a call to `catkin_make` will generate the executables as usual.
 (e.g. for `examples/pubsub/pubsub.radl`)::
+
 	mkdir -p /tmp/catkin_ws/src
 	./radler.sh --ws_dir /tmp/catkin_ws/src compile examples/pubsub/single_machine/pubsub.radl --plant plant --ROS
 	cd /tmp/catkin_ws
 	catkin_make
 
 Run
-^^^^
+~~~~
 
 Since `pubsub` defines a plant, radler has generated a launch file to run the requested nodes.
 Simplest way of running it is to source the catkin workspace we just compiled and use `roslaunch`::
