@@ -3,7 +3,7 @@ Pubsub
 
 This simple examples demonstrate how to write pubsub on single/multi machine. 
 
-To generate the files from the radl description, do:
+To generate the files from the .radl description, do:
 
 ::
 
@@ -27,7 +27,7 @@ For multi\_machine testing, use a different .radl file in multi_machine director
 
    ./radler.sh --ws_dir=/tmp/catkin_ws/src compile examples/pubsub/multi_machine/pubsub.radl --plant plant --ROS
 
-For running on multi\_machine setup, copy executables to the corresponding machines. Refer plant section of .radl file for the IPs as below.
+For running on multi\_machine setup, copy executables to the corresponding machines. Refer to plant section of .radl file for the IPs as below.
 
 :: 
 

@@ -6,11 +6,11 @@ Demos using AR.Drone on ROS
 | Both demos consists of at least three nodes **sridrone**, **led**, and
   **camera**, and three topics **navdata**, **led\_anim**, and
   **camera\_param**. The **sridrone** node publishes **navdata** and
-  subscribes **led\_anim** and **camera\_param** to generate signals
+  subscribes to **led\_anim** and **camera\_param** to generate signals
   that control LED animation and video input. The **led** node
-  subscribes **navdata** and publishes **led\_anim** to indicate
+  subscribes to **navdata** and publishes **led\_anim** to indicate
   unstable roll (LEFT\_GREEN\_RIGHT\_RED or LEFT\_RED\_RIGHT\_GREEN) or
-  low battery level (BLINK\_RED). The **camera** node subscribes
+  low battery level (BLINK\_RED). The **camera** node subscribes to 
   **navdata** and publishes **camera\_param** to toggle the video feed
   between front/bottom cameras.
 | Demo \#1 additionaly supports for three other nodes: **key**, **timer**, and **landing**.  
@@ -123,7 +123,7 @@ Run the sridrone\_ardrone\_autonomy example.
     ./led
     ./camera
 
-Run ros image\_view node to check the camera feed.
+Run ros **image\_view** node to check the camera feed.
 
 ::
 

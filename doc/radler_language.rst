@@ -99,8 +99,8 @@ Resolution of identifiers to qualified names
 --------------------------------------------
 
 When resolving an identifier, the first step is the resolution of its
-``root_name``, which is match with the closest enclosing scoping region
-or in last resort to another module name. At that point, the
+``root_name``, which is matched with the closest enclosing scoping region
+or in the last resort to another module name. At that point, the
 ``root_name`` is replaced by the qualified name of its matching region
 and the identifier becomes a qualified name.
 
@@ -168,11 +168,11 @@ Example
 In this file, the resolution of ``module1.x`` will result in
 ``module3.module1.x`` since the closest enclosing region named
 ``module1`` is the one defined in ``module3``. Thus the definition of
-the struct named ``module1`` shadow the actual module ``module1``.
+the struct named ``module1`` shadows the actual module ``module1``.
 Note that in this example, since ``module3.module1.x`` isn't
-declared, the compiler will complain about it missing.
+declared, the compiler will complain that it is missing.
 
-The radler language
+Radler language
 ===================
 
 Logical level
@@ -199,11 +199,11 @@ important elements are:
 Nodes
 ~~~~~
 
-When creating a node, radler will construct one instance of the
+When creating a node, Radler will construct one instance of the
 provided C++ class (the ``CXX`` field). The step method of this
 instance will be called at a fixed frequency defined by the node's
 period (the ``PERIOD`` field). This step function needs to be proven
-to have a worst case execution time inferior to the one described
+to have a worst case execution time no greater than the one described
 here in the ``WCET`` field. At each call, the step function is
 provided with the messages received from its subscriptions and is
 required to write the messages it has to publish.
@@ -212,9 +212,9 @@ Topics
 ~~~~~~
 
 A topic (defined uniquely by its name) is a purely logical way to
-define point to point communications between one producer and
-multiple consumers. There needs to be one and only one node
-publishing to a topic while as many as needed nodes subscribing to
+define point-to-point communications between one producer and
+multiple consumers. There can be exactly one node
+publishing to a topic while  many  nodes can subscribe to
 it.
 
 External files and ``PATH``
@@ -252,7 +252,7 @@ Example
 
 Considering that path1.radl is in "/tmp/pathexample", the working
 directory inside the region ``n`` is "/tmp/pathexample/nodes/example"
-and the file refered by "n.cpp" is
+and the file referred by "n.cpp" is
 "/tmp/pathexample/nodes/example/src/n.cpp"
 
 :: 
@@ -306,9 +306,9 @@ Inference
 ~~~~~~~~~
 
 When a value is type annotated, it is checked to be of this type. If no
-type annotation is provided, the kind of the value is looked among
+type annotation is provided, the kind of the value is extracted from 
 the ones possible in the value declaration context. If there is an
-ambiguity, is chosen the first fitting in the order of declaration
+ambiguity, it chooses the first relevant one in the order of declaration
 in language.py_.
 
 Checking
@@ -339,7 +339,7 @@ Include directories
 ~~~~~~~~~~~~~~~~~~~
 
 The generated code is setup so that user code is compiled with the
-necessary include folders, meaning specified libraries header folders
+necessary include folders, i.e., the specified library header folders
 and the working directory of the file references.
 
 Compiler definitions
@@ -347,21 +347,21 @@ Compiler definitions
 
 The user code is compiled with the following definitions:
 
--  ``IN_RADL_GENERATED_CONTEXT`` : the basic definition to detect if the code is compiled within RADL compilation chain.
--  ``RADL_NODE_NAME`` : the name of the current radl node.
--  ``RADL_NODE_QNAME`` : which is set to the node qname (with dot separators, for example "``modulename.nodename``").
--  ``RADL_MODULE_NAME`` : the name of the current radl module.
--  ``RADL_MODULE`` : a pointer to the current module ast root. 
--  ``RADL_HEADER`` : the radl generated header to be included by the user code (defining input and output data types).
--  ``RADL_STATE`` : the radl default name to be used for the C state type (if not specified in the radl file).
--  ``RADL_STEP_FUN`` : the default name to be used for the C step function (if not specified in the radl file).
--  ``RADL_INIT_FUN`` : the default name to be used for the C init function (if not specified in the radl file).
--  ``RADL_FINISH_FUN`` : the default name to be used for the C finish function (if not specified in the radl file).
+-  ``IN_RADL_GENERATED_CONTEXT`` : The basic definition to detect if the code is compiled within Radler compilation chain.
+-  ``RADL_NODE_NAME`` : The name of the current radl node.
+-  ``RADL_NODE_QNAME`` : Which is set to the node qname (with dot separators, for example "``modulename.nodename``").
+-  ``RADL_MODULE_NAME`` : The name of the current radl module.
+-  ``RADL_MODULE`` : A pointer to the current module ast root. 
+-  ``RADL_HEADER`` : The radl generated header to be included by the user code (defining input and output data types).
+-  ``RADL_STATE`` : The radl default name to be used for the C state type (if not specified in the radl file).
+-  ``RADL_STEP_FUN`` : The default name to be used for the C step function (if not specified in the radl file).
+-  ``RADL_INIT_FUN`` : The default name to be used for the C init function (if not specified in the radl file).
+-  ``RADL_FINISH_FUN`` : The default name to be used for the C finish function (if not specified in the radl file).
 
 C++ node definition
 -------------------
 
-Every node is a mealy machine. The user provide a class which will be
+Each node is a Mealy machine. The user provide a class which will be
 instantiated with the default constructor to generate an instance
 representing the state of the machine. Then, the ``step`` method of this
 instance will be called to execute one step of the machine. The
@@ -402,7 +402,7 @@ each subscription (resp. publication). The type of each field is a
 C node definition
 -----------------
 
-Idem as the C++, except that instead of a class, the user needs to
+This is the same as the C++ case, except that instead of a class, the user needs to
 provide 4 things. To describe them, we use the default names provided by
 radl, but those may be decided in the radl file.
 
@@ -419,11 +419,11 @@ The flags
 Computation of the output flags
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The main idea of flags is to have some boolean metadata attached to
+The main idea of flags is to have some Boolean metadata attached to
 messages, which by default propagate through nodes. To this effect,
 the default value of the output flags of each publication of a node
 are set to the logical OR of all the flags of its subscriptions,
-equivalent to the following pseudo code:
+equivalent to the following pseudocode:
 
 :: 
 
@@ -434,7 +434,7 @@ equivalent to the following pseudo code:
        out_flags->p = v
 
 Then, the input flags are given to the step function as read-only
-while the pre set output flags are provided to the step function to
+while the preset output flags are provided to the step function to
 give it a chance to turn on or off the desired flags. So, if the step
 function doesn't change the output flags, they will propagate the
 input flags.
@@ -442,26 +442,26 @@ input flags.
 Computation of the input flag ``radl_STALE``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The so called stale flag has the broad meaning that its associated
+The so-called stale flag has the broad meaning that its associated
 value isn't "fresh". More precisely, it either means that the
 publisher of the value flagged it as stale (by automatic propagation
 or by choice) or that no new message arrived since the last call to
 the step function. In the latter case, the step function gets the
 same input value (the mailbox hasn't changed) but it is flagged as
 stale. To check if a subscription ``s`` is stale, one simply calls
-``radl_is_stale(in_flags->s)`` which returns a boolean.
+``radl_is_stale(in_flags->s)`` which returns a Boolean.
 
 Computation of the input flag ``radl_TIMEOUT``
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The so called timeout flag has the broad meaning that its associated
+The so-called timeout flag has the broad meaning that its associated
 value has violated the timing constraints. More precisely, it either
 means that the publisher of the value flagged it as timeout (by
 automatic propagation or by choice) or that we haven't received a
 message since period of the publisher plus the maxlatency. In the
 latter case, timing constraints are exceeded and something unexpected
 is happening. To check if a subscription ``s`` is timeout, one simply
-calls ``radl_is_timeout(in_flags->s)`` which returns a boolean.
+calls ``radl_is_timeout(in_flags->s)`` which returns a Boolean.
 
 Turning off/on output flags
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -517,7 +517,7 @@ field in the ``node`` and ``topic`` classes.
 Example
 ~~~~~~~
 
-Let us consider we have the following radl description.
+Consider the following radl description: 
 
 :: 
 
@@ -537,8 +537,7 @@ Let us consider we have the following radl description.
    }
    ----------------------------
 
-In the user code, if one desire to get the value of ``x`` (1), it has
-to do:
+In the user code, if one wants to get the value of ``x`` (1):
 
 :: 
 
@@ -559,7 +558,7 @@ a ``topic``, we don't need the indirection:
    RADL_MODULE->t.a
 
 Note that ``t`` is a topic so it is not a pointer, its field are
-accessed directly. Same things apply for any other value, for example
+accessed directly. This also applies to  any other value, for example
 to read "nodes/example", one will do:
 
 :: 
@@ -573,8 +572,8 @@ or, when writing the step function for ``n``:
    *(RADL_THIS->working_dir)
 
 Note that in order to access this value, we gave it a name in the
-radl description. Finally, to sum it up all, to access ``z`` when
-writing the step function of ``n``, one will do:
+radl description. Finally, to sum it up, to access ``z`` when
+writing the step function of ``n``:
 
 :: 
 

@@ -4,11 +4,11 @@ Demos using Raspberry Pi 2/B+
 | The demo consists of two nodes **led**, and
   **button**, and one topic **button\_status**. The **button** node publishes **button\_status** and
   the **led** node
-  subscribes it to turn the led light when the button is pressed. 
+  subscribes to it to turn on the led light when the button is pressed. 
 
 Some additional links:
 
--  Raspberry Pi wifi connection  
+-  Raspberry Pi WiFi connection  
    https://learn.adafruit.com/adafruits-raspberry-pi-lesson-3-network-setup/setting-up-wifi-with-raspbian
 -  RPi easy SD card setup  
    http://elinux.org/RPi_Easy_SD_Card_Setup
@@ -73,7 +73,7 @@ Install ROS Indigo on the Raspberry Pi.
 
 Follow the instructions in Step 2 at http://wiki.ros.org/ROSberryPi.
 
-We recommend to increase the swapfile size of Raspberry Pi to 800MBytes (default is 100MBytes) by editing *CONF_SWAPSIZE* in */etc/dphys-swapfile*, and restart dphys-swapfile. 
+We recommend increasing the swapfile size of Raspberry Pi to 800MBytes (default is 100MBytes) by editing *CONF_SWAPSIZE* in */etc/dphys-swapfile*, and restart dphys-swapfile. 
 
 :: 
 

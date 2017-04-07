@@ -4,14 +4,14 @@ Commands
 radler.sh
 ---------
 
-radler.sh is a simple bash script used to run the actual python radler
+radler.sh is a simple bash script used to run the actual python Radler
 script radler/main.py
 
-The radler script
+Radler script
 -----------------
 
-The script may be used to do handle object files with the subcommands
-``obj_version`` and ``obj_compatible`` or to compile a radl description
+The script may be used to  handle object files with the subcommands
+``obj_version`` and ``obj_compatible`` or to compile .radl description
 with the ``compile`` subcommand. The script has two levels of arguments.
 The arguments before the subcommand and the one after, specific to the
 subcommand.
@@ -39,12 +39,12 @@ to be a file with the '.radl' extension.
 
 ``--object_files``
 
-To compile a radl description which depends on other modules, one has
+To compile .radl description which depends on other modules, one has
 to give the object files of those modules with this argument.
 
 ``--object_dest``
 
 By default, the generated object file has the same name as its
 module, with the '.radlo' extension. Moreover it is by default
-written at the root of the workspace directory. This command allows
+written at the root of the workspace directory. This command can be used  
 to change the name and directory of the generated object file.

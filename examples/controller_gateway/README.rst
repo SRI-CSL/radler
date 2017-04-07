@@ -1,15 +1,15 @@
 Controller_Gateway   
 ==================
 
-This example demonstrates how to write a gateway to forward back and forth messages between the radler world and a local sandboxed ROS.
+This example demonstrates how to write a gateway to forward back-and-forth messages between Radler world and a local sandboxed ROS.
 
-The radler world is defined in the radl_files folder. It consists of a radl description containing three nodes. A device stub publishing an integer, an actuator stub subscribing to a float and a gateway node for an external controller node, forwarding device msgs to it and forwarding actuators msgs from it.
+Radler world is defined in the radl_files folder. It consists of .radl description containing three nodes. A device stub publishing an integer, an actuator stub subscribing to a float and a gateway node for an external controller node, forwarding device msgs to it and forwarding actuators msgs from it.
 
 To complete the example, a stub of a sandboxed ROS controller node is also provided in the sandboxed_ros_controller folder.
 
-There are basically two interesting files, the gateway.radl description of the radler system which defines the gateway node and the associated gateway.h file implementing the actual gateway.
+There are basically two interesting files, the gateway.radl description of Radler system which defines the gateway node and the associated gateway.h file implementing the actual gateway.
 
-To generate the files from the radl description, do:
+To generate the files from .radl description, do:
 
 ::
 

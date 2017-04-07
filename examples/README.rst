@@ -1,15 +1,15 @@
-The following examples demonstrate the features of `radler`.
+The following examples demonstrate the features of Radler.
 
-- pubsub: how to write pub/sub on single/multi machine 
+- Pubsub: How to write pub/sub on single/multi machine 
 
-- house_thermo: toy example of a distributed house heating system modeling
+- House_thermo: Toy example of a distributed house heating system modeling
 
-- controller_gateway: how to write a gateway to forward back and forth messages between the radler world and a local sandboxed ROS
+- Controller_gateway: How to write a gateway to forward back and forth messages between Radler world and a local sandboxed ROS
 
-- drone: AR.Drone demos using ardronelib sdk and ardrone_autonomy ROS driver
+- Drone: AR.Drone demos using ardronelib sdk and ardrone_autonomy ROS driver
 
-- raspberrypi: Raspberry Pi 2/B+ demo using GPIO 
+- Raspberrypi: Raspberry Pi 2/B+ demo using GPIO 
 
-- android: Android demos via ROS-enabled Android application and Android NDK  
+- Android: Android demos via ROS-enabled Android application and Android NDK  
 
 
