@@ -1,10 +1,10 @@
 Demos using Android  
 ===================
 
-Demo #1 implements sensing (of GPS, compass, touch screen) and controlling (of speaker volume) of Android device via ROS-enabled Android application using gradle-android studio environment. 
+Demo #1 implements sensing (of GPS, compass, touch screen) and controlling (of speaker volume) of Android device via ROS-enabled Android application using Gradle-Android studio environment. 
 This demo is sensing GPS, compass, and touch screen coordinate from Android device, and publishing those under **android\_gps**, **android\_compass**, and **android\_touch** topics, respectively. 
 Radler nodes (named as **gps**, **compass**, and **touch** on the workstation side) are subscribing to corresponding topics and publishing them in Radler world. 
-The controller Radler node subscribes to topics from gps, compass, and touch Radler nodes, and controls volume of the Android ringtone by publishing ROS topic. 
+The **controller** Radler node subscribes to topics from **gps**, **compass**, and **touch** Radler nodes, and controls volume of the Android ringtone by publishing ROS topic. 
 
 Demo #2 implements touchscreen event detection via the getevent system command and displays on the window of terminal emulator application. 
 
@@ -19,7 +19,7 @@ Some additional links:
 -  Android NDK 
    https://developer.android.com/ndk 
 
-Demo #1 Sensing and controlling of Android device via ROS-enabled Android application using gradle-android studio environment
+Demo #1 Sensing and controlling of Android device via ROS-enabled Android application using Gradle-Android studio environment
 ------------------------------------------------------------------------------------------------------------------------------
 
 Our example included in android\_core directory is based on the tutorial example (android\_tutorial\_pubsub) from 
@@ -27,7 +27,7 @@ https://github.com/rosjava/android_core.
 
 Install Android studio, and import android\_core project to compile/generate/install signed apk file via Android studio (recommended). 
 
-Alternatively, you can use gradle command as below. 
+Alternatively, you can use Gradle command as below. 
 
 :: 
 
@@ -101,7 +101,7 @@ Copy *do\_radler.sh* script to the Docker workspace for cross compilation of Rad
 
 Edit *android\_ip* and *master_ip* in
 *examples/android/touch\_detector/touch\_detector.radl* if needed.  
-The *android\_ip* is your Android device's IP (*192.168.42.129* in our example). The *master\_ip* is your workstation's IP (i.e., Ubuntu machine where you run ROS master; *192.168.42.11* in our example). Refer http://wiki.ros.org/ROS/EnvironmentVariables for further explanation.  
+The *android\_ip* is your Android device's IP (*192.168.42.129* in our example). The *master\_ip* is your workstation's IP (i.e., Ubuntu machine where you run ROS master; *192.168.42.11* in our example). Refer to http://wiki.ros.org/ROS/EnvironmentVariables for further explanation.  
 
 ::
 
@@ -130,7 +130,7 @@ Compile the touch\_detector example.
     ./radler.sh --ws_dir=/path/to/roscpp_android/output/catkin_ws/src compile examples/android/touch_detector/touch_detector.radl --plant plant --ROS
     sudo docker run --rm=true -t -v /path/to/roscpp_android:/opt/roscpp_android -v /path/to/roscpp_android/output:/opt/roscpp_output -i ekumenlabs/rosndk /opt/roscpp_android/do_radler.sh /opt/roscpp_output
 
-Copy Radler nodes for the touch\_detector example.
+Copy Radler nodes for the `touch\_detector` example.
 
 ::
 
@@ -138,7 +138,7 @@ Copy Radler nodes for the touch\_detector example.
     adb push touch /data/data
     adb push detector /data/data
 
-Run touch Radler node on your Android device. On your workstation, connect to you Android device Via ADB.  
+Run **touch** Radler node on your Android device. On your workstation, connect to you Android device Via ADB.  
 
 :: 
 
@@ -146,7 +146,7 @@ Run touch Radler node on your Android device. On your workstation, connect to yo
     cd /data/data
     ./touch      
     
-Run detector radler node on your Android device. First, download an Android application (.apk) for Terminal Emulator for Android (e.g., https://github.com/jackpal/Android-Terminal-Emulator), and run it on your Android device. On the terminal emulator, run the following commands.  
+Run **detector** Radler node on your Android device. First, download an Android application (.apk) for Terminal Emulator for Android (e.g., https://github.com/jackpal/Android-Terminal-Emulator), and run it on your Android device. On the terminal emulator, run the following commands.  
 
 ::  
 

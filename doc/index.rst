@@ -8,7 +8,7 @@ Introduction
 ++++++++++++ 
 .. include:: ../README.rst 
 
-`radler` usage 
+Radler usage 
 ++++++++++++++
 .. include:: commands.rst			
 

@@ -21,7 +21,7 @@ To checkout repository::
 	cd radler
 	git submodule update --init --recursive
 
-To get radler working on a clean version of Ubuntu 14.04::
+To get Radler working on a clean version of Ubuntu 14.04::
 
 	sudo apt-get install cmake python3-pip
 	sudo pip3 install tarjan

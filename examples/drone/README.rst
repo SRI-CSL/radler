@@ -13,11 +13,20 @@ Demos using AR.Drone on ROS
   low battery level (BLINK\_RED). The **camera** node subscribes to 
   **navdata** and publishes **camera\_param** to toggle the video feed
   between front/bottom cameras.
-| Demo \#1 additionaly supports for three other nodes: **key**, **timer**, and **landing**.  
+| Demo \#1 additionally supports for three other nodes: **key**, **timer**, and **landing**.  
   The **key** node provides drone flight control using keyboard. The **timer** node provides timer-based drone flight control, e.g., landing after 2 seconds of hovering over 50cm. 
   The **landing** node provides altitude-based landing, e.g., landing if the altitude is less than 50cm.  
 
 .. image:: sridrone_rqt_graph.png  
+
+This application uses code snippets from the following open source projects. 
+
+- ROS driver for Parrot AR-Drone 1.0 and 2.0 quadrocopters
+  https://github.com/AutonomyLab/ardrone_autonomy
+- Modified ARDroneLib based on official ARDroneSDK 2.0.1
+  https://github.com/AutonomyLab/ardronelib
+- AR.FreeFlight/AR.Drone 2.0 SDK
+  https://github.com/yolanother/AR.FreeFlight
 
 Some additional links:
 
