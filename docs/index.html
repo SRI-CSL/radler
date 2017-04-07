@@ -66,7 +66,7 @@ to other topics.</p>
 <span class="n">git</span> <span class="n">submodule</span> <span class="n">update</span> <span class="o">--</span><span class="n">init</span> <span class="o">--</span><span class="n">recursive</span>
 </pre></div>
 </div>
-<p>To get radler working on a clean version of Ubuntu 14.04:</p>
+<p>To get Radler working on a clean version of Ubuntu 14.04:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">cmake</span> <span class="n">python3</span><span class="o">-</span><span class="n">pip</span>
 <span class="n">sudo</span> <span class="n">pip3</span> <span class="n">install</span> <span class="n">tarjan</span>
 </pre></div>
@@ -109,7 +109,7 @@ The simplest way of running it is to source the catkin workspace we just compile
 </div>
 </div>
 <div class="section" id="radler-usage">
-<h1><cite>radler</cite> usage<a class="headerlink" href="#radler-usage" title="Permalink to this headline">¶</a></h1>
+<h1>Radler usage<a class="headerlink" href="#radler-usage" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="commands">
 <h2>Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="radler-sh">
@@ -248,11 +248,20 @@ unstable roll (LEFT_GREEN_RIGHT_RED or LEFT_RED_RIGHT_GREEN) or
 low battery level (BLINK_RED). The <strong>camera</strong> node subscribes to
 <strong>navdata</strong> and publishes <strong>camera_param</strong> to toggle the video feed
 between front/bottom cameras.</div>
-<div class="line">Demo #1 additionaly supports for three other nodes: <strong>key</strong>, <strong>timer</strong>, and <strong>landing</strong>.
+<div class="line">Demo #1 additionally supports for three other nodes: <strong>key</strong>, <strong>timer</strong>, and <strong>landing</strong>.
 The <strong>key</strong> node provides drone flight control using keyboard. The <strong>timer</strong> node provides timer-based drone flight control, e.g., landing after 2 seconds of hovering over 50cm.
 The <strong>landing</strong> node provides altitude-based landing, e.g., landing if the altitude is less than 50cm.</div>
 </div>
 <img alt="sridrone_rqt_graph.png" src="sridrone_rqt_graph.png" />
+<p>This application uses code snippets from the following open source projects.</p>
+<ul class="simple">
+<li>ROS driver for Parrot AR-Drone 1.0 and 2.0 quadrocopters
+<a class="reference external" href="https://github.com/AutonomyLab/ardrone_autonomy">https://github.com/AutonomyLab/ardrone_autonomy</a></li>
+<li>Modified ARDroneLib based on official ARDroneSDK 2.0.1
+<a class="reference external" href="https://github.com/AutonomyLab/ardronelib">https://github.com/AutonomyLab/ardronelib</a></li>
+<li>AR.FreeFlight/AR.Drone 2.0 SDK
+<a class="reference external" href="https://github.com/yolanother/AR.FreeFlight">https://github.com/yolanother/AR.FreeFlight</a></li>
+</ul>
 <p>Some additional links:</p>
 <ul class="simple">
 <li>AR.Drone Developer Guide
@@ -442,10 +451,10 @@ export PATH=$PATH:/usr/local/opt/python-3.4.3/bin
 </div>
 <div class="section" id="demos-using-android">
 <h2>Demos using Android<a class="headerlink" href="#demos-using-android" title="Permalink to this headline">¶</a></h2>
-<p>Demo #1 implements sensing (of GPS, compass, touch screen) and controlling (of speaker volume) of Android device via ROS-enabled Android application using gradle-android studio environment.
+<p>Demo #1 implements sensing (of GPS, compass, touch screen) and controlling (of speaker volume) of Android device via ROS-enabled Android application using Gradle-Android studio environment.
 This demo is sensing GPS, compass, and touch screen coordinate from Android device, and publishing those under <strong>android_gps</strong>, <strong>android_compass</strong>, and <strong>android_touch</strong> topics, respectively.
 Radler nodes (named as <strong>gps</strong>, <strong>compass</strong>, and <strong>touch</strong> on the workstation side) are subscribing to corresponding topics and publishing them in Radler world.
-The controller Radler node subscribes to topics from gps, compass, and touch Radler nodes, and controls volume of the Android ringtone by publishing ROS topic.</p>
+The <strong>controller</strong> Radler node subscribes to topics from <strong>gps</strong>, <strong>compass</strong>, and <strong>touch</strong> Radler nodes, and controls volume of the Android ringtone by publishing ROS topic.</p>
 <p>Demo #2 implements touchscreen event detection via the getevent system command and displays on the window of terminal emulator application.</p>
 <p>Some additional links:</p>
 <ul class="simple">
@@ -459,11 +468,11 @@ The controller Radler node subscribes to topics from gps, compass, and touch Rad
 <a class="reference external" href="https://developer.android.com/ndk">https://developer.android.com/ndk</a></li>
 </ul>
 <div class="section" id="demo-1-sensing-and-controlling-of-android-device-via-ros-enabled-android-application-using-gradle-android-studio-environment">
-<h3>Demo #1 Sensing and controlling of Android device via ROS-enabled Android application using gradle-android studio environment<a class="headerlink" href="#demo-1-sensing-and-controlling-of-android-device-via-ros-enabled-android-application-using-gradle-android-studio-environment" title="Permalink to this headline">¶</a></h3>
+<h3>Demo #1 Sensing and controlling of Android device via ROS-enabled Android application using Gradle-Android studio environment<a class="headerlink" href="#demo-1-sensing-and-controlling-of-android-device-via-ros-enabled-android-application-using-gradle-android-studio-environment" title="Permalink to this headline">¶</a></h3>
 <p>Our example included in android_core directory is based on the tutorial example (android_tutorial_pubsub) from
 <a class="reference external" href="https://github.com/rosjava/android_core">https://github.com/rosjava/android_core</a>.</p>
 <p>Install Android studio, and import android_core project to compile/generate/install signed apk file via Android studio (recommended).</p>
-<p>Alternatively, you can use gradle command as below.</p>
+<p>Alternatively, you can use Gradle command as below.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">radlerexamples</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">android_core</span>
 <span class="o">./</span><span class="n">gradlew</span>  <span class="c1"># this may require sudo</span>
 </pre></div>
@@ -520,7 +529,7 @@ You can now observe your compass and GPS coordinates on the top of the screen. W
 </div>
 <p>Edit <em>android_ip</em> and <em>master_ip</em> in
 <em>examples/android/touch_detector/touch_detector.radl</em> if needed.
-The <em>android_ip</em> is your Android device&#8217;s IP (<em>192.168.42.129</em> in our example). The <em>master_ip</em> is your workstation&#8217;s IP (i.e., Ubuntu machine where you run ROS master; <em>192.168.42.11</em> in our example). Refer <a class="reference external" href="http://wiki.ros.org/ROS/EnvironmentVariables">http://wiki.ros.org/ROS/EnvironmentVariables</a> for further explanation.</p>
+The <em>android_ip</em> is your Android device&#8217;s IP (<em>192.168.42.129</em> in our example). The <em>master_ip</em> is your workstation&#8217;s IP (i.e., Ubuntu machine where you run ROS master; <em>192.168.42.11</em> in our example). Refer to <a class="reference external" href="http://wiki.ros.org/ROS/EnvironmentVariables">http://wiki.ros.org/ROS/EnvironmentVariables</a> for further explanation.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DEFS</span>
    <span class="n">android_ip</span><span class="p">:</span> <span class="n">string</span> <span class="s2">&quot;192.168.42.129&quot;</span>
    <span class="n">master_ip</span><span class="p">:</span> <span class="n">string</span> <span class="s2">&quot;192.168.42.11&quot;</span>
@@ -541,19 +550,19 @@ The <em>android_ip</em> is your Android device&#8217;s IP (<em>192.168.42.129</e
 <span class="n">sudo</span> <span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">rm</span><span class="o">=</span><span class="n">true</span> <span class="o">-</span><span class="n">t</span> <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">roscpp_android</span><span class="p">:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">roscpp_android</span> <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">roscpp_android</span><span class="o">/</span><span class="n">output</span><span class="p">:</span><span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">roscpp_output</span> <span class="o">-</span><span class="n">i</span> <span class="n">ekumenlabs</span><span class="o">/</span><span class="n">rosndk</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">roscpp_android</span><span class="o">/</span><span class="n">do_radler</span><span class="o">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">roscpp_output</span>
 </pre></div>
 </div>
-<p>Copy Radler nodes for the touch_detector example.</p>
+<p>Copy Radler nodes for the <cite>touch_detector</cite> example.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">roscpp_android</span><span class="o">/</span><span class="n">output</span><span class="o">/</span><span class="n">catkin_ws</span><span class="o">/</span><span class="n">devel</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">touch_detector</span>
 <span class="n">adb</span> <span class="n">push</span> <span class="n">touch</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">data</span>
 <span class="n">adb</span> <span class="n">push</span> <span class="n">detector</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">data</span>
 </pre></div>
 </div>
-<p>Run touch Radler node on your Android device. On your workstation, connect to you Android device Via ADB.</p>
+<p>Run <strong>touch</strong> Radler node on your Android device. On your workstation, connect to you Android device Via ADB.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">adb</span> <span class="n">shell</span>
 <span class="n">cd</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">data</span>
 <span class="o">./</span><span class="n">touch</span>
 </pre></div>
 </div>
-<p>Run detector radler node on your Android device. First, download an Android application (.apk) for Terminal Emulator for Android (e.g., <a class="reference external" href="https://github.com/jackpal/Android-Terminal-Emulator">https://github.com/jackpal/Android-Terminal-Emulator</a>), and run it on your Android device. On the terminal emulator, run the following commands.</p>
+<p>Run <strong>detector</strong> Radler node on your Android device. First, download an Android application (.apk) for Terminal Emulator for Android (e.g., <a class="reference external" href="https://github.com/jackpal/Android-Terminal-Emulator">https://github.com/jackpal/Android-Terminal-Emulator</a>), and run it on your Android device. On the terminal emulator, run the following commands.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">data</span>
 <span class="o">./</span><span class="n">detector</span>
 </pre></div>
@@ -1093,7 +1102,7 @@ writing the step function of <code class="docutils literal"><span class="pre">n<
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#radler-usage"><cite>radler</cite> usage</a><ul>
+<li><a class="reference internal" href="#radler-usage">Radler usage</a><ul>
 <li><a class="reference internal" href="#commands">Commands</a><ul>
 <li><a class="reference internal" href="#radler-sh">radler.sh</a></li>
 <li><a class="reference internal" href="#radler-script">Radler script</a><ul>
@@ -1121,7 +1130,7 @@ writing the step function of <code class="docutils literal"><span class="pre">n<
 </ul>
 </li>
 <li><a class="reference internal" href="#demos-using-android">Demos using Android</a><ul>
-<li><a class="reference internal" href="#demo-1-sensing-and-controlling-of-android-device-via-ros-enabled-android-application-using-gradle-android-studio-environment">Demo #1 Sensing and controlling of Android device via ROS-enabled Android application using gradle-android studio environment</a></li>
+<li><a class="reference internal" href="#demo-1-sensing-and-controlling-of-android-device-via-ros-enabled-android-application-using-gradle-android-studio-environment">Demo #1 Sensing and controlling of Android device via ROS-enabled Android application using Gradle-Android studio environment</a></li>
 <li><a class="reference internal" href="#demo-2-touchscreen-event-detector-using-android-ndk">Demo #2 Touchscreen event detector using Android NDK</a></li>
 </ul>
 </li>
