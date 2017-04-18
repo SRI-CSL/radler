@@ -3,6 +3,8 @@
 #include "key.h" 
 #include <iostream>
 
+using namespace std; 
+
 extern "C" {
 #define FFMPEG_SUPPORT 
 #define USE_LINUX
@@ -135,9 +137,12 @@ input_device_t teleop =
 inline C_RESULT demo_navdata_client_init( void* data ) { return C_OK; }
 
 const navdata_demo_t* nd;
+const navdata_vision_detect_t* nvd;
 inline C_RESULT demo_navdata_client_process( const navdata_unpacked_t* const navdata )
 {
         nd = &navdata->navdata_demo;
+        nvd = &navdata->navdata_vision_detect;
+
   	return C_OK;
 }
 
@@ -253,7 +258,7 @@ SRIDrone::SRIDrone()
 {
     	while (-1 == getDroneVersion (".", *RADL_THIS->drone_ip, &ardroneVersion))
     	{
-        	std::cout << "Getting AR.Drone version ..." << std::endl;
+       	        cout << "Getting AR.Drone version ..." << endl;
         	vp_os_delay (250);
     	}
 
@@ -262,7 +267,7 @@ SRIDrone::SRIDrone()
     	res = ardrone_tool_setup_com( NULL );
     	if( FAILED(res) )
     	{
-        	std::cout << "Wifi initialization failed" << std::endl;
+        	cout << "Wifi initialization failed" << endl;
     	}
     	else
     	{
@@ -273,10 +278,10 @@ SRIDrone::SRIDrone()
     	vp_os_delay (5000);
 
     	if ( SUCCEED(res) ) {
-  		std::cout << "Initialized - " << *RADL_THIS->drone_ip << std::endl;
+  		cout << "Initialized - " << *RADL_THIS->drone_ip << endl;
     	}
     	else {
-       		std::cout << "Failed to initialize - " << *RADL_THIS->drone_ip << std::endl;
+       		cout << "Failed to initialize - " << *RADL_THIS->drone_ip << endl;
 		exit(0); 
      	}
 
@@ -342,7 +347,7 @@ SRIDrone::SRIDrone()
 		video_stage_resume_thread(); 
 	}
 	else {
-		std::cout << "show_image is disabled" << std::endl; 
+		cout << "show_image is disabled" << endl; 
 	}
 }
 
@@ -350,7 +355,7 @@ void SRIDrone::step(const radl_in_t * in, const radl_in_flags_t* iflags,
                     radl_out_t * out, radl_out_flags_t * oflags) 
 {
 	if ( *RADL_THIS->print_data ) {
-		std::cout << "-----------------------------------" << std::endl;
+		cout << "-----------------------------------" << endl;
 	}
 
         C_RESULT res = ardrone_tool_update();
@@ -374,6 +379,8 @@ void SRIDrone::step(const radl_in_t * in, const radl_in_flags_t* iflags,
         // Battery
         int battery = nd->vbat_flying_percentage;
 
+	static int32_t current_video_channel = 0;
+
 	out->navdata->roll = roll; 
 	out->navdata->pitch = pitch; 
 	out->navdata->yaw = yaw; 
@@ -390,21 +397,21 @@ void SRIDrone::step(const radl_in_t * in, const radl_in_flags_t* iflags,
 
 	if ( *RADL_THIS->check_iflags ) {
 		if ( radl_is_stale(iflags->led_anim) ) 
-			std::cout << "led_anim is stale" << std::endl;
+			cout << "led_anim is stale" << endl;
 		if ( radl_is_timeout(iflags->led_anim) ) 
-			std::cout << "led_anim is timeout" << std::endl;
+			cout << "led_anim is timeout" << endl;
 		if ( radl_is_stale(iflags->camera_param) ) 
-			std::cout << "camera_param is stale" << std::endl;
+			cout << "camera_param is stale" << endl;
 		if ( radl_is_timeout(iflags->camera_param) ) 
-			std::cout << "camera_param is timeout" << std::endl;
+			cout << "camera_param is timeout" << endl;
 		if ( radl_is_stale(iflags->key_input) ) 
-			std::cout << "key_input is stale" << std::endl;
+			cout << "key_input is stale" << endl;
 		if ( radl_is_timeout(iflags->key_input) ) 
-			std::cout << "key_input is timeout" << std::endl;
+			cout << "key_input is timeout" << endl;
 		if ( radl_is_stale(iflags->timer_input) ) 
-			std::cout << "timer_input is stale" << std::endl;
+			cout << "timer_input is stale" << endl;
 		if ( radl_is_timeout(iflags->timer_input) ) 
-			std::cout << "timer_input is timeout" << std::endl;
+			cout << "timer_input is timeout" << endl;
 	}
 
 	if ( !radl_is_stale(iflags->landing_input) && !radl_is_timeout(iflags->landing_input) ) {  
@@ -412,7 +419,7 @@ void SRIDrone::step(const radl_in_t * in, const radl_in_flags_t* iflags,
 		vp_os_mutex_lock(&twist_lock);
 		needs_land = true; 
 		vp_os_mutex_unlock(&twist_lock);
-		std::cout << "landing by nearground" << std::endl; 	
+		cout << "landing by nearground" << endl;
 	    }  
 	}
 
@@ -421,84 +428,99 @@ void SRIDrone::step(const radl_in_t * in, const radl_in_flags_t* iflags,
 		vp_os_mutex_lock(&twist_lock);
 		needs_land = true; 
 		vp_os_mutex_unlock(&twist_lock);
-		std::cout << "landing by timer" << std::endl; 	
+		cout << "landing by timer" << endl;
 	    }
 	}  
 
+	int32_t channel; 
+	int32_t ndOptions;
+	int32_t detectType; 
+        int32_t fMode; 
 	if ( !radl_is_stale(iflags->key_input) && !radl_is_timeout(iflags->key_input) ) {  
 	    switch (in->key_input->key) { 
 	    case KEY_TAKEOFF: // takeoff '+'
 		vp_os_mutex_lock(&twist_lock);
 		needs_takeoff = true; 
 		vp_os_mutex_unlock(&twist_lock);
-		std::cout << "takeoff by teleop" << std::endl; 	
+		cout << "takeoff by teleop" << endl;
 		break;
 	    case KEY_LANDING: // landing '-'
 		vp_os_mutex_lock(&twist_lock);
 		needs_land = true; 
 		vp_os_mutex_unlock(&twist_lock);
-		std::cout << "landing by teleop" << std::endl; 	
+		cout << "landing by teleop" << endl;
 		break;
 	    case KEY_RESET: // reset ' ' 
 		vp_os_mutex_lock(&twist_lock);
 		needs_reset = true; 
 		vp_os_mutex_unlock(&twist_lock);
-		std::cout << "reset by teleop" << std::endl; 	
+		cout << "reset by teleop" << endl;
 		break;
 	    case KEY_UP: // up 'u' 
 		vp_os_mutex_lock(&twist_lock);
 		lx = 0.0; ly = 0.0; lz = 1.0; ax = 0.0; ay = 0.0; az = 0.0;
 		vp_os_mutex_unlock(&twist_lock);
-		std::cout << "up by teleop" << std::endl; 	
+		cout << "up by teleop" << endl;
 		break;
 	    case KEY_DOWN: // down 'd' 
 		vp_os_mutex_lock(&twist_lock);
 		lx = 0.0; ly = 0.0; lz = -1.0; ax = 0.0; ay = 0.0; az = 0.0;
 		vp_os_mutex_unlock(&twist_lock);
-		std::cout << "down by teleop" << std::endl; 	
+		cout << "down by teleop" << endl;
 		break;
 	    case KEY_FORWARD: // forward 'f' 
 		vp_os_mutex_lock(&twist_lock);
 		lx = 1.0; ly = 0.0; lz = 0.0; ax = 0.0; ay = 0.0; az = 0.0;
 		vp_os_mutex_unlock(&twist_lock);
-		std::cout << "forward by teleop" << std::endl; 	
+		cout << "forward by teleop" << endl;
 		break;
 	    case KEY_BACKWARD: // backward 'b' 
 		vp_os_mutex_lock(&twist_lock);
 		lx = -1.0; ly = 0.0; lz = 0.0; ax = 0.0; ay = 0.0; az = 0.0;
 		vp_os_mutex_unlock(&twist_lock);
-		std::cout << "backward by teleop" << std::endl; 	
+		cout << "backward by teleop" << endl;
 		break;
 	    case KEY_LEFT: // left 'l' 
 		vp_os_mutex_lock(&twist_lock);
 		lx = 0.0; ly = 1.0; lz = 0.0; ax = 0.0; ay = 0.0; az = 0.0;
 		vp_os_mutex_unlock(&twist_lock);
-		std::cout << "left by teleop" << std::endl; 	
+		cout << "left by teleop" << endl;
 		break;
 	    case KEY_RIGHT: // right 'r' 
 		vp_os_mutex_lock(&twist_lock);
 		lx = 0.0; ly = -1.0; lz = 0.0; ax = 0.0; ay = 0.0; az = 0.0;
 		vp_os_mutex_unlock(&twist_lock);
-		std::cout << "right by teleop" << std::endl; 	
+		cout << "right by teleop" << endl;
 		break;
 	    case KEY_TURNLEFT: // turn left '[' 
 		vp_os_mutex_lock(&twist_lock);
 		lx = 0.0; ly = 0.0; lz = 0.0; ax = 0.0; ay = 0.0; az = 1.0;
 		vp_os_mutex_unlock(&twist_lock);
-		std::cout << "turn left by teleop" << std::endl; 	
+		cout << "turn left by teleop" << endl;
 		break;
 	    case KEY_TURNRIGHT: // turn right ']' 
 		vp_os_mutex_lock(&twist_lock);
 		lx = 0.0; ly = 0.0; lz = 0.0; ax = 0.0; ay = 0.0; az = -1.0;
 		vp_os_mutex_unlock(&twist_lock);
-		std::cout << "turn right by teleop" << std::endl; 	
+		cout << "turn right by teleop" << endl;
 		break;
 	    case KEY_HOVER: // hover '=' 
 		vp_os_mutex_lock(&twist_lock);
 		lx = 0.0; ly = 0.0; lz = 0.0; ax = 0.0; ay = 0.0; az = 0.0;
 		vp_os_mutex_unlock(&twist_lock);
-		std::cout << "hover by teleop" << std::endl; 	
+		cout << "hover by teleop" << endl;
 		break;
+	    case KEY_TAG: // hover on top of tag 't' 
+		ndOptions = NAVDATA_OPTION_FULL_MASK;
+		detectType = CAD_TYPE_ORIENTED_COCARDE_BW;
+        	fMode = FLYING_MODE_HOVER_ON_TOP_OF_ORIENTED_ROUNDEL;
+	 	channel = 1; // bottom facing camera 
+		current_video_channel = 1; 
+		ARDRONE_TOOL_CONFIGURATION_ADDEVENT (navdata_options, &ndOptions, NULL);
+		ARDRONE_TOOL_CONFIGURATION_ADDEVENT (detect_type, &detectType, NULL);
+		ARDRONE_TOOL_CONFIGURATION_ADDEVENT (flying_mode, &fMode, NULL);  
+    		ARDRONE_TOOL_CONFIGURATION_ADDEVENT (video_channel, &channel, NULL);
+		break; 
 	    default: 
 		break;
 	    }
@@ -509,24 +531,47 @@ void SRIDrone::step(const radl_in_t * in, const radl_in_flags_t* iflags,
     		ardrone_at_set_led_animation((LED_ANIMATION_IDS) in->led_anim->id, (float) fabs(in->led_anim->freq), (uint32_t) abs(in->led_anim->span));
 
 	// select cam channel 
-	static int32_t current_video_channel = 0;
 	if ( !radl_is_stale(iflags->camera_param) && !radl_is_timeout(iflags->camera_param) )    
 	{
-	    int32_t channel = in->camera_param->mode; 
+	    channel = in->camera_param->mode; 
 	    if ( current_video_channel != channel ) 
     		ARDRONE_TOOL_CONFIGURATION_ADDEVENT (video_channel, &channel, NULL);
 	    current_video_channel = channel; 
 	}
 
 	if ( *RADL_THIS->print_data ) {
-		std::cout << "ardrone.roll  = " << roll  * RAD_TO_DEG << " [deg]" << std::endl;
-		std::cout << "ardrone.pitch = " << pitch * RAD_TO_DEG << " [deg]" << std::endl;
-		std::cout << "ardrone.yaw   = " << yaw   * RAD_TO_DEG << " [deg]" << std::endl;
-		std::cout << "ardrone.altitude = " << altitude * 0.001 << " [m]" << std::endl;
-		std::cout << "ardrone.vx = " << v_x << " [m/s]" << std::endl;
-		std::cout << "ardrone.vy = " << v_y << " [m/s]" << std::endl;
-		std::cout << "ardrone.vz = " << v_z << " [m/s]" << std::endl;
-		std::cout << "ardrone.battery = " << battery << " [%]" << std::endl;
-		std::cout << "ardrone.setAnimation = " << in->led_anim->id << std::endl;
+		cout << "ardrone.roll  = " << roll  * RAD_TO_DEG << " [deg]" << endl;
+		cout << "ardrone.pitch = " << pitch * RAD_TO_DEG << " [deg]" << endl;
+		cout << "ardrone.yaw   = " << yaw   * RAD_TO_DEG << " [deg]" << endl;
+		cout << "ardrone.altitude = " << altitude * 0.001 << " [m]" << endl;
+		cout << "ardrone.vx = " << v_x << " [m/s]" << endl;
+		cout << "ardrone.vy = " << v_y << " [m/s]" << endl;
+		cout << "ardrone.vz = " << v_z << " [m/s]" << endl;
+		cout << "ardrone.battery = " << battery << " [%]" << endl;
+		cout << "ardrone.setAnimation = " << in->led_anim->id << endl;
+		cout << "tag detection = " << nvd->nb_detected << " by ";
+        	switch(nd->detection_camera_type)
+        	{
+                     case CAD_TYPE_NONE: cout << "Detection disabled" << endl; break;
+                     case CAD_TYPE_VISION: cout << "Detecting 2D tags" << endl; break;
+                     case CAD_TYPE_VISION_V2: cout << "Detecting 2D tags (v2)" << endl; break;
+                     case CAD_TYPE_COCARDE: cout << "Detecting roundels" << endl; break;
+                     case CAD_TYPE_ORIENTED_COCARDE: cout << "Detecting roundels" << endl; break;
+                     case CAD_TYPE_H_COCARDE: cout << "Detecting H roundels" << endl; break;
+                     case CAD_TYPE_H_ORIENTED_COCARDE: cout << "Detecting H roundels" << endl; break;
+                     case CAD_TYPE_STRIPE: cout << "Detecting ground stripe (15Hz)" << endl; break;
+                     case CAD_TYPE_STRIPE_V: cout << "Detecting ground stripe (60Hz)" << endl; break;
+                     case CAD_TYPE_CAP: cout << "Detecting ManHunt Cap" << endl; break;
+                     case CAD_TYPE_TOWER_SIDE: cout << "Detecting tower side" << endl; break;
+                     case CAD_TYPE_ORIENTED_COCARDE_BW: cout << "Detecting black roundel" << endl; break;
+                     default : cout << "Navdata error" << endl;
+          	}
+        	for(int i = 0 ; i < nvd->nb_detected ; i++)
+        	{
+                     cout << nvd->xc[i] << " : " << nvd->yc[i] << " : "
+	 		  << nvd->width[i] << " : " << nvd->height[i] << " : "
+			  << nvd->dist[i] << " : "
+			  << nvd->orientation_angle[i] << endl; 
+        	}
 	}
 }

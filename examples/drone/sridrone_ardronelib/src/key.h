@@ -12,6 +12,7 @@
 #define KEY_TURNLEFT  91 
 #define KEY_TURNRIGHT 93
 #define KEY_HOVER     61 
+#define KEY_TAG       116 
 
 class Key {
  	public:
