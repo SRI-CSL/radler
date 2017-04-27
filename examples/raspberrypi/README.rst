@@ -93,12 +93,19 @@ CMake 2.8.12 or higher is required on the Raspberry Pi.
     sudo checkinstall
     dpkg -i ~/cmake-3.2.2/cmake_3.2.2-1_armhf.deb 
 
+Run the demo on Raspberry Pi
+----------------------------
+
 Run ROS master on the Raspberry Pi. 
 
 ::
 
     export ROS_MASTER_URI=http://localhost:11311
     roscore 
+
+Edit ``target_link_libraries'' in packagen.py (under ralder/radlr/cgen).:: 
+
+    target_link_libraries({lib_target} {lib_static_libs} rt)
 
 Run the raspberrypi example.  
 
