@@ -103,7 +103,9 @@ Run ROS master on the Raspberry Pi.
     export ROS_MASTER_URI=http://localhost:11311
     roscore 
 
-Edit ``target_link_libraries`` in packagen.py (under ralder/radlr/cgen).:
+Edit ``target_link_libraries`` in packagen.py (under ralder/radlr/cgen).
+
+::
 
     target_link_libraries({lib_target} {lib_static_libs} rt)
 

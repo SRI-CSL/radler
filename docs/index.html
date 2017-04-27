@@ -437,9 +437,10 @@ export PATH=$PATH:/usr/local/opt/python-3.4.3/bin
 <span class="n">roscore</span>
 </pre></div>
 </div>
-<p>Edit <code class="docutils literal"><span class="pre">target_link_libraries</span></code> in packagen.py (under ralder/radlr/cgen).:</p>
-<blockquote>
-<div>target_link_libraries({lib_target} {lib_static_libs} rt)</div></blockquote>
+<p>Edit <code class="docutils literal"><span class="pre">target_link_libraries</span></code> in packagen.py (under ralder/radlr/cgen).</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">target_link_libraries</span><span class="p">({</span><span class="n">lib_target</span><span class="p">}</span> <span class="p">{</span><span class="n">lib_static_libs</span><span class="p">}</span> <span class="n">rt</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>Run the raspberrypi example.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">catkin_ws</span><span class="o">/</span><span class="n">src</span>
 <span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">radler</span>
