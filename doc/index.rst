@@ -23,7 +23,7 @@ Examples
 .. include:: ../examples/raspberrypi/README.rst			
 .. include:: ../examples/android/README.rst			
 
-`radler` language specification 
+Radler language specification 
 +++++++++++++++++++++++++++++++
 .. include:: radler_language.rst		
 

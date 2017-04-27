@@ -437,10 +437,9 @@ export PATH=$PATH:/usr/local/opt/python-3.4.3/bin
 <span class="n">roscore</span>
 </pre></div>
 </div>
-<p>Edit <a href="#id1"><span class="problematic" id="id2">``</span></a>target_link_libraries&#8217;&#8217; in packagen.py (under ralder/radlr/cgen).:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">target_link_libraries</span><span class="p">({</span><span class="n">lib_target</span><span class="p">}</span> <span class="p">{</span><span class="n">lib_static_libs</span><span class="p">}</span> <span class="n">rt</span><span class="p">)</span>
-</pre></div>
-</div>
+<p>Edit <code class="docutils literal"><span class="pre">target_link_libraries</span></code> in packagen.py (under ralder/radlr/cgen).:</p>
+<blockquote>
+<div>target_link_libraries({lib_target} {lib_static_libs} rt)</div></blockquote>
 <p>Run the raspberrypi example.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">catkin_ws</span><span class="o">/</span><span class="n">src</span>
 <span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">radler</span>
@@ -579,7 +578,7 @@ The <em>android_ip</em> is your Android device&#8217;s IP (<em>192.168.42.129</e
 </div>
 </div>
 <div class="section" id="radler-language-specification">
-<h1><cite>radler</cite> language specification<a class="headerlink" href="#radler-language-specification" title="Permalink to this headline">¶</a></h1>
+<h1>Radler language specification<a class="headerlink" href="#radler-language-specification" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="file-constraints">
 <h2>File constraints<a class="headerlink" href="#file-constraints" title="Permalink to this headline">¶</a></h2>
 <p>A radl description file is a text file, preferably encoded in utf8, with
@@ -712,8 +711,8 @@ qualified names.</p>
 <p>While using qualified names for identifiers permit to overcome most
 possible shadowings, a region will shadow any module with identical
 name.</p>
-<div class="section" id="id3">
-<h4>Example<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id1">
+<h4>Example<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">---</span> <span class="n">file</span><span class="p">:</span> <span class="n">module3</span><span class="o">.</span><span class="n">radl</span> <span class="o">---</span>
 
 <span class="n">module1</span> <span class="p">:</span> <span class="n">struct</span> <span class="p">{</span> <span class="n">FIELDS</span>
@@ -789,8 +788,8 @@ directory. The module working directory is the directory of the
 module file except when it is redefined by the <code class="docutils literal"><span class="pre">MODULE_BASE_PATH</span></code>
 of the <code class="docutils literal"><span class="pre">module_settings</span></code> value.</p>
 </div>
-<div class="section" id="id4">
-<h4>Example<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id2">
+<h4>Example<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">----</span> <span class="n">file</span><span class="p">:</span> <span class="n">path1</span><span class="o">.</span><span class="n">radl</span> <span class="o">----</span>
 <span class="n">n</span><span class="p">:</span> <span class="n">node</span> <span class="p">{</span>
     <span class="n">PATH</span> <span class="s2">&quot;nodes/example&quot;</span>
@@ -932,8 +931,8 @@ each subscription (resp. publication). The type of each field is a
 <a class="reference external" href="https://github.com/SRI-CSL/radler/blob/master/radl_lib/include/radl_flags.h">radl_flags.h</a>.</p>
 </div>
 </div>
-<div class="section" id="id5">
-<h3>C node definition<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3>C node definition<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>This is the same as the C++ case, except that instead of a class, the user needs to
 provide 4 things. To describe them, we use the default names provided by
 radl, but those may be decided in the radl file.</p>
@@ -1034,8 +1033,8 @@ declared value inside this value. This name is in turn</p>
 that should be statically defined and shared, we added the <code class="docutils literal"><span class="pre">DEFS</span></code>
 field in the <code class="docutils literal"><span class="pre">node</span></code> and <code class="docutils literal"><span class="pre">topic</span></code> classes.</p>
 </div>
-<div class="section" id="id6">
-<h4>Example<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id4">
+<h4>Example<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
 <p>Consider the following radl description:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">----</span> <span class="n">file</span><span class="p">:</span> <span class="n">introspec</span><span class="o">.</span><span class="n">radl</span> <span class="o">----</span>
 <span class="n">x</span> <span class="p">:</span> <span class="n">int32</span> <span class="mi">1</span>
@@ -1144,7 +1143,7 @@ writing the step function of <code class="docutils literal"><span class="pre">n<
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#radler-language-specification"><cite>radler</cite> language specification</a><ul>
+<li><a class="reference internal" href="#radler-language-specification">Radler language specification</a><ul>
 <li><a class="reference internal" href="#file-constraints">File constraints</a></li>
 <li><a class="reference internal" href="#meta-syntax-rules">Meta syntax rules</a><ul>
 <li><a class="reference internal" href="#grammar">Grammar</a></li>
@@ -1163,7 +1162,7 @@ writing the step function of <code class="docutils literal"><span class="pre">n<
 </ul>
 </li>
 <li><a class="reference internal" href="#shadowing">Shadowing</a><ul>
-<li><a class="reference internal" href="#id3">Example</a></li>
+<li><a class="reference internal" href="#id1">Example</a></li>
 </ul>
 </li>
 </ul>
@@ -1177,7 +1176,7 @@ writing the step function of <code class="docutils literal"><span class="pre">n<
 <li><a class="reference internal" href="#external-files-and-path">External files and <code class="docutils literal"><span class="pre">PATH</span></code></a><ul>
 <li><a class="reference internal" href="#file-reference">File reference</a></li>
 <li><a class="reference internal" href="#working-directory-of-a-region-path-and-module-base-path">Working directory of a region, <code class="docutils literal"><span class="pre">PATH</span></code> and <code class="docutils literal"><span class="pre">MODULE_BASE_PATH</span></code></a></li>
-<li><a class="reference internal" href="#id4">Example</a></li>
+<li><a class="reference internal" href="#id2">Example</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#libraries">Libraries</a><ul>
@@ -1205,7 +1204,7 @@ writing the step function of <code class="docutils literal"><span class="pre">n<
 <li><a class="reference internal" href="#the-flag-structures-radl-in-flags-t-radl-out-flags-t">The flag structures <code class="docutils literal"><span class="pre">radl_in_flags_t</span></code>, <code class="docutils literal"><span class="pre">radl_out_flags_t</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id5">C node definition</a></li>
+<li><a class="reference internal" href="#id3">C node definition</a></li>
 <li><a class="reference internal" href="#the-flags">The flags</a><ul>
 <li><a class="reference internal" href="#computation-of-the-output-flags">Computation of the output flags</a></li>
 <li><a class="reference internal" href="#computation-of-the-input-flag-radl-stale">Computation of the input flag <code class="docutils literal"><span class="pre">radl_STALE</span></code></a></li>
@@ -1218,7 +1217,7 @@ writing the step function of <code class="docutils literal"><span class="pre">n<
 <li><a class="reference internal" href="#shortcuts">Shortcuts</a></li>
 <li><a class="reference internal" href="#field-access">Field access</a></li>
 <li><a class="reference internal" href="#the-defs-field">The <code class="docutils literal"><span class="pre">DEFS</span></code> field</a></li>
-<li><a class="reference internal" href="#id6">Example</a></li>
+<li><a class="reference internal" href="#id4">Example</a></li>
 </ul>
 </li>
 </ul>
