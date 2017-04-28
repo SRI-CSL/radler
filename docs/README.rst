@@ -1,142 +1,177 @@
-Demos using AR.Drone on ROS
-=======================================
+Demos using Android  
+===================
 
-| Demos are available for two types of AR.Drone drivers: Demo \#1 with **ardronelib**
-  (AR.Drone sdk) and Demo \#2 with **ardrone\_autonomy** (ROS driver).
-| Both demos consists of at least three nodes **sridrone**, **led**, and
-  **camera**, and three topics **navdata**, **led\_anim**, and
-  **camera\_param**. The **sridrone** node publishes **navdata** and
-  subscribes to **led\_anim** and **camera\_param** to generate signals
-  that control LED animation and video input. The **led** node
-  subscribes to **navdata** and publishes **led\_anim** to indicate
-  unstable roll (LEFT\_GREEN\_RIGHT\_RED or LEFT\_RED\_RIGHT\_GREEN) or
-  low battery level (BLINK\_RED). The **camera** node subscribes to 
-  **navdata** and publishes **camera\_param** to toggle the video feed
-  between front/bottom cameras.
-| Demo \#1 additionally supports for three other nodes: **key**, **timer**, and **landing**.  
-  The **key** node provides drone flight control using keyboard. The **timer** node provides timer-based drone flight control, e.g., landing after 2 seconds of hovering over 50cm. 
-  The **landing** node provides altitude-based landing, e.g., landing if the altitude is less than 50cm.  
+Demo #1 implements sensing (of GPS, compass, touch screen) and controlling (of speaker volume) of Android device via ROS-enabled Android application using Gradle-Android studio environment. 
+This demo is sensing GPS, compass, and touch screen coordinate from Android device, and publishing those under **android\_gps**, **android\_compass**, and **android\_touch** topics, respectively. 
+Radler nodes (named as **gps**, **compass**, and **touch** on the workstation side) are subscribing to corresponding topics and publishing them in Radler world. 
+The **controller** Radler node subscribes to topics from **gps**, **compass**, and **touch** Radler nodes, and controls volume of the Android ringtone by publishing ROS topic. 
 
-.. image:: sridrone_rqt_graph.png  
+.. image:: sensor_pubsub_rqt_graph.png
 
-This application uses code snippets from the following open source projects. 
-
-- ROS driver for Parrot AR-Drone 1.0 and 2.0 quadrocopters
-  https://github.com/AutonomyLab/ardrone_autonomy
-- Modified ARDroneLib based on official ARDroneSDK 2.0.1
-  https://github.com/AutonomyLab/ardronelib
-- AR.FreeFlight/AR.Drone 2.0 SDK
-  https://github.com/yolanother/AR.FreeFlight
+Demo #2 implements touchscreen event detection via ``getevent`` system command and displays on the window of terminal emulator application.
 
 Some additional links:
 
--  AR.Drone Developer Guide
-   http://www.msh-tools.com/ardrone/ARDrone\_Developer\_Guide.pdf
--  Parrot developer site for SDK
-   http://developer.parrot.com/docs/SDK3/#how-to-build-the-sdk
--  Control the AR.Drone LEDs
-   http://gauth.fr/2011/09/control-the-ar-drone-leds/
+-  Rosjava/android_core  
+   https://github.com/rosjava/android_core
+-  Using native ROS code on Android 
+   http://wiki.ros.org/android_ndk
+-  Android Studio  
+   https://developer.android.com/studio
+-  Android NDK 
+   https://developer.android.com/ndk 
 
-Demo #1 with sridrone\_ardronelib
----------------------------------
+Demo #1 Sensing and controlling of Android device via ROS-enabled Android application using Gradle-Android studio environment
+------------------------------------------------------------------------------------------------------------------------------
 
-Compile up-to-date ardronelib sdk.
+Our example included in android\_core directory is based on the tutorial example (android\_tutorial\_pubsub) from 
+https://github.com/rosjava/android_core. 
+
+Install Android studio, and import android\_core project to compile/generate/install signed apk file via Android studio (recommended). 
+
+Alternatively, you can use Gradle command as below. 
+
+:: 
+
+    cd /path/to/radler/examples/android/android_core
+
+Edit ``sdk.dir`` in *local.properties*.
 
 ::
 
-    git submodule update --init --recursive 
-    cd examples/drone/sridrone_ardronelib/ardronelib
-    make 
-    sudo make install --makefile=../Makefile INSTALL_PREFIX=/usr/local
+    sdk.dir=/path/to/android/sdk
 
-Edit *drone\_ip* in
-*examples/drone/sridrone\_ardronelib/sridrone\_ardronelib.radl* with
-your drone's IP if needed.
+Execute a build with the Wrapper.
 
 ::
 
-    DEFS 
-       drone_ip: string "192.168.1.xxx" 
+    sudo ./gradlew
 
-Run ROS master.
+If you are not using Android studio, you need to sign your unsigned apk *android_tutorial_pubsub-release-unsigned.apk* under *android\_tutorial\_pubsub/build/output/apk*, and install signed apk.
+
+:: 
+
+    cd /path/to/radler/examples/android/android_core/android_tutorial_pubsub/build/output/apk
+    keytool -genkey -v -keystore debug.keystore -alias radler -keyalg RSA -keysize 2048 -validity 20000
+    jarsigner -verbose -keystore debug.keystore android_tutorial_pubsub-release-unsigned.apk radler  
+    adb install  android_tutorial_pubsub-release-unsigned.apk
+
+For ease of testing, USB tethering can be used. Note that USB tethering is not required for deployment.
+Enable USB tethering mode on your Android device. ``ifconfig`` on your workstation will show you the ``usb0`` interface.
+
+::
+    usb0  Link encap:Ethernet  HWaddr :::::
+          inet addr:192.168.42.11  Bcast:192.168.42.255  Mask:255.255.255.0
+
+Set environment variables on your workstation.
+
+::
+
+    export ROS_MASTER_URI=http://192.168.42.11:11311
+    export ROS_HOSTNAME=192.168.42.11 
+
+Run ROS master on your workstation.
 
 ::
 
     roscore 
 
-Run the sridrone\_ardronelib example.
+Edit *master_ip* in
+*examples/android/sensor\_pubsub/sensor\_pubsub.radl* if needed.  
+
+:: 
+    
+    DEFS 
+       master_ip: string "192.168.42.11" 
+
+Run the sensor\_pubsub example. Note that when you open a new terminal to run Radler nodes, set environment variables (i.e., ROS_MASTER_URI and ROS_HOSTNAME).
 
 ::
 
     mkdir -p /tmp/catkin_ws/src
     cd /path/to/radler
-    ./radler.sh --ws_dir /tmp/catkin_ws/src compile examples/drone/sridrone_ardronelib/sridrone_ardronelib.radl --plant plant --ROS  
+    ./radler.sh --ws_dir /tmp/catkin_ws/src compile examples/android/sensor_pubsub/sensor_pubsub.radl --plant plant --ROS
     cd /tmp/catkin_ws  
     catkin_make 
-    cd /tmp/catkin_ws/devel/lib/sridrone_ardronelib
-    ./sridrone 
-    ./led
-    ./camera 
-    ./key 
-    ./timer 
-    ./landing 
+    cd /tmp/catkin_ws/devel/lib/sensor_pubsub
+    ./gps 
+    ./compass 
+    ./touch  
+    ./controller 
 
-Demo #2 with sridrone\_ardrone\_autonomy
-----------------------------------------
 
-Download and install ROS ardrone\_driver from
-https://github.com/AutonomyLab/ardrone\_autonomy.git.
+When you start **PubSubTutorial** application on your Android device, enter *Master_URI* as your workstation IP (*192.168.42.11* in this demo).
+You can now observe your compass and GPS coordinates on the top of the screen. When you touch the screen, the ringtone sound will be played with volume that is proportional to the ratio of current x-coordinate and screen width. 
+
+Demo #2 Touchscreen event detector using Android NDK  
+----------------------------------------------------
+
+Prepare build environment to build native ROS nodes using the Android NDK as described in http://wiki.ros.org/android_ndk/Tutorials/BuildingNativeROSPackages. *do\_docker.sh* takes some time to complete.  
 
 ::
 
-    sudo apt-get install ros-indigo-ardrone-autonomy 
+    git clone https://github.com/ekumenlabs/roscpp_android.git
+    cd roscpp_android  
+    ./do_docker.sh
 
-.. raw:: html
+Copy *do\_radler.sh* script to the Docker workspace for cross compilation of Radler nodes.  
 
-    <!--
-    cd ~/catkin_ws/src
-    git clone https://github.com/AutonomyLab/ardrone_autonomy.git -b indigo-devel
-    cd ~/catkin_ws
-    rosdep install --from-paths src -i 
-    catkin_make 
+::
 
-    catkin_make install 
-    source devel/setup.bash 
-    export CPLUS_INCLUDE_PATH=~/catkin_ws/devel/include
-    -->
+    cp /path/to/radler/examples/android/do_radler.sh /path/to/roscpp_android/
 
-Run ROS master and ardrone\_driver.
+Edit *android\_ip* and *master_ip* in
+*examples/android/touch\_detector/touch\_detector.radl* if needed.  
+The *android\_ip* is your Android device's IP (*192.168.42.129* in this demo). The *master\_ip* is your workstation's IP (i.e., Ubuntu machine where you run ROS master; *192.168.42.11* in this demo). Refer to http://wiki.ros.org/ROS/EnvironmentVariables for further explanation.
+
+::
+
+    DEFS 
+       android_ip: string "192.168.42.129" 
+       master_ip: string "192.168.42.11" 
+
+Set environment variables on your workstation. 
+
+::
+
+    export ROS_MASTER_URI=http://192.168.42.11:11311
+    export ROS_HOSTNAME=192.168.42.11 
+
+Run ROS master on your workstation.
 
 ::
 
     roscore 
-    rosrun ardrone_autonomy ardrone_driver 
 
-Note. Use *-ip ${Your Drone's IP address}* if your drone does not have
-the default IP address.
+Compile the touch\_detector example.
 
 ::
 
-    rosrun ardrone_autonomy ardrone_driver -ip 192.168.1.xxx
+    cd /path/to/radler
+    ./radler.sh --ws_dir=/path/to/roscpp_android/output/catkin_ws/src compile examples/android/touch_detector/touch_detector.radl --plant plant --ROS
+    sudo docker run --rm=true -t -v /path/to/roscpp_android:/opt/roscpp_android -v /path/to/roscpp_android/output:/opt/roscpp_output -i ekumenlabs/rosndk /opt/roscpp_android/do_radler.sh /opt/roscpp_output
 
-Run the sridrone\_ardrone\_autonomy example.
-
-::
-
-    cd /path/to/radler 
-    ./radler.sh --ws_dir /tmp/catkin_ws/src compile examples/drone/sridrone_ardrone_autonomy/sridrone_ardrone_autonomy.radl --plant plant --ROS 
-    cd /tmp/catkin_ws  
-    catkin_make 
-    cd /tmp/catkin_ws/devel/lib/sridrone_ardrone_autonomy
-    ./sridrone 
-    ./led
-    ./camera
-
-Run ros **image\_view** node to check the camera feed.
+Copy Radler nodes for the `touch\_detector` example.
 
 ::
 
-    sudo apt-get install ros-indigo-image-view
-    rosrun image_view image_view image:=/ardrone/front/image_raw
-    rosrun image_view image_view image:=/ardrone/bottom/image_raw
+    cd /path/to/roscpp_android/output/catkin_ws/devel/lib/touch_detector
+    adb push touch /data/data
+    adb push detector /data/data
 
+Run **touch** Radler node on your Android device. On your workstation, connect to you Android device Via ADB.  
+
+:: 
+
+    adb shell 
+    cd /data/data
+    ./touch      
+    
+Run **detector** Radler node on your Android device. First, download an Android application (.apk) for Terminal Emulator for Android (e.g., https://github.com/jackpal/Android-Terminal-Emulator), and run it on your Android device. On the terminal emulator, run the following commands.  
+
+::  
+
+    cd /data/data
+    ./detector 
+
+Now you will see **O** on both windows (i.e., Android Terminal Emulator and ADB shell) when you touch your Android's screen. Otherwise **X** will be displayed. 

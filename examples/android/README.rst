@@ -57,7 +57,7 @@ If you are not using Android studio, you need to sign your unsigned apk *android
     adb install  android_tutorial_pubsub-release-unsigned.apk
 
 For ease of testing, USB tethering can be used. Note that USB tethering is not required for deployment.
-Enable USB tethering mode on your Android device. ``ifconfig`` on your workstation will show you the ``usb0`` interface like below:
+Enable USB tethering mode on your Android device. ``ifconfig`` on your workstation will show you the ``usb0`` interface.
 
 ::
     usb0  Link encap:Ethernet  HWaddr :::::
