@@ -501,14 +501,10 @@ The <strong>controller</strong> Radler node subscribes to topics from <strong>gp
 </div>
 <p>For ease of testing, USB tethering can be used. Note that USB tethering is not required for deployment.
 Enable USB tethering mode on your Android device. <code class="docutils literal"><span class="pre">ifconfig</span></code> on your workstation will show you the <code class="docutils literal"><span class="pre">usb0</span></code> interface.</p>
-<dl class="docutils">
-<dt>::</dt>
-<dd><dl class="first last docutils">
-<dt>usb0  Link encap:Ethernet  HWaddr xx:xx:xx:xx:xx:xx</dt>
-<dd>inet addr:192.168.42.11  Bcast:192.168.42.255  Mask:255.255.255.0</dd>
-</dl>
-</dd>
-</dl>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">usb0</span>  <span class="n">Link</span> <span class="n">encap</span><span class="p">:</span><span class="n">Ethernet</span>  <span class="n">HWaddr</span> <span class="n">xx</span><span class="p">:</span><span class="n">xx</span><span class="p">:</span><span class="n">xx</span><span class="p">:</span><span class="n">xx</span><span class="p">:</span><span class="n">xx</span><span class="p">:</span><span class="n">xx</span>
+      <span class="n">inet</span> <span class="n">addr</span><span class="p">:</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.11</span>  <span class="n">Bcast</span><span class="p">:</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.255</span>  <span class="n">Mask</span><span class="p">:</span><span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+</pre></div>
+</div>
 <p>Set environment variables on your workstation.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">ROS_MASTER_URI</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.11</span><span class="p">:</span><span class="mi">11311</span>
 <span class="n">export</span> <span class="n">ROS_HOSTNAME</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.11</span>
