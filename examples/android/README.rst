@@ -60,7 +60,7 @@ For ease of testing, USB tethering can be used. Note that USB tethering is not r
 Enable USB tethering mode on your Android device. ``ifconfig`` on your workstation will show you the ``usb0`` interface.
 
 ::
-    usb0  Link encap:Ethernet  HWaddr :::::
+    usb0  Link encap:Ethernet  HWaddr xx:xx:xx:xx:xx:xx
           inet addr:192.168.42.11  Bcast:192.168.42.255  Mask:255.255.255.0
 
 Set environment variables on your workstation.
