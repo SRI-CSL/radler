@@ -6,7 +6,9 @@ This demo is sensing GPS, compass, and touch screen coordinate from Android devi
 Radler nodes (named as **gps**, **compass**, and **touch** on the workstation side) are subscribing to corresponding topics and publishing them in Radler world. 
 The **controller** Radler node subscribes to topics from **gps**, **compass**, and **touch** Radler nodes, and controls volume of the Android ringtone by publishing ROS topic. 
 
-Demo #2 implements touchscreen event detection via the getevent system command and displays on the window of terminal emulator application. 
+.. image:: sensor_pubsub_rqt_graph.png
+
+Demo #2 implements touchscreen event detection via ``getevent`` system command and displays on the window of terminal emulator application.
 
 Some additional links:
 
@@ -31,19 +33,37 @@ Alternatively, you can use Gradle command as below.
 
 :: 
 
-    cd /path/to/radlerexamples/android/android_core 
-    ./gradlew  # this may require sudo 
+    cd /path/to/radler/examples/android/android_core
 
-If you are not using Android studio, you need to sign your unsigned apk android_tutorial_pubsub-release-unsigned.apk under android\_tutorial\_pubsub/build/output/apk, and install signed apk. 
+Edit ``sdk.dir`` in *local.properties*.
+
+::
+
+    sdk.dir=/path/to/android/sdk
+
+Execute a build with the Wrapper.
+
+::
+
+    sudo ./gradlew
+
+If you are not using Android studio, you need to sign your unsigned apk *android_tutorial_pubsub-release-unsigned.apk* under *android\_tutorial\_pubsub/build/output/apk*, and install signed apk.
 
 :: 
 
-    cd /path/to/radlerexamples/android/android_core/android_tutorial_pubsub/build/output/apk
+    cd /path/to/radler/examples/android/android_core/android_tutorial_pubsub/build/output/apk
     keytool -genkey -v -keystore debug.keystore -alias radler -keyalg RSA -keysize 2048 -validity 20000
     jarsigner -verbose -keystore debug.keystore android_tutorial_pubsub-release-unsigned.apk radler  
     adb install  android_tutorial_pubsub-release-unsigned.apk
 
-Set environmental variables on your workstation. 
+For ease of testing, USB tethering can be used. Note that USB tethering is not required for deployment.
+Enable USB tethering mode on your Android device. ``ifconfig`` on your workstation will show you the ``usb0`` interface like below:
+
+::
+    usb0  Link encap:Ethernet  HWaddr :::::
+          inet addr:192.168.42.11  Bcast:192.168.42.255  Mask:255.255.255.0
+
+Set environment variables on your workstation.
 
 ::
 
@@ -64,7 +84,7 @@ Edit *master_ip* in
     DEFS 
        master_ip: string "192.168.42.11" 
 
-Run the sensor\_pubsub example.
+Run the sensor\_pubsub example. Note that when you open a new terminal to run Radler nodes, set environment variables (i.e., ROS_MASTER_URI and ROS_HOSTNAME).
 
 ::
 
@@ -79,7 +99,8 @@ Run the sensor\_pubsub example.
     ./touch  
     ./controller 
 
-When you double-click the application on your Android device, enter *Master_URI* as your workstation IP. 
+
+When you start **PubSubTutorial** application on your Android device, enter *Master_URI* as your workstation IP (*192.168.42.11* in this demo).
 You can now observe your compass and GPS coordinates on the top of the screen. When you touch the screen, the ringtone sound will be played with volume that is proportional to the ratio of current x-coordinate and screen width. 
 
 Demo #2 Touchscreen event detector using Android NDK  
@@ -91,7 +112,7 @@ Prepare build environment to build native ROS nodes using the Android NDK as des
 
     git clone https://github.com/ekumenlabs/roscpp_android.git
     cd roscpp_android  
-    ./do_docker.sh 
+    ./do_docker.sh
 
 Copy *do\_radler.sh* script to the Docker workspace for cross compilation of Radler nodes.  
 
@@ -101,7 +122,7 @@ Copy *do\_radler.sh* script to the Docker workspace for cross compilation of Rad
 
 Edit *android\_ip* and *master_ip* in
 *examples/android/touch\_detector/touch\_detector.radl* if needed.  
-The *android\_ip* is your Android device's IP (*192.168.42.129* in our example). The *master\_ip* is your workstation's IP (i.e., Ubuntu machine where you run ROS master; *192.168.42.11* in our example). Refer to http://wiki.ros.org/ROS/EnvironmentVariables for further explanation.  
+The *android\_ip* is your Android device's IP (*192.168.42.129* in this demo). The *master\_ip* is your workstation's IP (i.e., Ubuntu machine where you run ROS master; *192.168.42.11* in this demo). Refer to http://wiki.ros.org/ROS/EnvironmentVariables for further explanation.
 
 ::
 

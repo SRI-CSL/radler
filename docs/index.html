@@ -462,7 +462,8 @@ export PATH=$PATH:/usr/local/opt/python-3.4.3/bin
 This demo is sensing GPS, compass, and touch screen coordinate from Android device, and publishing those under <strong>android_gps</strong>, <strong>android_compass</strong>, and <strong>android_touch</strong> topics, respectively.
 Radler nodes (named as <strong>gps</strong>, <strong>compass</strong>, and <strong>touch</strong> on the workstation side) are subscribing to corresponding topics and publishing them in Radler world.
 The <strong>controller</strong> Radler node subscribes to topics from <strong>gps</strong>, <strong>compass</strong>, and <strong>touch</strong> Radler nodes, and controls volume of the Android ringtone by publishing ROS topic.</p>
-<p>Demo #2 implements touchscreen event detection via the getevent system command and displays on the window of terminal emulator application.</p>
+<img alt="sensor_pubsub_rqt_graph.png" src="sensor_pubsub_rqt_graph.png" />
+<p>Demo #2 implements touchscreen event detection via <code class="docutils literal"><span class="pre">getevent</span></code> system command and displays on the window of terminal emulator application.</p>
 <p>Some additional links:</p>
 <ul class="simple">
 <li>Rosjava/android_core
@@ -480,18 +481,35 @@ The <strong>controller</strong> Radler node subscribes to topics from <strong>gp
 <a class="reference external" href="https://github.com/rosjava/android_core">https://github.com/rosjava/android_core</a>.</p>
 <p>Install Android studio, and import android_core project to compile/generate/install signed apk file via Android studio (recommended).</p>
 <p>Alternatively, you can use Gradle command as below.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">radlerexamples</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">android_core</span>
-<span class="o">./</span><span class="n">gradlew</span>  <span class="c1"># this may require sudo</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">radler</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">android_core</span>
 </pre></div>
 </div>
-<p>If you are not using Android studio, you need to sign your unsigned apk android_tutorial_pubsub-release-unsigned.apk under android_tutorial_pubsub/build/output/apk, and install signed apk.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">radlerexamples</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">android_core</span><span class="o">/</span><span class="n">android_tutorial_pubsub</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">output</span><span class="o">/</span><span class="n">apk</span>
+<p>Edit <code class="docutils literal"><span class="pre">sdk.dir</span></code> in <em>local.properties</em>.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sdk</span><span class="o">.</span><span class="n">dir</span><span class="o">=/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">sdk</span>
+</pre></div>
+</div>
+<p>Execute a build with the Wrapper.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="o">./</span><span class="n">gradlew</span>
+</pre></div>
+</div>
+<p>If you are not using Android studio, you need to sign your unsigned apk <em>android_tutorial_pubsub-release-unsigned.apk</em> under <em>android_tutorial_pubsub/build/output/apk</em>, and install signed apk.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">radler</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">android_core</span><span class="o">/</span><span class="n">android_tutorial_pubsub</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">output</span><span class="o">/</span><span class="n">apk</span>
 <span class="n">keytool</span> <span class="o">-</span><span class="n">genkey</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">keystore</span> <span class="n">debug</span><span class="o">.</span><span class="n">keystore</span> <span class="o">-</span><span class="n">alias</span> <span class="n">radler</span> <span class="o">-</span><span class="n">keyalg</span> <span class="n">RSA</span> <span class="o">-</span><span class="n">keysize</span> <span class="mi">2048</span> <span class="o">-</span><span class="n">validity</span> <span class="mi">20000</span>
 <span class="n">jarsigner</span> <span class="o">-</span><span class="n">verbose</span> <span class="o">-</span><span class="n">keystore</span> <span class="n">debug</span><span class="o">.</span><span class="n">keystore</span> <span class="n">android_tutorial_pubsub</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">unsigned</span><span class="o">.</span><span class="n">apk</span> <span class="n">radler</span>
 <span class="n">adb</span> <span class="n">install</span>  <span class="n">android_tutorial_pubsub</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">unsigned</span><span class="o">.</span><span class="n">apk</span>
 </pre></div>
 </div>
-<p>Set environmental variables on your workstation.</p>
+<p>For ease of testing, USB tethering can be used. Note that USB tethering is not required for deployment.
+Enable USB tethering mode on your Android device. <code class="docutils literal"><span class="pre">ifconfig</span></code> on your workstation will show you the <code class="docutils literal"><span class="pre">usb0</span></code> interface like below:</p>
+<dl class="docutils">
+<dt>::</dt>
+<dd><dl class="first last docutils">
+<dt>usb0  Link encap:Ethernet  HWaddr :::::</dt>
+<dd>inet addr:192.168.42.11  Bcast:192.168.42.255  Mask:255.255.255.0</dd>
+</dl>
+</dd>
+</dl>
+<p>Set environment variables on your workstation.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">ROS_MASTER_URI</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.11</span><span class="p">:</span><span class="mi">11311</span>
 <span class="n">export</span> <span class="n">ROS_HOSTNAME</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.11</span>
 </pre></div>
@@ -506,7 +524,7 @@ The <strong>controller</strong> Radler node subscribes to topics from <strong>gp
    <span class="n">master_ip</span><span class="p">:</span> <span class="n">string</span> <span class="s2">&quot;192.168.42.11&quot;</span>
 </pre></div>
 </div>
-<p>Run the sensor_pubsub example.</p>
+<p>Run the sensor_pubsub example. Note that when you open a new terminal to run Radler nodes, set environment variables (i.e., ROS_MASTER_URI and ROS_HOSTNAME).</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">catkin_ws</span><span class="o">/</span><span class="n">src</span>
 <span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">radler</span>
 <span class="o">./</span><span class="n">radler</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">ws_dir</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">catkin_ws</span><span class="o">/</span><span class="n">src</span> <span class="nb">compile</span> <span class="n">examples</span><span class="o">/</span><span class="n">android</span><span class="o">/</span><span class="n">sensor_pubsub</span><span class="o">/</span><span class="n">sensor_pubsub</span><span class="o">.</span><span class="n">radl</span> <span class="o">--</span><span class="n">plant</span> <span class="n">plant</span> <span class="o">--</span><span class="n">ROS</span>
@@ -519,7 +537,7 @@ The <strong>controller</strong> Radler node subscribes to topics from <strong>gp
 <span class="o">./</span><span class="n">controller</span>
 </pre></div>
 </div>
-<p>When you double-click the application on your Android device, enter <em>Master_URI</em> as your workstation IP.
+<p>When you start <strong>PubSubTutorial</strong> application on your Android device, enter <em>Master_URI</em> as your workstation IP (<em>192.168.42.11</em> in this demo).
 You can now observe your compass and GPS coordinates on the top of the screen. When you touch the screen, the ringtone sound will be played with volume that is proportional to the ratio of current x-coordinate and screen width.</p>
 </div>
 <div class="section" id="demo-2-touchscreen-event-detector-using-android-ndk">
@@ -536,7 +554,7 @@ You can now observe your compass and GPS coordinates on the top of the screen. W
 </div>
 <p>Edit <em>android_ip</em> and <em>master_ip</em> in
 <em>examples/android/touch_detector/touch_detector.radl</em> if needed.
-The <em>android_ip</em> is your Android device&#8217;s IP (<em>192.168.42.129</em> in our example). The <em>master_ip</em> is your workstation&#8217;s IP (i.e., Ubuntu machine where you run ROS master; <em>192.168.42.11</em> in our example). Refer to <a class="reference external" href="http://wiki.ros.org/ROS/EnvironmentVariables">http://wiki.ros.org/ROS/EnvironmentVariables</a> for further explanation.</p>
+The <em>android_ip</em> is your Android device&#8217;s IP (<em>192.168.42.129</em> in this demo). The <em>master_ip</em> is your workstation&#8217;s IP (i.e., Ubuntu machine where you run ROS master; <em>192.168.42.11</em> in this demo). Refer to <a class="reference external" href="http://wiki.ros.org/ROS/EnvironmentVariables">http://wiki.ros.org/ROS/EnvironmentVariables</a> for further explanation.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DEFS</span>
    <span class="n">android_ip</span><span class="p">:</span> <span class="n">string</span> <span class="s2">&quot;192.168.42.129&quot;</span>
    <span class="n">master_ip</span><span class="p">:</span> <span class="n">string</span> <span class="s2">&quot;192.168.42.11&quot;</span>
