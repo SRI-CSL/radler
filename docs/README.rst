@@ -10,6 +10,8 @@ The **controller** Radler node subscribes to topics from **gps**, **compass**, a
 
 Demo #2 implements touchscreen event detection via ``getevent`` system command and displays on the window of terminal emulator application.
 
+.. image:: touch_detector_rqt_graph.png
+
 Some additional links:
 
 -  Rosjava/android_core  
@@ -160,19 +162,37 @@ Copy Radler nodes for the `touch\_detector` example.
     adb push touch /data/data
     adb push detector /data/data
 
-Run **touch** Radler node on your Android device. On your workstation, connect to you Android device Via ADB.  
+Run **touch** Radler node on your Android device. On your workstation, connect to you Android device via ADB.
 
 :: 
 
     adb shell 
+    su
+    mount -o rw,remount /
+    export ROS_MASTER_URI=http://192.168.42.11:11311
+    export ROS_HOSTNAME=192.168.42.129
     cd /data/data
     ./touch      
     
-Run **detector** Radler node on your Android device. First, download an Android application (.apk) for Terminal Emulator for Android (e.g., https://github.com/jackpal/Android-Terminal-Emulator), and run it on your Android device. On the terminal emulator, run the following commands.  
+Run **detector** Radler node.
+
+::
+
+    adb shell
+    su
+    export ROS_MASTER_URI=http://192.168.42.11:11311
+    export ROS_HOSTNAME=192.168.42.129
+    cd /data/data
+    ./detector
+
+Alternatively, run Radler node on your Android device. Download an Android application (.apk) for Terminal Emulator for Android (e.g., https://github.com/jackpal/Android-Terminal-Emulator), and run it on your Android device. On the terminal emulator, run the following commands.
 
 ::  
 
+    su
+    export ROS_MASTER_URI=http://192.168.42.11:11311
+    export ROS_HOSTNAME=192.168.42.129
     cd /data/data
-    ./detector 
+    ./detector
 
 Now you will see **O** on both windows (i.e., Android Terminal Emulator and ADB shell) when you touch your Android's screen. Otherwise **X** will be displayed. 

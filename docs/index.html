@@ -464,6 +464,7 @@ Radler nodes (named as <strong>gps</strong>, <strong>compass</strong>, and <stro
 The <strong>controller</strong> Radler node subscribes to topics from <strong>gps</strong>, <strong>compass</strong>, and <strong>touch</strong> Radler nodes, and controls volume of the Android ringtone by publishing ROS topic.</p>
 <img alt="sensor_pubsub_rqt_graph.png" src="sensor_pubsub_rqt_graph.png" />
 <p>Demo #2 implements touchscreen event detection via <code class="docutils literal"><span class="pre">getevent</span></code> system command and displays on the window of terminal emulator application.</p>
+<img alt="touch_detector_rqt_graph.png" src="touch_detector_rqt_graph.png" />
 <p>Some additional links:</p>
 <ul class="simple">
 <li>Rosjava/android_core
@@ -577,14 +578,30 @@ The <em>android_ip</em> is your Android device&#8217;s IP (<em>192.168.42.129</e
 <span class="n">adb</span> <span class="n">push</span> <span class="n">detector</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">data</span>
 </pre></div>
 </div>
-<p>Run <strong>touch</strong> Radler node on your Android device. On your workstation, connect to you Android device Via ADB.</p>
+<p>Run <strong>touch</strong> Radler node on your Android device. On your workstation, connect to you Android device via ADB.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">adb</span> <span class="n">shell</span>
+<span class="n">su</span>
+<span class="n">mount</span> <span class="o">-</span><span class="n">o</span> <span class="n">rw</span><span class="p">,</span><span class="n">remount</span> <span class="o">/</span>
+<span class="n">export</span> <span class="n">ROS_MASTER_URI</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.11</span><span class="p">:</span><span class="mi">11311</span>
+<span class="n">export</span> <span class="n">ROS_HOSTNAME</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.129</span>
 <span class="n">cd</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">data</span>
 <span class="o">./</span><span class="n">touch</span>
 </pre></div>
 </div>
-<p>Run <strong>detector</strong> Radler node on your Android device. First, download an Android application (.apk) for Terminal Emulator for Android (e.g., <a class="reference external" href="https://github.com/jackpal/Android-Terminal-Emulator">https://github.com/jackpal/Android-Terminal-Emulator</a>), and run it on your Android device. On the terminal emulator, run the following commands.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">data</span>
+<p>Run <strong>detector</strong> Radler node.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">adb</span> <span class="n">shell</span>
+<span class="n">su</span>
+<span class="n">export</span> <span class="n">ROS_MASTER_URI</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.11</span><span class="p">:</span><span class="mi">11311</span>
+<span class="n">export</span> <span class="n">ROS_HOSTNAME</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.129</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">data</span>
+<span class="o">./</span><span class="n">detector</span>
+</pre></div>
+</div>
+<p>Alternatively, run Radler node on your Android device. Download an Android application (.apk) for Terminal Emulator for Android (e.g., <a class="reference external" href="https://github.com/jackpal/Android-Terminal-Emulator">https://github.com/jackpal/Android-Terminal-Emulator</a>), and run it on your Android device. On the terminal emulator, run the following commands.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">su</span>
+<span class="n">export</span> <span class="n">ROS_MASTER_URI</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.11</span><span class="p">:</span><span class="mi">11311</span>
+<span class="n">export</span> <span class="n">ROS_HOSTNAME</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.129</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">data</span>
 <span class="o">./</span><span class="n">detector</span>
 </pre></div>
 </div>
