@@ -49,7 +49,7 @@ Execute a build with the Wrapper.
 
 If you are not using Android studio, you need to sign your unsigned apk *android_tutorial_pubsub-release-unsigned.apk* under *android\_tutorial\_pubsub/build/output/apk*, and install signed apk.
 
-:: 
+::
 
     cd /path/to/radler/examples/android/android_core/android_tutorial_pubsub/build/output/apk
     keytool -genkey -v -keystore debug.keystore -alias radler -keyalg RSA -keysize 2048 -validity 20000
@@ -60,6 +60,7 @@ For ease of testing, USB tethering can be used. Note that USB tethering is not r
 Enable USB tethering mode on your Android device. ``ifconfig`` on your workstation will show you the ``usb0`` interface.
 
 ::
+
     usb0  Link encap:Ethernet  HWaddr xx:xx:xx:xx:xx:xx
           inet addr:192.168.42.11  Bcast:192.168.42.255  Mask:255.255.255.0
 
