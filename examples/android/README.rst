@@ -7,10 +7,12 @@ Radler nodes (named as **gps**, **compass**, and **touch** on the workstation si
 The **controller** Radler node subscribes to topics from **gps**, **compass**, and **touch** Radler nodes, and controls volume of the Android ringtone by publishing ROS topic. 
 
 .. image:: sensor_pubsub_rqt_graph.png
+   :height: 340
 
 Demo #2 implements touchscreen event detection via ``getevent`` system command and displays on the window of terminal emulator application.
 
 .. image:: touch_detector_rqt_graph.png
+   :height: 70
 
 Some additional links:
 

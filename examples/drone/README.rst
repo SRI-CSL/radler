@@ -18,6 +18,7 @@ Demos using AR.Drone on ROS
   The **landing** node provides altitude-based landing, e.g., landing if the altitude is less than 50cm.  
 
 .. image:: sridrone_rqt_graph.png  
+   :height: 300
 
 This application uses code snippets from the following open source projects. 
 

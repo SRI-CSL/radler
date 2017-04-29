@@ -252,7 +252,7 @@ between front/bottom cameras.</div>
 The <strong>key</strong> node provides drone flight control using keyboard. The <strong>timer</strong> node provides timer-based drone flight control, e.g., landing after 2 seconds of hovering over 50cm.
 The <strong>landing</strong> node provides altitude-based landing, e.g., landing if the altitude is less than 50cm.</div>
 </div>
-<img alt="sridrone_rqt_graph.png" src="sridrone_rqt_graph.png" />
+<a class="reference internal image-reference" href="sridrone_rqt_graph.png"><img alt="sridrone_rqt_graph.png" src="sridrone_rqt_graph.png" style="height: 300px;" /></a>
 <p>This application uses code snippets from the following open source projects.</p>
 <ul class="simple">
 <li>ROS driver for Parrot AR-Drone 1.0 and 2.0 quadrocopters
@@ -361,6 +361,7 @@ the default IP address.</p>
 the <strong>led</strong> node
 subscribes to it to turn on the led light when the button is pressed.</div>
 </div>
+<a class="reference internal image-reference" href="raspberrypi_rqt_graph.png"><img alt="raspberrypi_rqt_graph.png" src="raspberrypi_rqt_graph.png" style="height: 70px;" /></a>
 <p>Some additional links:</p>
 <ul class="simple">
 <li>Raspberry Pi WiFi connection
@@ -462,9 +463,9 @@ export PATH=$PATH:/usr/local/opt/python-3.4.3/bin
 This demo is sensing GPS, compass, and touch screen coordinate from Android device, and publishing those under <strong>android_gps</strong>, <strong>android_compass</strong>, and <strong>android_touch</strong> topics, respectively.
 Radler nodes (named as <strong>gps</strong>, <strong>compass</strong>, and <strong>touch</strong> on the workstation side) are subscribing to corresponding topics and publishing them in Radler world.
 The <strong>controller</strong> Radler node subscribes to topics from <strong>gps</strong>, <strong>compass</strong>, and <strong>touch</strong> Radler nodes, and controls volume of the Android ringtone by publishing ROS topic.</p>
-<img alt="sensor_pubsub_rqt_graph.png" src="sensor_pubsub_rqt_graph.png" />
+<a class="reference internal image-reference" href="sensor_pubsub_rqt_graph.png"><img alt="sensor_pubsub_rqt_graph.png" src="sensor_pubsub_rqt_graph.png" style="height: 340px;" /></a>
 <p>Demo #2 implements touchscreen event detection via <code class="docutils literal"><span class="pre">getevent</span></code> system command and displays on the window of terminal emulator application.</p>
-<img alt="touch_detector_rqt_graph.png" src="touch_detector_rqt_graph.png" />
+<a class="reference internal image-reference" href="touch_detector_rqt_graph.png"><img alt="touch_detector_rqt_graph.png" src="touch_detector_rqt_graph.png" style="height: 70px;" /></a>
 <p>Some additional links:</p>
 <ul class="simple">
 <li>Rosjava/android_core

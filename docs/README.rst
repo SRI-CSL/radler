@@ -1,198 +1,128 @@
-Demos using Android  
-===================
+Demos using Raspberry Pi 2/B+ 
+=============================
 
-Demo #1 implements sensing (of GPS, compass, touch screen) and controlling (of speaker volume) of Android device via ROS-enabled Android application using Gradle-Android studio environment. 
-This demo is sensing GPS, compass, and touch screen coordinate from Android device, and publishing those under **android\_gps**, **android\_compass**, and **android\_touch** topics, respectively. 
-Radler nodes (named as **gps**, **compass**, and **touch** on the workstation side) are subscribing to corresponding topics and publishing them in Radler world. 
-The **controller** Radler node subscribes to topics from **gps**, **compass**, and **touch** Radler nodes, and controls volume of the Android ringtone by publishing ROS topic. 
+| The demo consists of two nodes **led**, and
+  **button**, and one topic **button\_status**. The **button** node publishes **button\_status** and
+  the **led** node
+  subscribes to it to turn on the led light when the button is pressed. 
 
-.. image:: sensor_pubsub_rqt_graph.png
-
-Demo #2 implements touchscreen event detection via ``getevent`` system command and displays on the window of terminal emulator application.
-
-.. image:: touch_detector_rqt_graph.png
+.. image:: raspberrypi_rqt_graph.png
+   :height: 70
 
 Some additional links:
 
--  Rosjava/android_core  
-   https://github.com/rosjava/android_core
--  Using native ROS code on Android 
-   http://wiki.ros.org/android_ndk
--  Android Studio  
-   https://developer.android.com/studio
--  Android NDK 
-   https://developer.android.com/ndk 
+-  Raspberry Pi WiFi connection  
+   https://learn.adafruit.com/adafruits-raspberry-pi-lesson-3-network-setup/setting-up-wifi-with-raspbian
+-  RPi easy SD card setup  
+   http://elinux.org/RPi_Easy_SD_Card_Setup
+-  Raspberry Pi GPIO 
+   https://www.raspberrypi.org/documentation/usage/gpio-plus-and-raspi2/
+-  Python on Debian Wheezy 
+   http://www.extellisys.com/articles/python-on-debian-wheezy
 
-Demo #1 Sensing and controlling of Android device via ROS-enabled Android application using Gradle-Android studio environment
-------------------------------------------------------------------------------------------------------------------------------
+Preparing your Raspberry Pi
+---------------------------
 
-Our example included in android\_core directory is based on the tutorial example (android\_tutorial\_pubsub) from 
-https://github.com/rosjava/android_core. 
+On your host Linux machine, insert the microSD card that comes with Raspberry Pi to extract its disk image.   
 
-Install Android studio, and import android\_core project to compile/generate/install signed apk file via Android studio (recommended). 
+::
 
-Alternatively, you can use Gradle command as below. 
+    lsblk 
+    sudo dd bs=4M if=/dev/sdb | gzip > raspbian.img.gz 
+    
+Now eject the microSD card that comes with Raspberry Pi, and insert a larger microSD card to copy the disk image.  
+
+::
+
+    unzip --stdout raspbian.img.gz | sudo dd bs=4M of=/dev/sdb
+    sudo sync
+
+Boot with a larger microSD to provide enough disk space for this demo (we recommend 16GBytes). Run the following command to expand the disk space. 
+
+::
+
+    sudo raspi-config 
+
+Preparing LED and Button
+------------------------
+
+Understand GPIO on Raspberry Pi. We use GPIO 4 and 17 for the LED output and for the Button input, respectively.  
+
+We use GPIOClass from http://www.hertaville.com/introduction-to-accessing-the-raspberry-pis-gpio-in-c.html. 
+
+Installing Radler on Raspberry Pi
+---------------------------------
+
+Install Python 3.4 on the Raspberry Pi. 
 
 :: 
 
-    cd /path/to/radler/examples/android/android_core
+    sudo apt-get install libncurses5-dev libncursesw5-dev libreadline6-dev
+    tar -zxf /path/to/your/Python-3.4.3.tgz
+    cd Python-3.4.3
+    ./configure --prefix=/usr/local/opt/python-3.4.3
+    make
+    sudo make install
+    export PATH=$PATH:/usr/local/opt/python-3.4.3/bin 
 
-Edit ``sdk.dir`` in *local.properties*.
+Install tarjan and pyyaml on the Raspberry Pi.  
+
+:: 
+
+    sudo pip3.4 install tarjan 
+    sudo pip3.4 install pyyaml 
+
+Install ROS Indigo on the Raspberry Pi. 
+
+Follow the instructions in Step 2 at http://wiki.ros.org/ROSberryPi.
+
+We recommend increasing the swapfile size of Raspberry Pi to 800MBytes (default is 100MBytes) by editing *CONF_SWAPSIZE* in */etc/dphys-swapfile*, and restart dphys-swapfile. 
+
+:: 
+
+    /etc/init.d/dphys-swapfile stop
+    /etc/init.d/dphys-swapfile start 
+
+CMake 2.8.12 or higher is required on the Raspberry Pi.
+
+:: 
+
+    wget http://www.cmake.org/files/v3.2/cmake-3.2.2.tar.gz
+    tar xf cmake-3.2.2.tar.gz
+    cd cmake-3.2.2
+    ./configure
+    make
+    sudo apt-get install checkinstall
+    sudo checkinstall
+    dpkg -i ~/cmake-3.2.2/cmake_3.2.2-1_armhf.deb 
+
+Run the demo on Raspberry Pi
+----------------------------
+
+Run ROS master on the Raspberry Pi. 
 
 ::
 
-    sdk.dir=/path/to/android/sdk
-
-Execute a build with the Wrapper.
-
-::
-
-    sudo ./gradlew
-
-If you are not using Android studio, you need to sign your unsigned apk *android_tutorial_pubsub-release-unsigned.apk* under *android\_tutorial\_pubsub/build/output/apk*, and install signed apk.
-
-::
-
-    cd /path/to/radler/examples/android/android_core/android_tutorial_pubsub/build/output/apk
-    keytool -genkey -v -keystore debug.keystore -alias radler -keyalg RSA -keysize 2048 -validity 20000
-    jarsigner -verbose -keystore debug.keystore android_tutorial_pubsub-release-unsigned.apk radler  
-    adb install  android_tutorial_pubsub-release-unsigned.apk
-
-For ease of testing, USB tethering can be used. Note that USB tethering is not required for deployment.
-Enable USB tethering mode on your Android device. ``ifconfig`` on your workstation will show you the ``usb0`` interface.
-
-::
-
-    usb0  Link encap:Ethernet  HWaddr xx:xx:xx:xx:xx:xx
-          inet addr:192.168.42.11  Bcast:192.168.42.255  Mask:255.255.255.0
-
-Set environment variables on your workstation.
-
-::
-
-    export ROS_MASTER_URI=http://192.168.42.11:11311
-    export ROS_HOSTNAME=192.168.42.11 
-
-Run ROS master on your workstation.
-
-::
-
+    export ROS_MASTER_URI=http://localhost:11311
     roscore 
 
-Edit *master_ip* in
-*examples/android/sensor\_pubsub/sensor\_pubsub.radl* if needed.  
+Edit ``target_link_libraries`` in packagen.py (under ralder/radlr/cgen).
 
-:: 
-    
-    DEFS 
-       master_ip: string "192.168.42.11" 
+::
 
-Run the sensor\_pubsub example. Note that when you open a new terminal to run Radler nodes, set environment variables (i.e., ROS_MASTER_URI and ROS_HOSTNAME).
+    target_link_libraries({lib_target} {lib_static_libs} rt)
+
+Run the raspberrypi example.  
 
 ::
 
     mkdir -p /tmp/catkin_ws/src
-    cd /path/to/radler
-    ./radler.sh --ws_dir /tmp/catkin_ws/src compile examples/android/sensor_pubsub/sensor_pubsub.radl --plant plant --ROS
-    cd /tmp/catkin_ws  
+    cd /path/to/radler 
+    ./radler.sh --ws_dir /tmp/catkin_ws/src compile examples/raspberrypi/raspberrypi.radl --plant plant --ROS 
+    cd /tmp/catkin_ws 
     catkin_make 
-    cd /tmp/catkin_ws/devel/lib/sensor_pubsub
-    ./gps 
-    ./compass 
-    ./touch  
-    ./controller 
-
-
-When you start **PubSubTutorial** application on your Android device, enter *Master_URI* as your workstation IP (*192.168.42.11* in this demo).
-You can now observe your compass and GPS coordinates on the top of the screen. When you touch the screen, the ringtone sound will be played with volume that is proportional to the ratio of current x-coordinate and screen width. 
-
-Demo #2 Touchscreen event detector using Android NDK  
-----------------------------------------------------
-
-Prepare build environment to build native ROS nodes using the Android NDK as described in http://wiki.ros.org/android_ndk/Tutorials/BuildingNativeROSPackages. *do\_docker.sh* takes some time to complete.  
-
-::
-
-    git clone https://github.com/ekumenlabs/roscpp_android.git
-    cd roscpp_android  
-    ./do_docker.sh
-
-Copy *do\_radler.sh* script to the Docker workspace for cross compilation of Radler nodes.  
-
-::
-
-    cp /path/to/radler/examples/android/do_radler.sh /path/to/roscpp_android/
-
-Edit *android\_ip* and *master_ip* in
-*examples/android/touch\_detector/touch\_detector.radl* if needed.  
-The *android\_ip* is your Android device's IP (*192.168.42.129* in this demo). The *master\_ip* is your workstation's IP (i.e., Ubuntu machine where you run ROS master; *192.168.42.11* in this demo). Refer to http://wiki.ros.org/ROS/EnvironmentVariables for further explanation.
-
-::
-
-    DEFS 
-       android_ip: string "192.168.42.129" 
-       master_ip: string "192.168.42.11" 
-
-Set environment variables on your workstation. 
-
-::
-
-    export ROS_MASTER_URI=http://192.168.42.11:11311
-    export ROS_HOSTNAME=192.168.42.11 
-
-Run ROS master on your workstation.
-
-::
-
-    roscore 
-
-Compile the touch\_detector example.
-
-::
-
-    cd /path/to/radler
-    ./radler.sh --ws_dir=/path/to/roscpp_android/output/catkin_ws/src compile examples/android/touch_detector/touch_detector.radl --plant plant --ROS
-    sudo docker run --rm=true -t -v /path/to/roscpp_android:/opt/roscpp_android -v /path/to/roscpp_android/output:/opt/roscpp_output -i ekumenlabs/rosndk /opt/roscpp_android/do_radler.sh /opt/roscpp_output
-
-Copy Radler nodes for the `touch\_detector` example.
-
-::
-
-    cd /path/to/roscpp_android/output/catkin_ws/devel/lib/touch_detector
-    adb push touch /data/data
-    adb push detector /data/data
-
-Run **touch** Radler node on your Android device. On your workstation, connect to you Android device via ADB.
-
-:: 
-
-    adb shell 
-    su
-    mount -o rw,remount /
-    export ROS_MASTER_URI=http://192.168.42.11:11311
-    export ROS_HOSTNAME=192.168.42.129
-    cd /data/data
-    ./touch      
-    
-Run **detector** Radler node.
-
-::
-
-    adb shell
-    su
-    export ROS_MASTER_URI=http://192.168.42.11:11311
-    export ROS_HOSTNAME=192.168.42.129
-    cd /data/data
-    ./detector
-
-Alternatively, run Radler node on your Android device. Download an Android application (.apk) for Terminal Emulator for Android (e.g., https://github.com/jackpal/Android-Terminal-Emulator), and run it on your Android device. On the terminal emulator, run the following commands.
-
-::  
-
-    su
-    export ROS_MASTER_URI=http://192.168.42.11:11311
-    export ROS_HOSTNAME=192.168.42.129
-    cd /data/data
-    ./detector
-
-Now you will see **O** on both windows (i.e., Android Terminal Emulator and ADB shell) when you touch your Android's screen. Otherwise **X** will be displayed. 
+    cd /tmp/catkin_ws/devel/lib/raspberrypi
+    sudo chown -v root.root led 
+    sudo chmod 4755 led 
+    ./led
+    ./button  

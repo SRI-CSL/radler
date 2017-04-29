@@ -6,6 +6,9 @@ Demos using Raspberry Pi 2/B+
   the **led** node
   subscribes to it to turn on the led light when the button is pressed. 
 
+.. image:: raspberrypi_rqt_graph.png
+   :height: 70
+
 Some additional links:
 
 -  Raspberry Pi WiFi connection  
