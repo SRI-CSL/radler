@@ -56,7 +56,7 @@ Since `pubsub` defines a plant, Radler has generated a launch file to run the re
 The simplest way of running it is to source the catkin workspace we just compiled and use `roslaunch`::
 
     source devel/setup.bash
-    roslaunch pubsub pubsud.plant.host_computer.launch
+    roslaunch pubsub pubsub.plant.host_computer.launch
 
 You should see the output of the two nodes explaining that they are communicating. For more details see `pubsub` example documentation. 
 
