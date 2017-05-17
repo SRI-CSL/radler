@@ -30,6 +30,7 @@ Key::Key() {
     cout << "   'u/d'   -- Up/Down            " << endl;
     cout << "   'l/r'   -- Move Left/Right    " << endl;
     cout << "   '[/]'   -- Turn Left/Right    " << endl;
+    cout << "   't'     -- Tag follwoing      " << endl;
 }
 
 void Key::step(const radl_in_t * in, const radl_in_flags_t* iflags,
@@ -39,7 +40,7 @@ void Key::step(const radl_in_t * in, const radl_in_flags_t* iflags,
 	key = getch(); 
 
 	if ( *RADL_THIS->print_data ) {
-        	cout << "key = " << (char)key << endl;
+        cout << "key = " << (char)key << endl;
 	}
 
 	out->key_event->key = key;
