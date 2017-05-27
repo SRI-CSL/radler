@@ -4,57 +4,100 @@
 
 #include <iostream>
 
+#include <image_transport/image_transport.h>
+#include <sensor_msgs/image_encodings.h>
+#include <cv_bridge/cv_bridge.h>
+#include <opencv2/highgui/highgui.hpp>
+
+using namespace std;
+using namespace cv;
+
+static const std::string SRC_WINDOW = "ardrone";
+static const std::string DST_WINDOW = "houghline";
+
 ardrone_autonomy::Navdata lastNavdataReceived; 
 
 void navdataCb(const ardrone_autonomy::NavdataConstPtr navdataPtr) {
 	lastNavdataReceived = *navdataPtr;
 }
 
+void process(const sensor_msgs::ImageConstPtr& mgs)
+{
+    cv_bridge::CvImageConstPtr cv_ptr;
+    cv_ptr = cv_bridge::toCvShare(mgs, sensor_msgs::image_encodings::RGB8);
+    
+    imshow(SRC_WINDOW,cv_ptr->image);
+
+    Mat dst, cdst;
+    Canny(cv_ptr->image, dst, 50, 200, 3);
+    cvtColor(dst, cdst, COLOR_GRAY2BGR);
+
+    vector<Vec4i> lines;
+    HoughLinesP(dst, lines, 1, CV_PI/180, 50, 50, 10 );
+    for( size_t i = 0; i < lines.size(); i++ )
+    {
+        Vec4i l = lines[i];
+        line( cdst, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0,0,255), 3, LINE_AA);
+    }
+
+    imshow(DST_WINDOW, cdst);
+
+    cvWaitKey(1);
+}
+
 SRIDrone::SRIDrone()
 {
 	navdata_sub = nh.subscribe<ardrone_autonomy::Navdata>("/ardrone/navdata", 10, navdataCb); 
-        if(!navdata_sub)
-                std::cout << "ERROR:: subscribe to /ardrone/navdata failed" << std::endl;
+    if(!navdata_sub)
+        cout << "ERROR:: subscribe to /ardrone/navdata failed" << endl;
+
+    image_transport::ImageTransport it(nh);
+    image_sub = it.subscribe("/ardrone/image_raw", 1, process);
+    if(!image_sub)
+        cout << "ERROR:: subscribe to /ardrone/image_raw failed" << endl;
+
+    namedWindow(SRC_WINDOW);
+    namedWindow(DST_WINDOW);
 }
 
 void SRIDrone::step(const radl_in_t * in, const radl_in_flags_t* iflags,
                  radl_out_t * out, radl_out_flags_t * oflags) 
 {
-        std::cout << "-----------------------------------" << std::endl;
+    cout << "-----------------------------------" << endl;
 
-        // Orientation
-        double roll  = lastNavdataReceived.rotX;
-        double pitch = lastNavdataReceived.rotY;
-        double yaw   = lastNavdataReceived.rotZ;
+    // Orientation
+    double roll  = lastNavdataReceived.rotX;
+    double pitch = lastNavdataReceived.rotY;
+    double yaw   = lastNavdataReceived.rotZ;
 
-        // Altitude
-        double altitude = lastNavdataReceived.altd;
+    // Altitude
+    double altitude = lastNavdataReceived.altd;
 
-        // Velocity
+    // Velocity
 	double v_x = lastNavdataReceived.vx; 
 	double v_y = lastNavdataReceived.vy; 
 	double v_z = lastNavdataReceived.vz; 
 
-        // Battery
-        int battery = lastNavdataReceived.batteryPercent;
+    // Battery
+    int battery = lastNavdataReceived.batteryPercent;
 
-        out->navdata->roll = roll;
-        out->navdata->pitch = pitch;
-        out->navdata->yaw = yaw;
+    out->navdata->roll = roll;
+    out->navdata->pitch = pitch;
+    out->navdata->yaw = yaw;
 
-        out->navdata->altitude = altitude;
-        out->navdata->vx = v_x;
-        out->navdata->vy = v_y;
-        out->navdata->vz = v_z;
+    out->navdata->altitude = altitude;
+    out->navdata->vx = v_x;
+    out->navdata->vy = v_y;
+    out->navdata->vz = v_z;
 
-        out->navdata->battery = battery;
+    out->navdata->battery = battery;
 
-        std::cout << "ardrone.roll  = " << roll  << " [deg]" << std::endl;
-        std::cout << "ardrone.pitch = " << pitch << " [deg]" << std::endl;
-        std::cout << "ardrone.yaw   = " << yaw   << " [deg]" << std::endl;
-        std::cout << "ardrone.altitude = " << altitude << " [m]" << std::endl;
-        std::cout << "ardrone.vx = " << v_x << " [m/s]" << std::endl;
-        std::cout << "ardrone.vy = " << v_y << " [m/s]" << std::endl;
-        std::cout << "ardrone.vz = " << v_z << " [m/s]" << std::endl;
-        std::cout << "ardrone.battery = " << battery << " [%]" << std::endl;
+    cout << "ardrone.roll  = " << roll  << " [deg]" << endl;
+    cout << "ardrone.pitch = " << pitch << " [deg]" << endl;
+    cout << "ardrone.yaw   = " << yaw   << " [deg]" << endl;
+    cout << "ardrone.altitude = " << altitude << " [m]" << endl;
+    cout << "ardrone.vx = " << v_x << " [m/s]" << endl;
+    cout << "ardrone.vy = " << v_y << " [m/s]" << endl;
+    cout << "ardrone.vz = " << v_z << " [m/s]" << endl;
+    cout << "ardrone.battery = " << battery << " [%]" << endl;
 }
