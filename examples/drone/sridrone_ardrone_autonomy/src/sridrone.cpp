@@ -7,6 +7,7 @@
 #include <image_transport/image_transport.h>
 #include <sensor_msgs/image_encodings.h>
 #include <cv_bridge/cv_bridge.h>
+#include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 
 using namespace std;
@@ -24,10 +25,15 @@ void navdataCb(const ardrone_autonomy::NavdataConstPtr navdataPtr) {
 void process(const sensor_msgs::ImageConstPtr& mgs)
 {
     cv_bridge::CvImageConstPtr cv_ptr;
-    cv_ptr = cv_bridge::toCvShare(mgs, sensor_msgs::image_encodings::RGB8);
+    try
+    {
+        cv_ptr = cv_bridge::toCvCopy(mgs, sensor_msgs::image_encodings::RGB8);
+    }
+    catch (cv_bridge::Exception& e)
+    {
+        return;
+    }
     
-    imshow(SRC_WINDOW,cv_ptr->image);
-
     Mat dst, cdst;
     Canny(cv_ptr->image, dst, 50, 200, 3);
     cvtColor(dst, cdst, COLOR_GRAY2BGR);
@@ -37,12 +43,14 @@ void process(const sensor_msgs::ImageConstPtr& mgs)
     for( size_t i = 0; i < lines.size(); i++ )
     {
         Vec4i l = lines[i];
-        line( cdst, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0,0,255), 3, LINE_AA);
+        line(cdst, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0,0,255), 3, LINE_AA);
     }
 
+    waitKey(1);
+    imshow(SRC_WINDOW, cv_ptr->image);
+    waitKey(1);
     imshow(DST_WINDOW, cdst);
-
-    cvWaitKey(1);
+    waitKey(1);
 }
 
 SRIDrone::SRIDrone()
@@ -51,13 +59,18 @@ SRIDrone::SRIDrone()
     if(!navdata_sub)
         cout << "ERROR:: subscribe to /ardrone/navdata failed" << endl;
 
-    image_transport::ImageTransport it(nh);
-    image_sub = it.subscribe("/ardrone/image_raw", 1, process);
-    if(!image_sub)
-        cout << "ERROR:: subscribe to /ardrone/image_raw failed" << endl;
+	if (*RADL_THIS->opencv_houghline) {
+        image_transport::ImageTransport it(nh);
+        image_sub = it.subscribe("/ardrone/image_raw", 1, process);
+        if(!image_sub)
+            cout << "ERROR:: subscribe to /ardrone/image_raw failed" << endl;
 
-    namedWindow(SRC_WINDOW);
-    namedWindow(DST_WINDOW);
+        waitKey(1);
+        namedWindow(SRC_WINDOW);
+        waitKey(1);
+        namedWindow(DST_WINDOW);
+        waitKey(1);
+    }
 }
 
 void SRIDrone::step(const radl_in_t * in, const radl_in_flags_t* iflags,

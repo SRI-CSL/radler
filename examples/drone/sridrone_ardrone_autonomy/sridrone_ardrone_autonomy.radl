@@ -42,6 +42,8 @@ camera_topic : topic { FIELDS
 }
 
 sridrone : node {
+    DEFS
+        opencv_houghline: bool false
     PUBLISHES
         navdata { TOPIC navdata_topic }
     SUBSCRIBES
