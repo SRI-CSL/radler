@@ -1,7 +1,14 @@
+opencv_lib : cmake_library {
+    PATH "/usr/local/share/OpenCV"
+    CMAKE_MODULE "OpenCV"
+    CMAKE_VAR_LIBRARIES "OpenCV_LIBRARIES"
+    CMAKE_VAR_INCLUDE_DIRS "OpenCV_INCLUDE_DIRS"
+}
+
 gtk2_lib : cmake_library {
-        CMAKE_MODULE "GTK2"
-        CMAKE_VAR_LIBRARIES "GTK2_LIBRARIES"
-        CMAKE_VAR_INCLUDE_DIRS "GTK2_INCLUDE_DIRS"
+    CMAKE_MODULE "GTK2"
+    CMAKE_VAR_LIBRARIES "GTK2_LIBRARIES"
+    CMAKE_VAR_INCLUDE_DIRS "GTK2_INCLUDE_DIRS"
 }
 
 ardrone_sdk_lib : cmake_library {
@@ -12,9 +19,9 @@ ardrone_sdk_lib : cmake_library {
 
 navdata_topic : topic {
     FIELDS
-	roll  	 : float32 0
-	pitch    : float32 0
-	yaw      : float32 0
+	    roll  	 : float32 0
+	    pitch    : float32 0
+	    yaw      : float32 0
         altitude : float32 0
         vx       : float32 0 
         vy       : float32 0 
@@ -24,29 +31,29 @@ navdata_topic : topic {
 
 led_topic : topic {
     FIELDS
-        id   : int16 0 
-	freq : float32 4
-	span : int16 5
+        id   : int16 0
+	    freq : float32 4
+	    span : int16 5
 }
 
 camera_topic : topic {
     FIELDS
-	mode : int16 0
+	    mode : int16 0
 }
 
 key_topic : topic {
     FIELDS
-	key : int16 0  
+	    key : int16 0
 }
 
 timer_topic : topic {
     FIELDS
-	expiry : bool false   
+	    expiry : bool false
 }
 
 landing_topic : topic {
     FIELDS
-	nearground : bool false   
+	    nearground : bool false
 }
 
 sridrone : node {
@@ -55,6 +62,7 @@ sridrone : node {
         show_image: bool true
         print_data: bool true  
         check_iflags: bool true   
+        opencv_houghline: bool true
     PATH "src"
     PUBLISHES
         navdata { TOPIC navdata_topic }
@@ -68,7 +76,7 @@ sridrone : node {
     CXX { HEADER   "sridrone.h"
           FILENAME "sridrone.cpp"
           CLASS "SRIDrone"
-    LIB ardrone_sdk_lib gtk2_lib }
+    LIB ardrone_sdk_lib gtk2_lib opencv_lib }
 }
 
 key : node {

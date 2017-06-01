@@ -3,7 +3,13 @@
 #include "key.h" 
 #include <iostream>
 
-using namespace std; 
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
+
+using namespace std;
+using namespace cv;
+
+static const string DST_WINDOW = "houghline";
 
 extern "C" {
 #define FFMPEG_SUPPORT 
@@ -212,9 +218,29 @@ inline C_RESULT display_stage_transform(display_stage_cfg_t *cfg, vp_api_io_data
 {
     cfg->frameBuffer = (uint8_t *) vp_os_realloc (cfg->frameBuffer, in->size);
   	vp_os_memcpy (cfg->frameBuffer, in->buffers[in->indexBuffer], in->size);
-	
-	if (gtkRunning == TRUE) 
+
+	if (gtkRunning == TRUE) {
        	gtk_widget_queue_draw_area (cfg->widget, 0, 0, 640, 360);
+
+	    if (*RADL_THIS->opencv_houghline) {
+            Mat src = Mat(cvSize(640,360),CV_16U, cfg->frameBuffer).clone();
+            Mat tmp, dst, cdst;
+
+            src.convertTo(tmp, CV_8U);
+            Canny(tmp, dst, 50, 200, 3);
+            cvtColor(dst, cdst, COLOR_GRAY2BGR);
+
+            vector<Vec4i> lines;
+            HoughLinesP(dst, lines, 1, CV_PI/180, 50, 50, 10 );
+            for( size_t i = 0; i < lines.size(); i++ )
+            {
+                Vec4i l = lines[i];
+                line(cdst, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0,0,255), 3, LINE_AA);
+            }
+
+            imshow(DST_WINDOW, cdst);
+        }
+    }
 
    	out->size = 0;
 
@@ -256,6 +282,14 @@ END_NAVDATA_HANDLER_TABLE
 
 SRIDrone::SRIDrone()
 {
+	if (*RADL_THIS->opencv_houghline) {
+        waitKey(1);
+        namedWindow(DST_WINDOW);
+        waitKey(1);
+        resizeWindow(DST_WINDOW, 640, 360);
+        waitKey(1);
+    }
+
    	while (-1 == getDroneVersion (".", *RADL_THIS->drone_ip, &ardroneVersion))
    	{
         cout << "Getting AR.Drone version ..." << endl;

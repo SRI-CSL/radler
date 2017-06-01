@@ -13,8 +13,8 @@
 using namespace std;
 using namespace cv;
 
-static const std::string SRC_WINDOW = "ardrone";
-static const std::string DST_WINDOW = "houghline";
+static const string SRC_WINDOW = "ardrone";
+static const string DST_WINDOW = "houghline";
 
 ardrone_autonomy::Navdata lastNavdataReceived; 
 

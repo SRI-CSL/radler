@@ -28,6 +28,8 @@ This application uses code snippets from the following open source projects.
   https://github.com/AutonomyLab/ardronelib
 - AR.FreeFlight/AR.Drone 2.0 SDK
   https://github.com/yolanother/AR.FreeFlight
+- OpenCV
+  https://github.com/opencv/opencv
 
 Some additional links:
 
@@ -37,6 +39,18 @@ Some additional links:
    http://developer.parrot.com/docs/SDK3/#how-to-build-the-sdk
 -  Control the AR.Drone LEDs
    http://gauth.fr/2011/09/control-the-ar-drone-leds/
+
+For both demos, OpenCV is required to find line with the Hough transform. In *.radl* file, edit *opencv\_houghline* to enable line detection.
+
+::
+
+    git clone https://github.com/opencv/opencv.git
+    cd /path/to/opencv
+    mkdir build
+    cd build
+    cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
+    make
+    sudo make install
 
 Demo #1 with sridrone\_ardronelib
 ---------------------------------
