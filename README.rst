@@ -3,15 +3,6 @@ Radler framework takes its inspiration from the Robot Operating System (ROS). In
 Getting Started 
 =============== 
 
-Radler framework takes its inspiration from the Robot
-Operating System (ROS). In Radler framework, the sensors,
-controllers, and actuators are constructed from functional
-units called nodes. Each node executes independently with a
-period determined by a local clock and scheduling constraints.
-Radler supports a publish/subscribe architecture where nodes
-communicate by publishing on certain topics and subscribing
-to other topics.
-
 Find the documentation at https://sri-csl.github.io/radler/
 
 To install  
@@ -19,9 +10,9 @@ To install
 
 To checkout repository::
 
-        git clone https://github.com/SRI-CSL/radler.git
-	cd radler
-	git submodule update --init --recursive
+    git clone https://github.com/SRI-CSL/radler.git
+    cd radler
+    git submodule update --init --recursive
 
 To get Radler working on a clean version of Ubuntu 14.04::
 

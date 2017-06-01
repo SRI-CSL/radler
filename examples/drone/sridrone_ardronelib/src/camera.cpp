@@ -1,5 +1,3 @@
-
-
 #include "ros/ros.h"
 #include "camera.h"
 #include <iostream>
@@ -25,10 +23,10 @@ void Camera::step(const radl_in_t * in, const radl_in_flags_t* iflags,
 
     if ( (pitch > 30.0) || (pitch < -30.0) ) {
         out->camera_param->mode = 1;
-        cout << "Bottom Camera" << endl;
+        cout << "Bottom Camera: pitch " << pitch << endl;
     }
     else {
         out->camera_param->mode = 0;
-        cout << "Front Camera" << endl;
+        cout << "Front Camera: pitch " << pitch << endl;
     }
 }
