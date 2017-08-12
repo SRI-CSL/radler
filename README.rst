@@ -17,7 +17,7 @@ To checkout repository::
 To get Radler working on a clean version of Ubuntu 14.04::
 
 	sudo apt-get install cmake python3-pip
-	sudo pip3 install tarjan
+	sudo pip3 install tarjan pyyaml
 
 To install ROS:: 
 
