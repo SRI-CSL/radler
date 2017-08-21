@@ -9,7 +9,8 @@
 using namespace std;
 using namespace cv;
 
-static const string DST_WINDOW = "houghline";
+static const string SRC_WINDOW = "camera_feed";
+static const string DST_WINDOW = "houghline_detection";
 
 extern "C" {
 #define FFMPEG_SUPPORT 
@@ -41,8 +42,6 @@ extern "C" {
 //Video 
 #include <ardrone_tool/Video/video_stage_decoder.h>
 #include <ardrone_tool/Video/video_stage.h>
-#include <gtk/gtk.h>
-#include <cairo.h>
 
 //teleop 
 #define _EPS 1.0e-6
@@ -159,58 +158,11 @@ typedef struct _display_stage_cfg_ {
     float bpp;
     vp_api_picture_t *decoder_info;
     uint8_t *frameBuffer;
-    GtkWidget *widget;
 } display_stage_cfg_t;
 display_stage_cfg_t dispCfg;
 
-bool_t gtkRunning = FALSE; 
-
-static gboolean
-on_expose_event (GtkWidget *widget, GdkEventExpose *event, gpointer data)
-{
-    display_stage_cfg_t *cfg = (display_stage_cfg_t *)data;
-    uint32_t stride = cfg->bpp * 640;
-
-    gtk_window_resize (GTK_WINDOW (widget), cfg->decoder_info->width, cfg->decoder_info->height);
-
-    cairo_t *cr = gdk_cairo_create (widget->window);
-    cairo_surface_t *surface = cairo_image_surface_create_for_data (cfg->frameBuffer, CAIRO_FORMAT_RGB16_565, 640, 360, stride);
-    cairo_set_source_surface (cr, surface, 0.0, 0.0);
-    cairo_paint (cr);
-    cairo_surface_destroy (surface);
-    cairo_destroy (cr);
-
-    return FALSE;
-}
-
-DEFINE_THREAD_ROUTINE(gtk, data)
-{
-   	GtkWidget *window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-
-   	display_stage_cfg_t *cfg = (display_stage_cfg_t *)data;
-   	cfg->widget = window;
-
-   	g_signal_connect (window, "expose-event", G_CALLBACK (on_expose_event), data);
-   	g_signal_connect (window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
-
-   	gtk_window_set_position (GTK_WINDOW (window), GTK_WIN_POS_CENTER);
-   	gtk_window_set_default_size (GTK_WINDOW (window), 10, 10);
-   	gtk_widget_set_app_paintable (window, TRUE);
-   	gtk_widget_set_double_buffered (window, FALSE);
-
-   	gtk_widget_show_all (window);
-	gtkRunning = TRUE; 
-	gtk_main(); 
-	gtkRunning = FALSE; 
-	
-	sleep(5);
-	exit(0);
-	return (THREAD_RET)0;
-}
-
 inline C_RESULT display_stage_open(display_stage_cfg_t *cfg) 
 {
-	START_THREAD (gtk, cfg);
 	return C_OK; 
 }
 
@@ -219,27 +171,27 @@ inline C_RESULT display_stage_transform(display_stage_cfg_t *cfg, vp_api_io_data
     cfg->frameBuffer = (uint8_t *) vp_os_realloc (cfg->frameBuffer, in->size);
   	vp_os_memcpy (cfg->frameBuffer, in->buffers[in->indexBuffer], in->size);
 
-	if (gtkRunning == TRUE) {
-       	gtk_widget_queue_draw_area (cfg->widget, 0, 0, 640, 360);
+	if (*RADL_THIS->opencv_houghline) {
+        Mat src = Mat(cvSize(640,360), CV_8UC4, cfg->frameBuffer, Mat::AUTO_STEP);
+        Mat tmp, dst, cdst;
 
-	    if (*RADL_THIS->opencv_houghline) {
-            Mat src = Mat(cvSize(640,360),CV_16U, cfg->frameBuffer).clone();
-            Mat tmp, dst, cdst;
+        src.convertTo(tmp, CV_8U);
+        Canny(tmp, dst, 50, 200, 3);
+        cvtColor(dst, cdst, COLOR_GRAY2BGR);
 
-            src.convertTo(tmp, CV_8U);
-            Canny(tmp, dst, 50, 200, 3);
-            cvtColor(dst, cdst, COLOR_GRAY2BGR);
-
-            vector<Vec4i> lines;
-            HoughLinesP(dst, lines, 1, CV_PI/180, 50, 50, 10 );
-            for( size_t i = 0; i < lines.size(); i++ )
-            {
-                Vec4i l = lines[i];
-                line(cdst, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0,0,255), 3, LINE_AA);
-            }
-
-            imshow(DST_WINDOW, cdst);
+        vector<Vec4i> lines;
+        HoughLinesP(dst, lines, 1, CV_PI/180, 50, 50, 10 );
+        for( size_t i = 0; i < lines.size(); i++ )
+        {
+            Vec4i l = lines[i];
+            line(cdst, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0,0,255), 3, LINE_AA);
         }
+
+		waitKey(1);
+        imshow(SRC_WINDOW, src);
+		waitKey(1);
+        imshow(DST_WINDOW, cdst);
+		waitKey(1);
     }
 
    	out->size = 0;
@@ -266,13 +218,10 @@ const vp_api_stage_funcs_t display_stage_funcs =
     (vp_api_stage_close_t)display_stage_close
 };
 
-PROTO_THREAD_ROUTINE (gtk, data);
-
 BEGIN_THREAD_TABLE
   	THREAD_TABLE_ENTRY( ardrone_control, 20 )
   	THREAD_TABLE_ENTRY( navdata_update, 20 )
   	THREAD_TABLE_ENTRY( video_stage, 20 )
-  	THREAD_TABLE_ENTRY( gtk, 20 )
 END_THREAD_TABLE
 
 BEGIN_NAVDATA_HANDLER_TABLE
@@ -284,11 +233,18 @@ SRIDrone::SRIDrone()
 {
 	if (*RADL_THIS->opencv_houghline) {
         waitKey(1);
+        namedWindow(SRC_WINDOW);
+        waitKey(1);
         namedWindow(DST_WINDOW);
+        waitKey(1);
+        resizeWindow(SRC_WINDOW, 640, 360);
         waitKey(1);
         resizeWindow(DST_WINDOW, 640, 360);
         waitKey(1);
     }
+	else {
+		cout << "opencv_houghline is disabled" << endl;
+	}
 
    	while (-1 == getDroneVersion (".", *RADL_THIS->drone_ip, &ardroneVersion))
    	{
@@ -323,10 +279,6 @@ SRIDrone::SRIDrone()
 	ardrone_tool_input_add(&teleop); 
 
 	if (*RADL_THIS->show_image) {
-		int argc=1; 
-		char **argv;
-		gtk_init(&argc,&argv);
-
 		ardrone_application_default_config.video_codec = (codec_type_t)H264_360P_CODEC;
 		ardrone_application_default_config.video_channel = (ZAP_VIDEO_CHANNEL)ZAP_CHANNEL_HORI;
 		ardrone_application_default_config.bitrate_ctrl_mode = 1;
@@ -341,11 +293,11 @@ SRIDrone::SRIDrone()
    		in_picture->height = 360; 
 
    		out_picture->framerate = 20; 
-   		out_picture->format = PIX_FMT_RGB565; 
+   		out_picture->format = PIX_FMT_BGRA;
    		out_picture->width = in_picture->width;
    		out_picture->height = in_picture->height;
 
-		uint32_t bpp = 2;
+		uint32_t bpp = 4;
    		out_picture->y_buf = (uint8_t *)vp_os_malloc ( out_picture->width * out_picture->height * bpp );
    		out_picture->cr_buf = NULL;
    		out_picture->cb_buf = NULL;
@@ -376,7 +328,7 @@ SRIDrone::SRIDrone()
    		params->needSetPriority = 0;
    		params->priority = 0;
 
-		START_THREAD(video_stage, params);
+		START_THREAD (video_stage, params);
 		video_stage_init();
 		video_stage_resume_thread(); 
 	}
