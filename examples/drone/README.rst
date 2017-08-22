@@ -113,6 +113,7 @@ https://github.com/AutonomyLab/ardrone\_autonomy.git.
 ::
 
     sudo apt-get install ros-indigo-ardrone-autonomy 
+    sudo apt-get install ros-indigo-image-view
 
 .. raw:: html
 
@@ -155,13 +156,13 @@ Run the sridrone\_ardrone\_autonomy example.
     ./led
     ./camera
 
-Run ros **image\_view** node to check the camera feed.
+You can also run ros **image\_view** node to check the camera feed or record it.
 
 ::
 
-    sudo apt-get install ros-indigo-image-view
     rosrun image_view image_view image:=/ardrone/front/image_raw
     rosrun image_view image_view image:=/ardrone/bottom/image_raw
+    rosrun image_view video_recorder image:="/ardrone/front/image_raw" _filename:="/tmp/video_front_camera.avi"
 
 Demo #3 object detection with PS-Drone and TensorFlow
 -----------------------------------------------------

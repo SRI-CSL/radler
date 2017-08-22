@@ -323,6 +323,7 @@ your drone&#8217;s IP if needed.</p>
 <p>Download and install ROS ardrone_driver from
 <a class="reference external" href="https://github.com/AutonomyLab/ardrone_autonomy.git">https://github.com/AutonomyLab/ardrone_autonomy.git</a>.</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">ros</span><span class="o">-</span><span class="n">indigo</span><span class="o">-</span><span class="n">ardrone</span><span class="o">-</span><span class="n">autonomy</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">ros</span><span class="o">-</span><span class="n">indigo</span><span class="o">-</span><span class="n">image</span><span class="o">-</span><span class="n">view</span>
 </pre></div>
 </div>
 <!--
@@ -356,10 +357,10 @@ the default IP address.</p>
 <span class="o">./</span><span class="n">camera</span>
 </pre></div>
 </div>
-<p>Run ros <strong>image_view</strong> node to check the camera feed.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">ros</span><span class="o">-</span><span class="n">indigo</span><span class="o">-</span><span class="n">image</span><span class="o">-</span><span class="n">view</span>
-<span class="n">rosrun</span> <span class="n">image_view</span> <span class="n">image_view</span> <span class="n">image</span><span class="p">:</span><span class="o">=/</span><span class="n">ardrone</span><span class="o">/</span><span class="n">front</span><span class="o">/</span><span class="n">image_raw</span>
+<p>You can also run ros <strong>image_view</strong> node to check the camera feed or record it.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rosrun</span> <span class="n">image_view</span> <span class="n">image_view</span> <span class="n">image</span><span class="p">:</span><span class="o">=/</span><span class="n">ardrone</span><span class="o">/</span><span class="n">front</span><span class="o">/</span><span class="n">image_raw</span>
 <span class="n">rosrun</span> <span class="n">image_view</span> <span class="n">image_view</span> <span class="n">image</span><span class="p">:</span><span class="o">=/</span><span class="n">ardrone</span><span class="o">/</span><span class="n">bottom</span><span class="o">/</span><span class="n">image_raw</span>
+<span class="n">rosrun</span> <span class="n">image_view</span> <span class="n">video_recorder</span> <span class="n">image</span><span class="p">:</span><span class="o">=</span><span class="s2">&quot;/ardrone/front/image_raw&quot;</span> <span class="n">_filename</span><span class="p">:</span><span class="o">=</span><span class="s2">&quot;/tmp/video_front_camera.avi&quot;</span>
 </pre></div>
 </div>
 </div>
