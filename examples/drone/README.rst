@@ -35,7 +35,7 @@ This application uses code snippets from the following open source projects.
 - OpenCV
   https://github.com/opencv/opencv
 - TensorFlow object detection
-  https://github.com/tensorflow/models/tree/master/object_detection  
+  https://github.com/tensorflow/models/tree/master/research/object_detection
 - PS-Drone 
   http://www.playsheep.de/drone
 
