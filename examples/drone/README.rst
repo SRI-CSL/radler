@@ -66,6 +66,7 @@ Demo #1 with sridrone\_ardronelib
 Compile up-to-date ardronelib sdk.
 
 ::
+
     sudo apt-get install libsdl1.2-dev
     sudo apt-get install libgtk2.0
     git submodule update --init --recursive 
