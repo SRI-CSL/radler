@@ -14,18 +14,18 @@ To checkout repository::
     cd radler
     git submodule update --init --recursive
 
-To get Radler working on a clean version of Ubuntu 14.04::
+To get Radler working on a clean version of Ubuntu 16.04::
 
 	sudo apt-get install cmake python3-pip
 	sudo pip3 install tarjan pyyaml
 
 To install ROS:: 
 
-	sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu trusty main" > /etc/apt/sources.list.d/ros-latest.list'
+	sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list'
 	wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
 	sudo apt-get update
-	sudo apt-get install ros-indigo-ros-base
-	(echo ; echo "# Setup for ROS" ; echo "source /opt/ros/indigo/setup.bash" ) >> ~/.bashrc
+	sudo apt-get install ros-kinetic-ros-base
+	(echo ; echo "# Setup for ROS" ; echo "source /opt/ros/kinetic/setup.bash" ) >> ~/.bashrc
 	source ~/.bashrc
 
 
