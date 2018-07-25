@@ -48,11 +48,11 @@ Some additional links:
 -  Control the AR.Drone LEDs
    http://gauth.fr/2011/09/control-the-ar-drone-leds/
 
-For Demos \#1 and \#2, OpenCV is required to find line with the Hough transform. In *.radl* file, edit *opencv\_houghline* to enable line detection.
+For Demos \#1 and \#2, OpenCV is required to find line with the Hough transform. In *.radl* file, edit *opencv\_houghline* to enable line detection. 
 
 ::
 
-    git clone https://github.com/opencv/opencv.git
+    git clone https://github.com/opencv/opencv.git or download source from https://github.com/opencv/opencv/releases/tag/3.4.2
     cd /path/to/opencv
     mkdir build
     cd build
