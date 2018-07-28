@@ -186,8 +186,8 @@ Install TensorFlow and related packages. For details, refer https://www.tensorfl
 
 ::
 
-    sudo apt-get install python-pip
-    sudo pip install -U pip
+    sudo apt-get install python3-pip
+    sudo pip3 install -U pip
     sudo pip install --upgrade setuptools
     sudo pip install --upgrade --target=/usr/lib/python2.7/dist-packages tensorflow
     sudo apt-get install --fix-missing python-matplotlib
