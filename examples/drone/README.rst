@@ -200,11 +200,11 @@ Download models built with TensorFlow.
     cd tensorflow
     git clone https://github.com/tensorflow/models.git
     
-Download a Single Shot Multibox Detector (SSD) with MobileNet model from `here <http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v1_coco_11_06_2017.tar.gz>`_, and untar to /path/to/tensorflow/models/object\_detection directory. 
+Download a Single Shot Multibox Detector (SSD) with MobileNet model from `here <http://download.tensorflow.org/models/object_detection/ssd_mobilenet_v1_coco_11_06_2017.tar.gz>`_, and untar to /path/to/tensorflow/models/research/object\_detection directory. 
 
 ::
     
-    tar zxvf ssd_mobilenet_v1_coco_11_06_2017.tar.gz -C /path/to/tensorflow/models/object_detection
+    tar zxvf ssd_mobilenet_v1_coco_11_06_2017.tar.gz -C /path/to/tensorflow/models/research/object_detection
 
 Download and install Protobuf.
 
