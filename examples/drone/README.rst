@@ -223,7 +223,7 @@ Compile Protobuf libraries.
 ::
 
     export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
-    cd /path/to/tensorflow/models
+    cd /path/to/tensorflow/models/research
     protoc object_detection/protos/*.proto --python_out=.
 
 Add to PYTHONPATH. 
