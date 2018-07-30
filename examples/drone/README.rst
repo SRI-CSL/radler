@@ -271,8 +271,8 @@ Create symbolic links to find model and label.
 ::
 
     cd /tmp/catkin_ws/devel/lib/sridrone_sridrone_pydrone_tf_obj_detection
-    ln -s /path/to/tensorflow/models/object_detection/data .
-    ln -s /path/to/tensorflow/models/object_detection/ssd_mobilenet_v1_coco_11_06_2017 .
+    ln -s /path/to/tensorflow/models/research/object_detection/data .
+    ln -s /path/to/tensorflow/models/research/object_detection/ssd_mobilenet_v1_coco_11_06_2017 .
 
 Run the example.
 
