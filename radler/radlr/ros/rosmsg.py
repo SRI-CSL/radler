@@ -39,7 +39,7 @@ from radler.radlr.types import StructType, ArrayType
 
 def struct_of_topic(struct_t):
     """ It adds the header fields used for ros topics """
-    fields = [('radl__flags', 'uint8')]
+    fields = [('radl_flags', 'uint8')]
     fields += struct_t.elems_t
     if infos.instrument_msg_timings:
         fields += instrumentation.msg_timings.msg_field_decl()
@@ -77,6 +77,7 @@ def collect(package_folder, package_name, ast, generate_all):
         #Store our findings in the node for future retrieval
         node._ros_msgtype_name = name
         node._ros_msgtype_header = header
+
         return visitor.node_red(node, s) #recursive call
 
     if generate_all:
@@ -109,7 +110,7 @@ def ros_msgdef(struct_t):
 
 def generate_msg_files(msgtogen):
     """ The msgtogen is a mapping (dict) from the data StructType to the msg
-    filename. The required extra msg fields (radl__flags, instrumentation, etc)
+    filename. The required extra msg fields (radl_flags, instrumentation, etc)
     are automatically added.
     @Returns the list of message files generated.
     """
@@ -119,6 +120,7 @@ def generate_msg_files(msgtogen):
         msgs.append(file)
         filecontent = ros_msgdef(struct_t)
         write_file(file, filecontent)
+
     return msgs
 
 def generate_all_msg_files(package_folder, package_name, ast):

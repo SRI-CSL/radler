@@ -47,22 +47,29 @@ def clear(d, templates):
 cmake_templates = {
 'cmakelists':
 """
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.5)
+
+set(CMAKE_CXX_FLAGS "${{CMAKE_CXX_FLAGS}} -std=c++14")
 
 project({package_name})
 
-find_package(catkin REQUIRED {ast_deps})
-
-catkin_package(LIBRARIES {ast} {libs})
+find_package(ament_cmake REQUIRED)
+{ast_deps_pkg}
 
 add_definitions(-DIN_RADL_GENERATED_CONTEXT)
+include_directories(
+{inc_dirs})
 """
 "{defs}"
 """
 {module_find_libs}
 add_library({ast} STATIC {ast_c_filename}{module_sources})
-target_include_directories({ast} PUBLIC include PRIVATE{module_includes})
-target_link_libraries({ast} ${{catkin_LIBRARIES}}{module_libs})
+target_include_directories({ast} 
+PUBLIC 
+  $<BUILD_INTERFACE:${{CMAKE_CURRENT_SOURCE_DIR}}/include>
+  $<INSTALL_INTERFACE:include>
+PRIVATE {module_includes})
+target_link_libraries({ast} {module_libs})
 target_compile_definitions({ast}
   PRIVATE RADL_MODULE_NAME={namespace}
   PRIVATE RADL_MODULE={ast_fun}\(\)
@@ -71,6 +78,21 @@ target_compile_definitions({ast}
 set_target_properties({ast} PROPERTIES radl_user_src
   ${{CMAKE_CURRENT_LIST_DIR}}/{user_src_folder}
 )
+
+ament_export_include_directories(include)
+ament_export_interfaces(export_{package_name})
+ament_export_libraries({package_name})
+
+ament_package()
+
+install(DIRECTORY include/
+  DESTINATION include)
+
+install(TARGETS {package_name}
+  EXPORT export_{package_name}
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
 
 """
 }
@@ -182,6 +204,14 @@ def do_pass(ast):
         build_deps.append(qn.package_ast(p))
 
     d['ast_deps'] = ' '.join(build_deps)
+    
+    ast_deps_pkg = ''
+    inc_dirs = ''
+    for p in build_deps:
+        ast_deps_pkg += 'find_package({0} REQUIRED)\n'.format(p)
+        inc_dirs += '${{{0}_INCLUDE_DIRS}}\n'.format(p) 
+    d['ast_deps_pkg'] = ast_deps_pkg 
+    d['inc_dirs'] = inc_dirs
 
     astfolder = ws_path(d['package_name'])
 

@@ -24,7 +24,7 @@ Created on Jun, 2014
 
 from radler.radlr.errors import internal_error
 from radler.radlr.workspace import ws_rospath
-
+import re 
 
 def qn_topic(qname):
     return qname.qname('/', root='/')
@@ -51,11 +51,22 @@ def msg_folder(package_folder):
 def msg_msg_file(package_folder, msg_name):
     return msg_folder(package_folder) / (msg_name + '.msg')
 
+def demangle(s):
+    pat = re.compile('^([A-Z])([a-zA-Z]+)(\d+)([A-Z])([a-zA-z]+)(\d+)([A-Z])([a-zA-Z]+)$', re.IGNORECASE)
+    retval = None
+    m =  pat.match(s)
+    if m:
+        retval = '{0}{1}{2}_{3}{4}{5}_{6}{7}'.format(m.group(1).lower(), m.group(2), m.group(3),
+                                                     m.group(4).lower(), m.group(5), m.group(6),
+                                                     m.group(7).lower(), m.group(8))
+    return retval
+
 def msg_cpp_header(msg_package_name, msg_name):
-    return msg_package_name + '/' + msg_name + '.h'
+    msg_name = demangle(msg_name) 
+    return msg_package_name + '/msg/' + msg_name + '.hpp'
 
 def msg_cpp_qname(msg_package_name, msg_name):
-    return msg_package_name + '::' + msg_name
+    return msg_package_name + '::msg::' + msg_name
 
 def msg_ros_qname(msg_package_name, msg_name):
     return msg_package_name + '/' + msg_name

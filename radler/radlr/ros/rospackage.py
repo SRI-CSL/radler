@@ -25,7 +25,7 @@ from radler.radlr import infos
 from radler.radlr.gen_utils import catkin_pkg
 from radler.radlr.ros import rosmsg, roscmake, rosutils, rosplant
 from radler.radlr.workspace import ws_rospath
-
+from radler.radlr.gen_utils import qn
 
 def do_pass(ast, plantinfo):
 
@@ -35,12 +35,15 @@ def do_pass(ast, plantinfo):
     ensure_dir(msg_folder) # Catkin is not happy without a msg folder
 
     # Generate the package.xml file
-    build_deps = ['message_generation', 'message_runtime', 'roscpp', 'radl_lib']
-    run_deps = ['message_runtime', 'roscpp']
+    build_deps = ['rmw_implementation', 'rclcpp', 'radl_lib']
+    run_deps = ['rosidl_default_runtime', 'rclcpp']
 
     # Modular compilation, we have to add dependencies
     for p in infos.loaded_modules:
         build_deps.append(p)
+        build_deps.append(qn.cmake_ast(p))
+
+    build_deps.append(qn.cmake_ast(ast._qname.rootmodule()))
 
     catkin_pkg.gen(package_folder, package_name, build_deps, run_deps)
 

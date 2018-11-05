@@ -26,7 +26,7 @@ from radler.radlr import infos
 
 
 package_xml_template = ("""<?xml version="1.0"?>
-<package>
+<package format="3">
   <name>{package}</name>
   <version>0.0.1</version>
   <description>Generated from {source}</description>
@@ -34,7 +34,12 @@ package_xml_template = ("""<?xml version="1.0"?>
   <license>GPL</license>"""
 "{build_deps}"
 """
-  <buildtool_depend>catkin</buildtool_depend>"""
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <buildtool_depend>rosidl_default_generators</buildtool_depend>
+  <member_of_group>rosidl_interface_packages</member_of_group>
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>"""
 "{run_deps}"
 """
 </package>
@@ -42,7 +47,7 @@ package_xml_template = ("""<?xml version="1.0"?>
 )
 
 run_dep_template = """
-  <run_depend>{package_dep}</run_depend>"""
+  <exec_depend>{package_dep}</exec_depend>"""
 
 build_dep_template = """
   <build_depend>{package_dep}</build_depend>"""

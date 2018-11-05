@@ -14,7 +14,8 @@
 
 #pragma once
 
-#include "ros/ros.h"
+//#include "ros/ros.h"
+#include "rclcpp/rclcpp.hpp"
 #include <stdint.h>
 
 namespace radl {
@@ -46,10 +47,12 @@ public:
 template <typename msg_type>
 class Default_pub {
 private:
-  ros::Publisher* pub;
+  //ros::Publisher* pub;
+  typename rclcpp::Publisher<msg_type>* pub;
 
 public:
-  Default_pub(ros::Publisher& pub) {
+  //Default_pub(ros::Publisher& pub) {
+  Default_pub(rclcpp::Publisher<msg_type>& pub) {
     this->pub = &pub;
   }
   void operator()(msg_type& msg) {
@@ -60,12 +63,14 @@ public:
 template <typename msg_type>
 class Default_pub_each {
 private:
-  ros::Publisher* pub;
+  //ros::Publisher* pub;
+  typename rclcpp::Publisher<msg_type>* pub;
   const unsigned int each;
   unsigned int each_counter;
 
 public:
-  Default_pub_each(ros::Publisher& pub, unsigned int each): each(each), each_counter(0) {
+  //Default_pub_each(ros::Publisher& pub, unsigned int each): each(each), each_counter(0) {
+  Default_pub_each(rclcpp::Publisher<msg_type>& pub, unsigned int each): each(each), each_counter(0) {
     this->pub = &pub;
   }
   void operator()(msg_type& msg) {

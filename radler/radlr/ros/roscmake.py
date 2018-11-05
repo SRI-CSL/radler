@@ -56,34 +56,47 @@ def clear(d, templates):
 
 cmake_templates = {
 'cmakeliststxt': """
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.5)
+
+set(CMAKE_CXX_FLAGS "${{CMAKE_CXX_FLAGS}} -std=c++14")
+
 project({module})
 
-find_package(catkin REQUIRED {find_modules} {ros_modules})
+find_package(ament_cmake REQUIRED)
+{find_modules_pkg}
+{ros_modules_pkg}
+find_package(rmw_implementation REQUIRED)
+find_package(rosidl_default_generators REQUIRED)
+find_package(rosidl_default_runtime REQUIRED)
+find_package(rosidl_typesupport_cpp REQUIRED)
 
 add_definitions(-DIN_RADL_GENERATED_CONTEXT)
 """
 "{msgs_gen}"
 """
-catkin_package(CATKIN_DEPENDS {run_modules})
 
 include_directories(
   include
-  PRIVATE ${{catkin_INCLUDE_DIRS}} src
+  PRIVATE 
+{inc_dir}
 )"""
 "{node_defs}"
 """
 
+ament_export_dependencies(rosidl_default_runtime)
+
+ament_package()
+
 install(TARGETS
   {to_install}
-  ARCHIVE DESTINATION ${{CATKIN_PACKAGE_LIB_DESTINATION}}
-  LIBRARY DESTINATION ${{CATKIN_PACKAGE_LIB_DESTINATION}}
-  RUNTIME DESTINATION ${{CATKIN_PACKAGE_BIN_DESTINATION}}
+  ARCHIVE DESTINATION lib 
+  LIBRARY DESTINATION lib 
+  RUNTIME DESTINATION bin 
 )
 
 install(FILES
   {extra_files}
-  DESTINATION ${{CATKIN_PACKAGE_SHARE_DESTINATION}}
+  DESTINATION share 
 )
 """
 }
@@ -93,8 +106,9 @@ install(FILES
 
 cmake_msgs_templates = {
 'msgs_gen':"""
-add_message_files(FILES {msg_files})
-generate_messages(DEPENDENCIES {ros_modules})
+rosidl_generate_interfaces({module}
+  {msg_dir}/{msg_files}
+)
 """
 }
 
@@ -113,13 +127,13 @@ node_templates_cmake_sublevel = {
 " {node_target}"
 ,
 'node_defs':"""
-get_target_property({node_user_src_var} {node_module_lib} radl_user_src)"""
+#get_target_property({node_user_src_var} {node_module_lib} radl_user_src)
+set({node_user_src_var} "/tmp/catkin_ws/src/radlast_6_pubsub/user_src")"""
 "{node_find_libs}"
 """
 add_executable({node_target} {node_sources})
 set_target_properties({node_target} PROPERTIES OUTPUT_NAME {node_name})
 target_include_directories({node_target} PUBLIC {node_dirs} PRIVATE {node_gen_folder})
-add_dependencies({node_target} {module}_generate_messages_cpp)
 target_compile_definitions({node_target}
   PRIVATE RADL_MODULE_NAME={node_modulename}
   PRIVATE RADL_MODULE={node_module_ast_fun}\(\)
@@ -132,8 +146,11 @@ target_compile_definitions({node_target}
   PRIVATE RADL_FINISH_FUN={node_user_finish_fun}
 )
 target_link_libraries({node_target}
-  ${{catkin_LIBRARIES}} {node_libs}
-)"""
+  {target_link_libs} {node_libs}
+)
+rosidl_target_interfaces({node_target}
+      {module} "rosidl_typesupport_cpp")
+"""
 }
 
 
@@ -164,6 +181,15 @@ def _from_node(visitor, node, d):
     d['node_libs'] = libs
     d['node_find_libs'] = find_libs
 
+    target_link_libs = ''
+    target_link_libs += '${{{0}_LIBRARIES}}\n'.format(qn.cmake_ast(nodemodule))
+    target_link_libs += '${radl_lib_LIBRARIES}\n'
+    target_link_libs += '${rclcpp_LIBRARIES}\n'
+    for p in infos.loaded_modules:
+        target_link_libs += '${{{0}_LIBRARIES}}\n'.format(qn.cmake_ast(p))
+
+    d['target_link_libs'] = target_link_libs
+
     app(d, node_templates_cmake_sublevel)
 
 
@@ -187,9 +213,33 @@ def gen(localroot, msg_list, msg_dir, ast, extra_files=None):
 
     toload = infos.loaded_modules
     loaded_modules = ' '.join(qn.cmake_ast(n) for n in toload)
-    d['find_modules'] = d['module_lib'] + ' radl_lib roscpp ' + loaded_modules
-    d['run_modules'] = ' roscpp'
+
+    d['find_modules'] = d['module_lib'] + ' radl_lib rclcpp ' + loaded_modules
+    find_modules_pkg = ''
+    find_modules_pkg += 'find_package({0} REQUIRED)\n'.format(qn.cmake_ast(ast._qname.rootmodule()))
+    find_modules_pkg += 'find_package(radl_lib REQUIRED)\n'
+    find_modules_pkg += 'find_package(rclcpp REQUIRED)\n'
+    for p in toload:
+        find_modules_pkg += 'find_package({0} REQUIRED)\n'.format(qn.cmake_ast(p))
+    d['find_modules_pkg'] = find_modules_pkg
+
+    inc_dir = ''
+    inc_dir += '${{{0}_INCLUDE_DIRS}}\n'.format(qn.cmake_ast(ast._qname.rootmodule()))
+    inc_dir += '${radl_lib_INCLUDE_DIRS}\n'
+    inc_dir += '${rclcpp_INCLUDE_DIRS}\n'
+    for p in toload:
+        inc_dir += '${{{0}_INCLUDE_DIRS}}\n'.format(qn.cmake_ast(p))
+        inc_dir += '${{{0}_INCLUDE_DIRS}}\n'.format(p)
+    inc_dir += 'src'
+    d['inc_dir'] = inc_dir
+
+    d['run_modules'] = ' rclcpp'
+
     d['ros_modules'] = ' '.join(n.name() for n in toload)
+    ros_modules_pkg = ''
+    for p in toload:
+        ros_modules_pkg += 'find_package({0} REQUIRED)\n'.format(p)
+    d['ros_modules_pkg'] = ros_modules_pkg
 
 # Trying to be smart make dependencies hard since otherwise we can't blindly
 # add any ros package as a message dependency.
@@ -197,9 +247,10 @@ def gen(localroot, msg_list, msg_dir, ast, extra_files=None):
 
     msg_files = (str(relative_path(m, msg_dir)) for m in msg_list)
     d['msg_files'] = listjoin(' ', msg_files)
+    d['msg_dir'] = msg_dir
     d['extra_files'] = listjoin(' ', extra_files) if extra_files else ''
-    d['find_modules'] += ' message_generation'
-    d['run_modules'] += ' message_runtime'
+#    d['find_modules'] += ' message_generation'
+#    d['run_modules'] += ' message_runtime'
 
     app(d, cmake_msgs_templates)
 

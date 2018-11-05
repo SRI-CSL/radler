@@ -25,7 +25,6 @@ Here we define what is a qualified name.
 
 from collections.abc import MutableMapping
 
-
 class ExistingIdent(Exception): pass
 class NonExistingIdent(KeyError):
     @property
@@ -71,6 +70,8 @@ class QualifiedName(tuple):
         """
         n = self[1]
         nn = str(len(n))
+        if manglespace == 'rosmsg': 
+            return ''.join(e for e in self[0].mangle(reserved_prefix, manglespace) + '_' + nn + '_' + n if e.isalnum()).title()
         return self[0].mangle(reserved_prefix, manglespace) + '_' + nn + '_' + n
     def generated(self):
         return self[2]
