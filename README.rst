@@ -19,37 +19,31 @@ To get Radler working on a clean version of Ubuntu 16.04::
 	sudo apt-get install cmake python3-pip
 	sudo pip3 install tarjan pyyaml
 
-To install ROS:: 
+To install ROS2, follow the instructions from https://index.ros.org/doc/ros2/Installation/
 
-	sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list'
-	wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
-	sudo apt-get update
-	sudo apt-get install ros-kinetic-ros-base
-	(echo ; echo "# Setup for ROS" ; echo "source /opt/ros/kinetic/setup.bash" ) >> ~/.bashrc
-	source ~/.bashrc
-
+To install colcon, follow the instructions from https://colcon.readthedocs.io/en/released/user/installation.html
 
 To compile and run  
 ----------------------------
 
 Compile
 ~~~~~~~~
-Radler generates files from the RADL file into a usual ROS catkin structure, then a call to `catkin_make` will generate the executables as usual.
+Radler generates files from the RADL file into a usual ROS2 structure, then a call to `colcon build` will generate the executables as usual.
 (e.g., see  `examples/pubsub/pubsub.radl`)::
 
-	mkdir -p /tmp/catkin_ws/src
-	./radler.sh --ws_dir /tmp/catkin_ws/src compile examples/pubsub/single_machine/pubsub.radl --plant plant --ROS
-	cd /tmp/catkin_ws
-	catkin_make
+	mkdir -p /tmp/ros2_ws/src
+	./radler.sh --ws_dir /tmp/ros2_ws/src compile examples/pubsub/single_machine/pubsub.radl --plant plant --ROS
+	cd /tmp/ros2_ws
+	colcon build
 
 Run
 ~~~~
 
-Since `pubsub` defines a plant, Radler has generated a launch file to run the requested nodes.
-The simplest way of running it is to source the catkin workspace we just compiled and use `roslaunch`::
+The simplest way of running it is to source the ros2 workspace we just compiled and invoke it by name directly::
 
-    source devel/setup.bash
-    roslaunch pubsub pubsub.plant.host_computer.launch
+    source install/local_setup.bash
+    ./install/pubsub/bin/listener
+    ./install/pubsub/bin/talker
 
 You should see the output of the two nodes explaining that they are communicating. For more details see `pubsub` example documentation. 
 
