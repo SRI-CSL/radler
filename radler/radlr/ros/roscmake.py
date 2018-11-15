@@ -128,7 +128,7 @@ node_templates_cmake_sublevel = {
 ,
 'node_defs':"""
 #get_target_property({node_user_src_var} {node_module_lib} radl_user_src)
-set({node_user_src_var} "/tmp/catkin_ws/src/radlast_6_pubsub/user_src")"""
+set({node_user_src_var} "/tmp/catkin_ws/src/{node_module_lib}/user_src")"""
 "{node_find_libs}"
 """
 add_executable({node_target} {node_sources})
@@ -145,6 +145,7 @@ target_compile_definitions({node_target}
   PRIVATE RADL_INIT_FUN={node_user_init_fun}
   PRIVATE RADL_FINISH_FUN={node_user_finish_fun}
 )
+target_compile_features({node_target} PUBLIC cxx_decltype_auto)
 target_link_libraries({node_target}
   {target_link_libs} {node_libs}
 )
