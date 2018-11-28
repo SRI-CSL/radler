@@ -128,7 +128,7 @@ node_templates_cmake_sublevel = {
 ,
 'node_defs':"""
 #get_target_property({node_user_src_var} {node_module_lib} radl_user_src)
-set({node_user_src_var} "/tmp/catkin_ws/src/{node_module_lib}/user_src")"""
+set({node_user_src_var} ${{CMAKE_CURRENT_SOURCE_DIR}}/../../{node_module_lib}/user_src)"""
 "{node_find_libs}"
 """
 add_executable({node_target} {node_sources})
