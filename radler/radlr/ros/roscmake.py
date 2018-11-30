@@ -107,7 +107,7 @@ install(FILES
 cmake_msgs_templates = {
 'msgs_gen':"""
 rosidl_generate_interfaces({module}
-  {msg_dir}/{msg_files}
+	{msg_dir_msg_files}
 )
 """
 }
@@ -249,6 +249,12 @@ def gen(localroot, msg_list, msg_dir, ast, extra_files=None):
     msg_files = (str(relative_path(m, msg_dir)) for m in msg_list)
     d['msg_files'] = listjoin(' ', msg_files)
     d['msg_dir'] = msg_dir
+
+    msg_dir_msg_files = ''
+    for m in msg_list:
+        msg_dir_msg_files += str(msg_dir) + '/' + str(relative_path(m, msg_dir)) + ' '
+    d['msg_dir_msg_files'] = msg_dir_msg_files
+
     d['extra_files'] = listjoin(' ', extra_files) if extra_files else ''
 #    d['find_modules'] += ' message_generation'
 #    d['run_modules'] += ' message_runtime'
