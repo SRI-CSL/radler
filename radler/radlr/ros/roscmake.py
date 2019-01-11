@@ -151,6 +151,8 @@ target_link_libraries({node_target}
 )
 rosidl_target_interfaces({node_target}
       {module} "rosidl_typesupport_cpp")
+
+ament_target_dependencies({node_target} "std_msgs" {module})
 """
 }
 
@@ -220,6 +222,7 @@ def gen(localroot, msg_list, msg_dir, ast, extra_files=None):
     find_modules_pkg += 'find_package({0} REQUIRED)\n'.format(qn.cmake_ast(ast._qname.rootmodule()))
     find_modules_pkg += 'find_package(radl_lib REQUIRED)\n'
     find_modules_pkg += 'find_package(rclcpp REQUIRED)\n'
+    find_modules_pkg += 'find_package(std_msgs REQUIRED)\n'
     for p in toload:
         find_modules_pkg += 'find_package({0} REQUIRED)\n'.format(qn.cmake_ast(p))
     d['find_modules_pkg'] = find_modules_pkg
@@ -228,6 +231,7 @@ def gen(localroot, msg_list, msg_dir, ast, extra_files=None):
     inc_dir += '${{{0}_INCLUDE_DIRS}}\n'.format(qn.cmake_ast(ast._qname.rootmodule()))
     inc_dir += '${radl_lib_INCLUDE_DIRS}\n'
     inc_dir += '${rclcpp_INCLUDE_DIRS}\n'
+    inc_dir += '${std_msgs_INCLUDE_DIRS}\n'
     for p in toload:
         inc_dir += '${{{0}_INCLUDE_DIRS}}\n'.format(qn.cmake_ast(p))
         inc_dir += '${{{0}_INCLUDE_DIRS}}\n'.format(p)

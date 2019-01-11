@@ -4,46 +4,43 @@
 
 #include RADL_HEADER
 
-#include "ros/ros.h"
-#include "std_msgs/Int32.h"
-#include "std_msgs/Float32.h"
+#include "rclcpp/rclcpp.hpp"
+#include "std_msgs/msg/int32.hpp"
+#include "std_msgs/msg/float32.hpp"
+
+std_msgs::msg::Float32::ConstSharedPtr out_mbox;
 
 class Gateway {
+private:
+  rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr pub;
+  rclcpp::Subscription<std_msgs::msg::Float32>::SharedPtr sub;
 public:
   Gateway() {
     //Uncomment if the gateway is used when radl doesn't use ROS backend.
-    //ros::init(n, NULL, "estop_gateway");
+    auto h = rclcpp::Node::make_shared("estop_gateway");
 
     //Declared sandbox publications
-    pub = h.advertise<std_msgs::Int32>("sandbox_input1", 2);
+    pub = h->create_publisher<std_msgs::msg::Int32>("sandbox_input1", rmw_qos_profile_default);
 
     // Declared sandbox subscriptions
-    sub = h.subscribe("sandbox_output1", 2, &Gateway::subhandler, this);
-  }
+    sub = h->create_subscription<std_msgs::msg::Float32>("sandbox_output1", subhandler, rmw_qos_profile_default);
+	}
 
-  void subhandler(const std_msgs::Float32::ConstPtr& msg) {
-    this->out_mbox = msg;
-  }
+  static void subhandler(const std_msgs::msg::Float32::ConstSharedPtr msg) {
+    out_mbox = msg;
+	}
 
-  void step(const radl_in_t* i, const radl_in_flags_t* i_f,
-            radl_out_t* o, radl_out_flags_t* o_f) {
+  void step(const radl_in_t* i, const radl_in_flags_t* i_f, radl_out_t* o, radl_out_flags_t* o_f) {
     //Forward inputs to sandbox
-    std_msgs::Int32 out_msg;
-    out_msg.data = i->input1->data;
-    this->pub.publish(out_msg);
+    auto out_msg = std::make_shared<std_msgs::msg::Int32>();
+    out_msg->data = i->input1->data;
+    this->pub->publish(out_msg);
 
     //Forward sandbox to outputs
-    if (this->out_mbox) {
-      o->output1->data = this->out_mbox->data;
+    if (out_mbox) {
+      o->output1->data = out_mbox->data;
     } else {
       radl_turn_on(radl_STALE, &o_f->output1);
     }
   }
-
-private:
-  ros::NodeHandle h;
-  ros::Publisher pub;
-  ros::Subscriber sub;
-  std_msgs::Float32::ConstPtr out_mbox;
 };
-
