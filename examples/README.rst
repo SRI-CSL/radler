@@ -1,10 +1,12 @@
-The following examples demonstrate the features of Radler.
+The following examples demonstrate the features of Radler, which work with both ROS and ROS2.
 
 - Pubsub: How to write pub/sub on single/multi machine 
 
 - House_thermo: Toy example of a distributed house heating system modeling
 
 - Controller_gateway: How to write a gateway to forward back and forth messages between Radler world and a local sandboxed ROS
+
+The following examples work with ROS.
 
 - Drone: AR.Drone demos using ardronelib sdk and ardrone_autonomy ROS driver
 
