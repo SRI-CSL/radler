@@ -26,7 +26,7 @@ listener : node {
 sys2 : linux {
   NODES_UID 1000
   IMG "linux.img"
-  IP 192.168.10.202
+  IP 10.211.55.4 
   NODES
    talker
 }
@@ -34,7 +34,7 @@ sys2 : linux {
 sys3 : linux {
   NODES_UID 1000
   IMG "linux.img"
-  IP 192.168.10.203
+  IP 10.211.55.11
   NODES
    listener 
 }
