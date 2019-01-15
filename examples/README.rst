@@ -1,4 +1,4 @@
-The following examples demonstrate the features of Radler, which work with both ROS and ROS2.
+The following examples demonstrate the features of Radler, which work with both ROS (master branch) and ROS2 (ros2 branch).
 
 - Pubsub: How to write pub/sub on single/multi machine 
 
@@ -6,7 +6,7 @@ The following examples demonstrate the features of Radler, which work with both 
 
 - Controller_gateway: How to write a gateway to forward back and forth messages between Radler world and a local sandboxed ROS
 
-The following examples work with ROS.
+The following examples work with ROS (master branch).
 
 - Drone: AR.Drone demos using ardronelib sdk and ardrone_autonomy ROS driver
 
