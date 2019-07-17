@@ -256,14 +256,16 @@ def gen(localroot, msg_list, msg_dir, ast, extra_files=None):
 
     msg_dir_msg_files = ''
     for m in msg_list:
-        msg_dir_msg_files += str(msg_dir) + '/' + str(relative_path(m, msg_dir)) + ' '
+#        msg_dir_msg_files += str(msg_dir) + '/' + str(relative_path(m, msg_dir)) + ' '
+        msg_dir_msg_files += 'msg/' + str(relative_path(m, msg_dir)) + ' '
     d['msg_dir_msg_files'] = msg_dir_msg_files
 
     d['extra_files'] = listjoin(' ', extra_files) if extra_files else ''
 #    d['find_modules'] += ' message_generation'
 #    d['run_modules'] += ' message_runtime'
 
-    app(d, cmake_msgs_templates)
+    if len(msg_list) > 0: 
+        app(d, cmake_msgs_templates)
 
     app(d, cmake_templates)
 
