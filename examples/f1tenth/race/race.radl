@@ -1,0 +1,95 @@
+curses_lib : cmake_library {
+  PATH "/usr/share/cmake-3.5/Modules"
+  CMAKE_MODULE "Curses"
+  CMAKE_VAR_LIBRARIES "CURSES_LIBRARIES"
+  CMAKE_VAR_INCLUDE_DIRS "CURSES_INCLUDE_DIRS"
+}
+
+settings : module_settings {
+  MODULE_BASE_PATH "src"
+}
+
+basic_rate : duration 50msec
+
+pid_input : topic {
+  FIELDS
+    value: float32 0.0 
+}
+
+drive_param : topic {
+  FIELDS
+    velocity : float32 0.0
+    angle    : float32 0.0
+}
+
+key_input : topic {
+  FIELDS
+    value: int16 0
+}
+
+dist_finder : node {
+  DEFS
+    horizon: float32 1.5 
+    desired_trajectory: float32 1.0
+  PUBLISHES
+    error { TOPIC pid_input }
+  PERIOD basic_rate
+  CXX { HEADER "dist_finder.h" FILENAME "dist_finder.cpp" CLASS "DistFinder" }
+}
+
+controller : node {
+  DEFS
+    kp: float32 14.0
+    kd: float32 0.09
+    vel_input: float32 8.0 
+    servo_offset: float32 0.0
+    servo_sensitivity: float32 4.0
+    esc_sensitivity: float32 8.0
+    max_speed: float32 10.0 
+    print_debug: bool false
+  PUBLISHES
+    drive_parameters { TOPIC drive_param }
+  SUBSCRIBES
+    teleop { TOPIC key_input MAXLATENCY 10msec } 
+    error { TOPIC pid_input MAXLATENCY 10msec } 
+  PERIOD basic_rate
+  CXX { HEADER "controller.h" FILENAME "controller.cpp" CLASS "Controller" }
+}
+
+talker : node {
+  SUBSCRIBES
+    drive_parameters { TOPIC drive_param MAXLATENCY 10msec }
+  PERIOD basic_rate
+  CXX { HEADER "talker.h" FILENAME "talker.cpp" CLASS "Talker" }
+}
+
+keyboard : node {
+  DEFS
+    max_speed: float32 10.0 
+  PUBLISHES
+    key { TOPIC key_input }
+  PERIOD 10msec
+  CXX { HEADER "keyboard.h" FILENAME "keyboard.cpp" CLASS "Keyboard" LIB curses_lib}
+}
+
+kill : node {
+  PERIOD basic_rate
+  CXX { HEADER "kill.h" FILENAME "kill.cpp" CLASS "Kill" LIB curses_lib}
+}
+
+sys1 : linux {
+  NODES_UID 1000
+  IMG "linux.img"
+  IP 10.42.0.1
+  NODES
+    controller
+    dist_finder
+    talker
+    keyboard
+    kill
+}
+
+plant : plant {
+  MACHINES
+    host_computer { OS sys1 }
+}
