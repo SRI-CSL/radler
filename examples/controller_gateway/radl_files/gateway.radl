@@ -33,6 +33,10 @@ actuator_node : node {
 # Gateway for controller node
 #
 
+std_msgs : cmake_library {
+  CMAKE_MODULE "std_msgs"
+}
+
 controller_gateway : node {
   PERIOD 1sec
   PUBLISHES output1 {
@@ -42,6 +46,6 @@ controller_gateway : node {
     TOPIC device_value
     MAXLATENCY 10msec
   }
-  CXX { HEADER "gateway.h" CLASS "Gateway" }
+  CXX { HEADER "gateway.h" CLASS "Gateway" LIB std_msgs }
 }
 

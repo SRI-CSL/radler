@@ -36,6 +36,9 @@ from radler.radlr.ros.rosutils import msg_cpp_qname, msg_cpp_header, msg_msg_fil
     msg_ros_qname
 from radler.radlr.types import StructType, ArrayType
 
+import os
+import subprocess
+from pathlib import Path
 
 def struct_of_topic(struct_t):
     """ It adds the header fields used for ros topics """
@@ -137,5 +140,14 @@ def generate_package_msg_files(package_folder, package_name, ast):
     package folder and name.
     @Returns the list of message files generated.
     """
+    msgs = []
+    if os.path.exists(str(infos.module_base_path) + '/msg'):
+        p=subprocess.call('cp -r ' + str(infos.module_base_path) + '/msg ' + str(package_folder), shell=True)
+    for root, dirs, files in os.walk(str(package_folder) + '/msg'):
+        for f in files:
+            msgs.append(Path(os.path.join(root, f)))
+
     msgtogen = collect(package_folder, package_name, ast, False)
-    return generate_msg_files(msgtogen)
+
+    msgs += generate_msg_files(msgtogen)
+    return msgs

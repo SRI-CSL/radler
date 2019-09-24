@@ -35,8 +35,8 @@ def do_pass(ast, plantinfo):
     ensure_dir(msg_folder) # Catkin is not happy without a msg folder
 
     # Generate the package.xml file
-    build_deps = ['rmw_implementation', 'rclcpp', 'radl_lib', 'std_msgs']
-    run_deps = ['rosidl_default_runtime', 'rclcpp', 'std_msgs']
+    build_deps = ['rmw_implementation', 'rclcpp', 'radl_lib']
+    run_deps = ['rosidl_default_runtime', 'rclcpp']
 
     # Modular compilation, we have to add dependencies
     for p in infos.loaded_modules:
