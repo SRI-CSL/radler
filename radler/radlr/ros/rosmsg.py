@@ -141,8 +141,8 @@ def generate_package_msg_files(package_folder, package_name, ast):
     @Returns the list of message files generated.
     """
     msgs = []
-    if os.path.exists(str(infos.module_base_path) + '/msg'):
-        p=subprocess.call('cp -r ' + str(infos.module_base_path) + '/msg ' + str(package_folder), shell=True)
+    if os.path.exists(str(infos.module_base_path) + '/../msg'):
+        p=subprocess.call('cp -r ' + str(infos.module_base_path) + '/../msg ' + str(package_folder), shell=True)
     for root, dirs, files in os.walk(str(package_folder) + '/msg'):
         for f in files:
             msgs.append(Path(os.path.join(root, f)))
