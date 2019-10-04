@@ -41,7 +41,7 @@ controller : node {
   DEFS
     kp: float32 14.0
     kd: float32 0.09
-    vel_input: float32 8.0 
+    vel_input: float32 8.8
     servo_offset: float32 0.0
     servo_sensitivity: float32 4.0
     esc_sensitivity: float32 8.0
