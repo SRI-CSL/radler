@@ -14,6 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with Radler.  If not, see <http://www.gnu.org/licenses/>.
 
-SCRIPT_DIR=`dirname $(python -c "import os, sys; print(os.path.realpath(\"$0\"))")`
+SCRIPT_DIR=`dirname $(python3 -c "import os, sys; print(os.path.realpath(\"$0\"))")`
 
 PYTHONPATH="$SCRIPT_DIR/external_libs/parsimonious:$SCRIPT_DIR/external_libs/pydot:$SCRIPT_DIR" python3.6 $SCRIPT_DIR/radler/main.py "$@"
