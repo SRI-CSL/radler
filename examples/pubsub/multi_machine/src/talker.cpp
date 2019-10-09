@@ -2,7 +2,7 @@
 #include <iostream>
 
 Talker::Talker() {
-  this->counter = 1;
+  this->counter = 0;
 }
 
 void Talker::step(const radl_in_t * in, const radl_in_flags_t* inflags,
