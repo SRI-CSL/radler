@@ -75,6 +75,7 @@ RUN apt-get install -y ros-dashing-desktop
 RUN apt-get install -y tmux 
 RUN apt-get install -y net-tools iputils-ping
 RUN apt-get install -y openssh-server openssh-client
+RUN apt-get install -y libncurses5-dev
 
 # install radler packages
 RUN apt-get update -y
