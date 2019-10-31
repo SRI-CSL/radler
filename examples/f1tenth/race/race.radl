@@ -39,7 +39,6 @@ drive_pwm : topic {
 	FIELDS
 		pwm_drive : int16 0
 		pwm_angle : int16 0
-	EXTERNAL_ROS_DEF { FULLNAME "race::msg::DriveValues" HEADER "race/msg/drive_values.hpp" }
 }
 
 dist_finder : node {
