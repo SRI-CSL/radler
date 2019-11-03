@@ -3,6 +3,7 @@ set -e
 
 # setup ros environment
 source "$ROS_PREFIX/$ROS_DISTRO/setup.bash"
+export ROS_IP=`hostname -i`
 
 # build radler pubsub example
 cd ~/radler 

@@ -23,6 +23,9 @@ RUN cd ~/radler ; git submodule update --init --recursive
 ENV ROS_WS /tmp/catkin_ws
 RUN mkdir -p $ROS_WS/src
 
+# setup ros_master_uri
+ENV ROS_MASTER_URI http://172.17.0.2:11311
+
 # setup entrypoint
 ENV ROS_DISTRO melodic 
 ENV ROS_PREFIX /opt/ros
