@@ -77,12 +77,12 @@ RUN apt-get install -y tmux
 RUN apt-get install -y net-tools iputils-ping
 RUN apt-get install -y openssh-server openssh-client
 RUN apt-get install -y libncurses5-dev
+RUN apt-get install -y --no-install-recommends vim-tiny
 
 # install radler packages
 RUN apt-get update -y
 RUN apt-get install -y cmake python3-pip
 RUN pip3 install tarjan pyyaml
-RUN apt-get install -y --no-install-recommends vim-tiny
 
 RUN cd ~ ; git clone https://github.com/SRI-CSL/radler.git
 RUN cd ~/radler ; git checkout ros2 ; git submodule update --init --recursive
