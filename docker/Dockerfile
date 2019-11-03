@@ -71,6 +71,7 @@ RUN colcon mixin add default \
 # install ros2 dashing 
 RUN apt-get update -y
 RUN apt-get install -y ros-dashing-desktop
+
 # install basics
 RUN apt-get install -y tmux 
 RUN apt-get install -y net-tools iputils-ping
