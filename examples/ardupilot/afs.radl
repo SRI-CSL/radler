@@ -1,0 +1,42 @@
+battery : topic {
+	FIELDS
+		percentage : float32 1
+}
+
+mode : topic {
+	FIELDS
+		land : bool false  
+}
+
+gateway : node {
+	PUBLISHES
+		battery_status { TOPIC battery }
+	SUBSCRIBES 
+		mode_change { TOPIC mode MAXLATENCY 100msec } 
+	PERIOD 100msec
+	PATH "src"
+	CXX { HEADER "gateway.h" FILENAME "gateway.cpp" CLASS "Gateway" }
+}	
+
+afs_battery : node {
+	PUBLISHES
+		mode_change { TOPIC mode } 
+	SUBSCRIBES 
+		battery_status { TOPIC battery MAXLATENCY 100msec }
+	PERIOD 100msec
+	PATH "src"
+	CXX { HEADER "afs_battery.h" FILENAME "afs_battery.cpp" CLASS "AFS_Battery" }
+}	
+
+plant : plant {
+	MACHINES
+		machine1 {
+			OS linux {
+				NODES_UID 1000
+        IMG "linux.img"
+        IP 192.168.1.202
+        NODES
+          gateway afs_battery 
+       }
+    }
+}
