@@ -48,12 +48,12 @@ void Gateway::step(const radl_in_t* i, const radl_in_flags_t* i_f, radl_out_t* o
 	}
 	radl_turn_off(radl_TIMEOUT, &o_f->altitude);
 
-	if (radl_is_stale(i_f->mode_change_althold))
-		cout << "mode_change_althold is stale" << endl;
-	if (radl_is_timeout(i_f->mode_change_althold))
-		cout << "mode_change_althold is timeout" << endl;
+	if (radl_is_stale(i_f->target_altitude))
+		cout << "target_altitude is stale" << endl;
+	if (radl_is_timeout(i_f->target_altitude))
+		cout << "target_altitude is timeout" << endl;
 	
-	if (!radl_is_stale(i_f->mode_change_althold) && !radl_is_timeout(i_f->mode_change_althold)) {
+	if (!radl_is_stale(i_f->target_altitude) && !radl_is_timeout(i_f->target_altitude)) {
 		if (i->target_altitude->hold) {
 			geometry_msgs::PoseStamped msg;
 			msg.pose.position.z = i->target_altitude->data;
@@ -62,6 +62,11 @@ void Gateway::step(const radl_in_t* i, const radl_in_flags_t* i_f, radl_out_t* o
 		}
 	}
 /*
+	if (radl_is_stale(i_f->mode_change_althold))
+		cout << "mode_change_althold is stale" << endl;
+	if (radl_is_timeout(i_f->mode_change_althold))
+		cout << "mode_change_althold is timeout" << endl;
+	
 	if (!radl_is_stale(i_f->mode_change_althold) && !radl_is_timeout(i_f->mode_change_althold)) {
 		if (i->mode_change_althold->val) {
 			srv_setMode.request.custom_mode = "ALT_HOLD";

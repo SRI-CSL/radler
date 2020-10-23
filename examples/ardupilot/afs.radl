@@ -50,7 +50,7 @@ afs_battery : node {
 }	
 
 afs_altitude : node {
-  DEFS 
+	DEFS 
 		max_alt : float64 30
 		min_alt : float64 20
 	PUBLISHES
