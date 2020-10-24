@@ -8,6 +8,11 @@ The step function of battery node controls mode to return to takeoff location wh
 The step function of gateway node forwards back-and-forth messages between Radler and ROS worlds on the companion computer.
 Radler build process generates the glue code for scheduling, communication, and failure detection such as timeout or stale.
 
+.. image:: rqt.png
+   :height: 200
+
+The above graph shows the nodes and topics used in this demo. Note that we are using ROS service to change the flight mode which is not shown here. Also gateway subscribes from the relative altitude topic which will be used for another Radler node for altitude-related control such as altitude hold.
+
 More information on Ardupilot can be found from ArduPilot Development Site https://ardupilot.org/dev/index.html.
 
 Install ROS/MAVROS (refer https://ardupilot.org/dev/docs/ros-install.html).
@@ -86,7 +91,7 @@ The battery status topic published in the ROS side is subscribed by the gateway 
   ./devel/lib/afs/gateway
   ./devel/lib/afs/battery
 
-On the simulator side (upper right window), change the Arducopter's mode to GUIDED, arm throttle, then takeoff to an altitude (e.g., 30 meters) and one can observe the console window changing battery level and altitude.
+On the simulator side (upper right window of below snapshot), change the Arducopter's mode to GUIDED, arm throttle, then takeoff to an altitude (e.g., 30 meters) and one can observe the console window changing battery level and altitude.
 
 ::
 
@@ -101,9 +106,11 @@ On the map (bottom left window), create a target position with altitude, then ob
 
 When the battery level hits below threshold (i.e., 90%) the mode change to return to takeoff location is published by battery node. The gateway node subscribes from it and calls ROS service to set custom mode of the Arducopter. Note that the mode change to RTL on the simulator side.
 
-On the map window, one can observe that the Arducopter heading to the takeoff location.
+On the map window of below snapshot, one can observe that the Arducopter heading to the takeoff location.
 
 The altitude value on the ground control console indicates that the Arducopter landing to the takeoff location.
 
 .. image:: rtl.png  
    :height: 300
+
+
