@@ -10,7 +10,7 @@ Radler build process generates the glue code for scheduling, communication, and 
 
 .. image:: rqt.png
   :scale: 10
-  :height: 100
+  :height: 50
 
 The above graph shows the nodes and topics used in this demo. Note that we are using ROS service to change the flight mode which is not shown here. Also gateway subscribes from the relative altitude topic which will be used for another Radler node for altitude-related control such as altitude hold.
 
