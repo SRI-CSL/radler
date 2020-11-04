@@ -16,10 +16,23 @@ The above graph shows the nodes and topics used in this demo. Note that we are u
 
 More information on Ardupilot can be found from ArduPilot Development Site https://ardupilot.org/dev/index.html.
 
+Set up SITL simulation environment (refer https://ardupilot.org/dev/docs/setting-up-sitl-using-vagrant.html).
+
+::
+
+  git clone https://github.com/ArduPilot/ardupilot.git
+  cd ardupilot
+  vagrant up
+  vagrant ssh
+  cd /vagrant
+  git submodule update --init --recursive
+  exit
+
 Install ROS/MAVROS (refer https://ardupilot.org/dev/docs/ros-install.html).
 
 ::
 
+  vagrant ssh
   sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu bionic main" > /etc/apt/sources.list.d/ros-latest.list'
   wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
   sudo apt-get update
@@ -33,17 +46,6 @@ Install ROS/MAVROS (refer https://ardupilot.org/dev/docs/ros-install.html).
   sudo apt-get install -y ros-melodic-rqt ros-melodic-rqt-common-plugins ros-melodic-rqt-robot-plugins
   sudo apt-get install -y python-catkin-tools
 
-Set up SITL simulation environment (refer https://ardupilot.org/dev/docs/setting-up-sitl-using-vagrant.html).
-
-::
-
-  git clone https://github.com/ArduPilot/ardupilot.git
-  cd ardupilot
-  vagrant up
-  vagrant ssh
-  cd /vagrant
-  git submodule update --init --recursive
-  exit
 
 Start SITL simulator.
 
