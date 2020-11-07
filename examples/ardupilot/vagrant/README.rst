@@ -44,7 +44,7 @@ Connect MAVROS with SITL.
 
 Left two windows of the below snapshot show the ground control console and map of the environment launched from the SITL simulator on the top right window. On the right bottom window, one can observe some verbose that reads the Arducopter's configuration, which indicates a connection.
 
-.. image:: sitl_mavros.png  
+.. image:: ../sitl_mavros.png  
    :height: 300
 
 Launch Radler nodes (in different terminals for more clarity). 
@@ -65,7 +65,7 @@ On the simulator side (upper right window of below snapshot), change the Arducop
 
 On the map (bottom left window), create a target position with altitude, then observe the Arducopter flying to the target.
 
-.. image:: takeoff.png  
+.. image:: ../takeoff.png  
    :height: 300
 
 When the battery level hits below threshold (i.e., 90%) the mode change to return to takeoff location is published by battery node. The gateway node subscribes from it and calls ROS service to set custom mode of the Arducopter. Note that the mode change to RTL on the simulator side.
@@ -74,5 +74,5 @@ On the map window of below snapshot, one can observe that the Arducopter heading
 
 The altitude value on the ground control console indicates that the Arducopter landing to the takeoff location.
 
-.. image:: rtl.png  
+.. image:: ../rtl.png  
    :height: 300
