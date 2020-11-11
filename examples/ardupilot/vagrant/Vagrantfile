@@ -135,6 +135,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh -O ~/install_geographiclib_datasets.sh
       chmod a+x ~/install_geographiclib_datasets.sh
       sudo ~/install_geographiclib_datasets.sh
+      (echo ; echo "# Setup for ROS" ; echo "source /opt/ros/melodic/setup.bash" ) >> ~/.bashrc
       (echo ; echo "# Setup for ROS" ; echo "source /opt/ros/melodic/setup.bash" ) >> ~/.profile
       source ~/.profile
       mkdir -p ~/ardupilot_ws/src/launch
@@ -145,9 +146,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       git clone https://github.com/SRI-CSL/radler.git
       cd radler
       git submodule update --init --recursive
-      mkdir -p /tmp/catkin_ws/src
-      ./radler.sh --ws_dir /tmp/catkin_ws/src compile examples/ardupilot/afs.radl --plant plant --ROS
-      cd /tmp/catkin_ws
+      mkdir -p ~/catkin_ws/src
+      ./radler.sh --ws_dir ~/catkin_ws/src compile examples/ardupilot/afs.radl --plant plant --ROS
+      cd ~/catkin_ws
       catkin_make
     SCRIPT
     bionic64.vm.provision "shell", inline: $descert, privileged: false
