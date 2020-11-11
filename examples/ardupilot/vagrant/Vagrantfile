@@ -43,6 +43,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # removing this line causes "A box must be specified." error
   # and this is the default box that will be booted if no name is specified
   config.vm.box = "ubuntu/bionic64"
+  config.vm.synced_folder ".", "/vagrant", type: "rsync"
 
   # LTS, EOL April, 2019:
   config.vm.define "trusty32", autostart: false do |trusty32|
