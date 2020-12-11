@@ -1,3 +1,9 @@
+jni : cmake_library {
+	CMAKE_MODULE "JNI"
+	CMAKE_VAR_LIBRARIES "JNI_LIBRARIES"
+	CMAKE_VAR_INCLUDE_DIRS "JNI_INCLUDE_DIRS"
+}
+
 battery : topic {
 	FIELDS
 		percentage : float32 1
@@ -63,6 +69,14 @@ afs_altitude : node {
 	CXX { HEADER "afs_altitude.h" FILENAME "afs_altitude.cpp" CLASS "AFS_Altitude" }
 }	
 
+afs_log : node {
+	SUBSCRIBES
+		altitude { TOPIC rel_alt MAXLATENCY 100msec }
+	PERIOD 100msec
+	PATH "src"
+	CXX { HEADER "afs_log.h" FILENAME "afs_log.cpp" CLASS "AFS_Log" LIB jni }
+}
+
 plant : plant {
 	MACHINES
 		machine1 {
@@ -71,7 +85,7 @@ plant : plant {
 				IMG "linux.img"
 				IP 192.168.1.202
 				NODES
-					gateway afs_battery afs_altitude
+					gateway afs_battery afs_altitude afs_log
 			}
 		}
 }
