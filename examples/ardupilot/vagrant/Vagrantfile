@@ -129,6 +129,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       apt-get install -y ros-melodic-rqt ros-melodic-rqt-common-plugins ros-melodic-rqt-robot-plugins
       apt-get install -y python-catkin-tools
       apt-get install -y cmake python3-pip
+      apt-get install -y default-jdk
       pip3 install tarjan pyyaml pydot
     SHELL
 
