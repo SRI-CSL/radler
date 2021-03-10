@@ -16,6 +16,47 @@ AFS_Log::AFS_Log()
 	jint res = JNI_CreateJavaVM(&vm, (void **)&this->env, &this->vm_args);
 	if (res != JNI_OK) 
 		cout << "JVM creation failed with ERROR CODE " << res << endl;
+
+  auto t = std::time(nullptr);
+  auto tm = *std::localtime(&t);
+  std::ostringstream oss;
+  oss << std::put_time(&tm, "afs.log-%m-%d-%Y-%H-%M-%S");
+  auto fn = oss.str();
+
+  jclass cls;
+  jfieldID fid;
+  jobject obj;
+  jmethodID mid;
+  jstring jstr;
+
+  jstr = env->NewStringUTF(fn.c_str());
+
+  cls = env->FindClass("java/lang/System");
+  if (cls == 0) {
+    cout << "FindClass java/lang/System failed" << endl;
+    return;
+  }
+  fid = env->GetStaticFieldID(cls, "out", "Ljava/io/PrintStream;");
+  if (fid == 0) {
+    cout << "GetStaticFieldID out java/io/PrintStream failed" << endl;
+    return;
+  }
+  obj = env->GetStaticObjectField(cls, fid);
+  if (obj == 0) {
+    cout << "GetStaticObjectField failed" << endl;
+    return;
+  }
+  cls = env->GetObjectClass(obj);
+  if (cls == 0) {
+    cout << "GetObjectClass failed" << endl;
+    return;
+  }
+  mid = env->GetMethodID(cls, "<init>", "(Ljava/lang/String;)V");
+  if (mid == 0) {
+    cout << "GetMethodID <init> failed" << endl;
+    return;
+  }
+  env->CallVoidMethod(obj, mid, jstr);
 }
 
 void AFS_Log::step(const radl_in_t * i, const radl_in_flags_t* i_f, radl_out_t * o, radl_out_flags_t* o_f) 
@@ -38,28 +79,28 @@ void AFS_Log::step(const radl_in_t * i, const radl_in_flags_t* i_f, radl_out_t *
 
 	cls = env->FindClass("java/lang/System");
 	if (cls == 0) {
-		cout << "java/lang/System lookup failed" << endl;
+		cout << "FindClass java/lang/System failed" << endl;
 		return;
 	}
 	fid = env->GetStaticFieldID(cls, "out", "Ljava/io/PrintStream;");
 	if (fid == 0) {
-		cout << "java/lang/System::out lookup failed" << endl;
+		cout << "GetStaticFieldID out java/io/PrintStream failed" << endl;
 		return;
 	}
 	obj = env->GetStaticObjectField(cls, fid);
 	if (obj == 0) {
-		cout << "GetStaticObjectField call failed" << endl;
+		cout << "GetStaticObjectField failed" << endl;
 		return;
 	}
 	cls = env->GetObjectClass(obj);
 	if (cls == 0) {
-		cout << "GetObjectClass(out) failed" << endl;
+		cout << "GetObjectClass failed" << endl;
 		return;
 	}
 	mid = env->GetMethodID(cls, "println", "(Ljava/lang/String;)V");
 	if (mid == 0) {
-		cout << "println method lookup failed" << endl;
+		cout << "GetMethodID println failed" << endl;
 		return;
-	}
-	env->CallVoidMethod(obj, mid, jstr);
+  }
+  env->CallVoidMethod(obj, mid, jstr);
 }
