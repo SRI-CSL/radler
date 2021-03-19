@@ -1,4 +1,4 @@
-Radler framework takes its inspiration from the Robot Operating System (ROS). In Radler framework, the sensors, controllers, and actuators are constructed from functional units called nodes. Each node executes independently with a period determined by a local clock and scheduling constraints. Radler supports a publish/subscribe architecture where nodes communicate by publishing on certain topics and subscribing to other topics.
+Radler framework takes its inspiration from the Robot Operating System (ROS). In Radler framework, the sensors, controllers, and actuators are constructed from functional units called nodes. Each node executes independently with a period determined by a local clock and scheduling constraints. Radler supports a publish/subscribe architecture where nodes communicate by publishing on certain topics and subscribing to other topics. Radler uses ROS as a backend, i.e., each node and communication channels are dynamically setup by ROS.
 
 Getting Started 
 =============== 
