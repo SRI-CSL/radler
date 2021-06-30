@@ -8,6 +8,7 @@ Gateway::Gateway()
 {
 	mode_srv = nh.serviceClient<mavros_msgs::SetMode>("/mavros/set_mode");
 	bat_sub = nh.subscribe("/mavros/battery", 2, &Gateway::battery_state_cb, this);
+  pos_sub = nh.subscribe("/mavros/global_position/local", 2, &Gateway::position_cb, this);
 	alt_sub = nh.subscribe("/mavros/global_position/rel_alt", 2, &Gateway::altitude_cb, this);
 	alt_pub = nh.advertise<geometry_msgs::PoseStamped>("/mavros/setpoint_position/local", 2);
 }
@@ -38,6 +39,16 @@ void Gateway::step(const radl_in_t* i, const radl_in_flags_t* i_f, radl_out_t* o
 		}
 		mode_srv.call(srv_setMode);
 	}
+
+  if (this->pos_out_mbox) {
+    o->position->x = this->pos_out_mbox->pose.pose.position.x;
+    o->position->y = this->pos_out_mbox->pose.pose.position.y;
+    cout << "gateway pos : " << o->position->x << " " << o->position->y << endl;
+    radl_turn_off(radl_STALE, &o_f->position);
+  } else {
+    radl_turn_on(radl_STALE, &o_f->position);
+  }
+  radl_turn_off(radl_TIMEOUT, &o_f->position);
 
 	if (this->alt_out_mbox) {
 		o->altitude->data = this->alt_out_mbox->data;
@@ -81,6 +92,11 @@ void Gateway::step(const radl_in_t* i, const radl_in_flags_t* i_f, radl_out_t* o
 void Gateway::battery_state_cb(const sensor_msgs::BatteryState::ConstPtr& bs) 
 {
 	this->bat_out_mbox = bs;
+}
+
+void Gateway::position_cb(const nav_msgs::Odometry::ConstPtr& pos)
+{
+  this->pos_out_mbox = pos;
 }
 
 void Gateway::altitude_cb(const std_msgs::Float64::ConstPtr& alt) 

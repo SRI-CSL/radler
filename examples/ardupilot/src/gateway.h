@@ -6,6 +6,7 @@
 #include <std_msgs/Float64.h>
 #include <mavros_msgs/SetMode.h>
 #include <geometry_msgs/PoseStamped.h>
+#include <nav_msgs/Odometry.h>
 
 class Gateway 
 {
@@ -20,6 +21,10 @@ private:
  	ros::Subscriber bat_sub;
  	sensor_msgs::BatteryState::ConstPtr bat_out_mbox;
 	void battery_state_cb(const sensor_msgs::BatteryState::ConstPtr& bs);
+
+  ros::Subscriber pos_sub;
+  nav_msgs::Odometry::ConstPtr pos_out_mbox;
+  void position_cb(const nav_msgs::Odometry::ConstPtr& pos);
 
  	ros::Subscriber alt_sub;
  	std_msgs::Float64::ConstPtr alt_out_mbox;
