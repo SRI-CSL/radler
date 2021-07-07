@@ -108,8 +108,8 @@ public class PointDistance
 		connect(point_source, OUTPUT, fork, INPUT);
 		
 		/* The first path is plugged directly as the first argument of a 
-         * function processor that computes the Euclidean distance between
-         * two points. */
+         	 * function processor that computes the Euclidean distance between
+        	 * two points. */
 		ApplyFunction distance_proc = new ApplyFunction(new Distance());
 		connect(fork, LEFT, distance_proc, LEFT);
 		
