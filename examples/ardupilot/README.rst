@@ -116,4 +116,53 @@ The altitude value on the ground control console indicates that the Arducopter l
 .. image:: rtl.png  
    :height: 300
 
+For the inception of Java code in the step function, we provide a use-case with Java Native Interface (JNI). The step function of esp (event stream processing) node calculates point distance between two successive (x,y) positions. BeepBeep (https://liflab.github.io/beepbeep-3/) is used for event stream processing engine. The *afs.radl* includes *cmake_library* information for JNI. JVM creation should be in the class constructor (refer *afs\_esp.h*) and JNI calls in the step function (refer *afs\_esp.cpp*). 
 
+To install JDK: 
+
+:: 
+
+  sudo apt-get install default-jdk
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-11-openjdk-amd64/lib/server/
+
+To install BeepBeep:
+
+::
+
+  sudo apt-get install ant
+  cd ~
+  git clone https://github.com/liflab/beepbeep-3.git
+  cd beepbeep-3
+  ant download-deps
+  ant
+  cd ..
+  git clone https://github.com/liflab/beepbeep-3-palettes.git
+  cd beepbeep-3-palettes
+  ant download-deps
+  ant
+  ant (need twice for dependency)
+  cd ..
+  git clone https://github.com/liflab/beepbeep-3-examples.git
+  cd beepbeep-3-examples
+  edit config.xml
+    <zip>https://github.com/liflab/beepbeep-3-palettes/releases/download/v20181124/beepbeep-3-palettes-v20181124.zip</zip>
+    to 
+    <zip>https://github.com/liflab/beepbeep-3-palettes/releases/download/20181124/beepbeep-3-palettes-v20181124.zip</zip>
+  mkdir Core/src
+  mkdir doc
+  ant
+
+To compile Java-side code:
+
+::
+
+  cd /path/to/radler/examples/ardupilot/jni
+  javac -cp dep:~/beepbeep-3-examples/beepbeep-3-examples.jar PointDistance.java
+ 
+To run, edit Java class path (*-Djava.class.path*) in *afs\_esp.cpp* and execute *catkin_make* if needed. The default is *vagrant* user.
+
+::
+
+  cd /tmp/catkin_ws
+  catkin_make (if class path changed)
+  ./devel/lib/afs/afs_esp
