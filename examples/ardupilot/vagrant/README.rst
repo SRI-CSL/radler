@@ -118,7 +118,8 @@ To compile Java-side code:
 ::
 
   cd /path/to/radler/examples/ardupilot/jni
-  javac -cp dep:~/beepbeep-3-examples/beepbeep-3-examples.jar PointDistance.java
+  export CLASSPATH=~/beepbeep-3-examples/beepbeep-3-examples.jar
+  javac PointDistance.java
  
 To run, edit Java class path (*-Djava.class.path*) in *afs\_esp.cpp* and execute *catkin_make* if needed. The default is *vagrant* user.
 
