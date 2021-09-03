@@ -416,7 +416,7 @@ if __name__ == "__main__":
     dumpp.add_argument('-O', '--object_files', action='append', help='compiled object files to load')
     dumpp.add_argument('--pervasives_dir', default=infos.pervasives_dir, help='specify the path of the pervasives module')
     dumpp.add_argument('--no_pervasives', action='store_true', help='do not try to load the pervasives module (useful to compile the pervasives module).')
-    dumpp.add_argument('--filter', choices=dump_filters.keys(), default='none')
+    dumpp.add_argument('--filter_pred', choices=dump_filters.keys(), default='none')
 
 
     plantdotp = subs_p.add_parser('plantdot', help='generate a dot file representing the plant.')
