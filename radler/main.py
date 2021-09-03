@@ -426,7 +426,7 @@ if __name__ == "__main__":
     plantdotp.add_argument('--pervasives_dir', default=infos.pervasives_dir, help='specify the path of the pervasives module')
     plantdotp.add_argument('--no_pervasives', action='store_true', help='do not try to load the pervasives module (useful to compile the pervasives module).')
     plantdotp.add_argument('--plant', help='specify the plant to be compiled')
-    plantdotp.add_argument('-o', '--dot_file', help='specify a path for the generated dot file')
+    #plantdotp.add_argument('-o', '--dot_file', help='specify a path for the generated dot file')
 
     args = p.parse_args()
 
