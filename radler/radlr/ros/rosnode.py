@@ -159,7 +159,7 @@ struct {out_flags_struct} {{
 """
     {actionname}(*_out.{pubname});"""
 , 'set_pub'           :
-"""auto {actionname}_ros = _h->create_publisher<{topic_t}>("{topic_name}", rmw_qos_profile_default);{actiondef}"""
+"""auto {actionname}_ros = _h->create_publisher<{topic_t}>("{topic_name}", rclcpp::SystemDefaultsQoS());{actiondef}"""
 , 'in_struct_def'     : "{topic_t}::ConstSharedPtr {subname};"
 , 'in_fill'           :
 """// Retrieve data for {subname} subscription
@@ -176,7 +176,7 @@ struct {out_flags_struct} {{
   {actionclass}<{topic_t}> {actionname}(_wrap{initmsg});
   std::function<void (const {topic_t}::SharedPtr)> {actionname}_func;
   {actionname}_func = std::ref({actionname});
-  auto {actionname}_ros = _h->create_subscription<{topic_t}>("{topic_name}", {actionname}_func, rmw_qos_profile_default);
+  auto {actionname}_ros = _h->create_subscription<{topic_t}>("{topic_name}", rclcpp::SystemDefaultsQoS(), {actionname}_func);
 
   double _{subname}_maxperiod = 10; // pub_period * pub_each + pub_wcet in seconds
 /* TODO  

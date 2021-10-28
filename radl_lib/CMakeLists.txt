@@ -13,7 +13,7 @@ target_include_directories(${PROJECT_NAME}
     "$<INSTALL_INTERFACE:include>")
 
 ament_export_include_directories(include)
-ament_export_interfaces(export_${PROJECT_NAME})
+ament_export_targets(export_${PROJECT_NAME})
 ament_export_libraries(${PROJECT_NAME})
 
 ament_package()

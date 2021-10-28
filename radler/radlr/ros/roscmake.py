@@ -151,7 +151,7 @@ target_link_libraries({node_target}
 rosidl_target_interfaces({node_target}
       {module} "rosidl_typesupport_cpp")
 
-ament_target_dependencies({node_target} {module})
+#ament_target_dependencies({node_target} {module})
 """
 }
 

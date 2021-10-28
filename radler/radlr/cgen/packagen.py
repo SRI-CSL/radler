@@ -80,7 +80,7 @@ set_target_properties({ast} PROPERTIES radl_user_src
 )
 
 ament_export_include_directories(include)
-ament_export_interfaces(export_{package_name})
+ament_export_targets(export_{package_name})
 ament_export_libraries({package_name})
 
 ament_package()
