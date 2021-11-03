@@ -49,3 +49,4 @@ controller_gateway : node {
   CXX { HEADER "gateway.h" CLASS "Gateway" LIB std_msgs }
 }
 
+plant : plant {}
