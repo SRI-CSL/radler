@@ -1,0 +1,13 @@
+# global_position
+global_position:
+  ros__parameters:
+    frame_id: "map"             # origin frame
+    child_frame_id: "base_link" # body-fixed frame
+    rot_covariance: 99999.0   # covariance for attitude?
+    gps_uere: 1.0             # User Equivalent Range Error (UERE) of GPS sensor (m)
+    use_relative_alt: true    # use relative altitude for local coordinates
+    tf:
+      send: false               # send TF?
+      frame_id: "map"  # TF frame_id
+      global_frame_id: "earth"  # TF earth frame_id
+      child_frame_id: "base_link" # TF child_frame_id

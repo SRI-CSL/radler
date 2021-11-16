@@ -1,0 +1,9 @@
+# setpoint_position
+setpoint_position:
+  ros__parameters:
+    tf:
+      listen: false           # enable tf listener (disable topic subscribers)
+      frame_id: "map"
+      child_frame_id: "target_position"
+      rate_limit: 50.0
+    mav_frame: LOCAL_NED

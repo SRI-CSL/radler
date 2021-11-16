@@ -1,0 +1,10 @@
+# imu_pub
+imu:
+  ros__parameters:
+    frame_id: "base_link"
+  # need find actual values
+    linear_acceleration_stdev: 0.0003
+    angular_velocity_stdev: 0.0003490659 // 0.02 degrees
+    orientation_stdev: 1.0
+    magnetic_stdev: 0.0
+

@@ -1,0 +1,10 @@
+# sys_status
+sys:
+  ros__parameters:
+    min_voltage: 10.0   # diagnostics min voltage
+    disable_diag: false # disable all sys_status diagnostics, except heartbeat
+conn:
+  ros__parameters:
+    heartbeat_rate: 1.0    # send hertbeat rate in Hertz
+    heartbeat_mav_type: "ONBOARD_CONTROLLER"
+    timeout: 10.0          # hertbeat timeout in seconds
