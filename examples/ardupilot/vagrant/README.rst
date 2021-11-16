@@ -23,7 +23,7 @@ Set up the SITL/MAVROS/Radler in a virtual machine environment using Vagrant.
   git clone https://github.com/ArduPilot/ardupilot.git
   cd ardupilot
   git checkout 5a8b1639d0a36c882b67495a101ef2284027fca7
-  cp /path/to/radler/example/ardupilot/vagrant/Vagrantfile .
+  cp /path/to/radler-ros2-branch/example/ardupilot/vagrant/Vagrantfile .
   vagrant up
   vagrant ssh
   cd /vagrant
@@ -53,7 +53,7 @@ The battery status topic published in the ROS side is subscribed by the gateway 
 ::
 
   vagrant ssh -c "source ~/ros2_ws/install/local_setup.bash; ~/ros2_ws/install/afs/bin/gateway"
-  vagrant ssh -c "vagrant ssh -c "source ~/ros2_ws/install/local_setup.bash; ~/ros2_ws/install/afs/bin/afs_battery"
+  vagrant ssh -c "source ~/ros2_ws/install/local_setup.bash; ~/ros2_ws/install/afs/bin/afs_battery"
 
 On the simulator side (upper right window of below snapshot), change the Arducopter's mode to GUIDED, arm throttle, then takeoff to an altitude (e.g., 30 meters) and one can observe the console window changing battery level and altitude.
 
