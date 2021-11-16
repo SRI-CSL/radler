@@ -52,8 +52,8 @@ The battery status topic published in the ROS side is subscribed by the gateway 
 
 ::
 
-  vagrant ssh -c "~/catkin_ws/devel/lib/afs/gateway"
-  vagrant ssh -c "~/catkin_ws/devel/lib/afs/battery"
+  vagrant ssh -c "source ~/catkin_ws/devel/local_setup.bash; ~/catkin_ws/devel/lib/afs/gateway"
+  vagrant ssh -c "source ~/catkin_ws/devel/local_setup.bash; ~/catkin_ws/devel/lib/afs/afs_battery"
 
 On the simulator side (upper right window of below snapshot), change the Arducopter's mode to GUIDED, arm throttle, then takeoff to an altitude (e.g., 30 meters) and one can observe the console window changing battery level and altitude.
 
