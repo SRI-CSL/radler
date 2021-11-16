@@ -212,7 +212,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       git submodule update --init --recursive
       git checkout ros2
       sudo mv /opt/ros/foxy/share/mavros/launch /opt/ros/foxy/share/mavros/launch.bak
-      cp -r examples/ardupilot/launch /opt/ros/foxy/share/mavros
+      sudo cp -r examples/ardupilot/launch /opt/ros/foxy/share/mavros
       mkdir -p ~/ros2_ws/src
       ./radler.sh --ws_dir ~/ros2_ws/src compile examples/ardupilot/afs.radl --plant plant --ROS
       cd ~/ros2_ws

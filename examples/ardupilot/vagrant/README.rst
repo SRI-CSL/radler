@@ -40,7 +40,7 @@ Connect MAVROS with SITL.
 
 :: 
 
-  vagrant ssh -c "roslaunch apm.launch fcu_url:=\"udp://127.0.0.1:14550@\""
+  vagrant ssh -c "ros2 launch mavros descert.launch.py"
 
 Left two windows of the below snapshot show the ground control console and map of the environment launched from the SITL simulator on the top right window. On the right bottom window, one can observe some verbose that reads the Arducopter's configuration, which indicates a connection.
 
@@ -52,8 +52,8 @@ The battery status topic published in the ROS side is subscribed by the gateway 
 
 ::
 
-  vagrant ssh -c "~/catkin_ws/devel/lib/afs/gateway"
-  vagrant ssh -c "~/catkin_ws/devel/lib/afs/battery"
+  vagrant ssh -c "source ~/ros2_ws/install/local_setup.bash; ~/ros2_ws/install/afs/bin/gateway"
+  vagrant ssh -c "vagrant ssh -c "source ~/ros2_ws/install/local_setup.bash; ~/ros2_ws/install/afs/bin/afs_battery"
 
 On the simulator side (upper right window of below snapshot), change the Arducopter's mode to GUIDED, arm throttle, then takeoff to an altitude (e.g., 30 meters) and one can observe the console window changing battery level and altitude.
 

@@ -39,11 +39,11 @@ def generate_launch_description():
         launch.actions.IncludeLaunchDescription(
             launch.launch_description_sources.PythonLaunchDescriptionSource(
                 os.path.join(get_package_share_directory(
-                    'mavros'), 'launch/arcos_node.launch.py')
+                    'mavros'), 'launch/descert_node.launch.py')
             ),
             launch_arguments={
-                'pluginlists_yaml': get_package_share_directory('mavros') + '/launch/arcos_pluginlists.yaml',
-                'config_yaml': get_package_share_directory('mavros') + '/launch/arcos_config.yaml',
+                'pluginlists_yaml': get_package_share_directory('mavros') + '/launch/descert_pluginlists.yaml',
+                'config_yaml': get_package_share_directory('mavros') + '/launch/descert_config.yaml',
                 'fcu_url': launch.substitutions.LaunchConfiguration('fcu_url'),
                 'gcs_url': launch.substitutions.LaunchConfiguration('gcs_url'),
                 'tgt_system': launch.substitutions.LaunchConfiguration('tgt_system'),
