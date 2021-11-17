@@ -2,7 +2,7 @@ The Example of Room Temperature Regulation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. image:: house_thermo_node_topic.png
-  :width: 400
+  :width: 600
 
 Five nodes (in ellipse) communicate through six topics (in rectangle).
 The ``button`` node publishes to ``thermostat_button`` and
