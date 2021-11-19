@@ -4,6 +4,8 @@
  */
 
 #include "rclcpp/rclcpp.hpp"
+#include "rclcpp/qos.hpp"
+
 #include "std_msgs/msg/int32.hpp"
 #include "std_msgs/msg/float32.hpp"
 
@@ -16,8 +18,8 @@ void input_handler(const std_msgs::msg::Int32::ConstSharedPtr msg) {
 int main(int argc, char **argv) {
   rclcpp::init(argc, argv);
   auto node = rclcpp::Node::make_shared("sandboxed_controller");
-  auto sub = node->create_subscription<std_msgs::msg::Int32>("sandbox_input1", input_handler, rmw_qos_profile_default);
-  auto pub = node->create_publisher<std_msgs::msg::Float32>("sandbox_output1", rmw_qos_profile_default);
+  auto sub = node->create_subscription<std_msgs::msg::Int32>("sandbox_input1", rclcpp::SensorDataQoS(), input_handler);
+  auto pub = node->create_publisher<std_msgs::msg::Float32>("sandbox_output1", rclcpp::SensorDataQoS());
   rclcpp::Rate loop_rate(1);
   float output = 0.1;
   while (rclcpp::ok()) {

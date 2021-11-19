@@ -21,7 +21,7 @@ Then to compile everything and get ROS executables, do:
 
 :: 
 
-   ln -s /path/to/radler/example/controller_gateway/sandboxed_ros_controller /tmp/ros2_ws/src
+   ln -s /path/to/radler/examples/controller_gateway/sandboxed_ros_controller /tmp/ros2_ws/src
    cd /tmp/ros2_ws
    colcon build
 
