@@ -1,6 +1,6 @@
 # This is an auto generated Dockerfile for ros2:devel
 # generated from docker_images_ros2/devel/create_ros_image.Dockerfile.em
-ARG FROM_IMAGE=ubuntu:bionic
+ARG FROM_IMAGE=ubuntu:focal
 FROM $FROM_IMAGE
 
 # setup timezone
@@ -70,7 +70,7 @@ RUN colcon mixin add default \
 
 # install ros2 dashing 
 RUN apt-get update -y
-RUN apt-get install -y ros-dashing-desktop
+RUN apt-get install -y ros-foxy-desktop
 
 # install basics
 RUN apt-get install -y tmux 
@@ -82,7 +82,12 @@ RUN apt-get install -y --no-install-recommends vim-tiny
 # install radler packages
 RUN apt-get update -y
 RUN apt-get install -y cmake python3-pip
-RUN pip3 install tarjan pyyaml
+RUN pip3 install tarjan pyyaml pydot
+RUN apt-get install -y software-properties-common
+RUN add-apt-repository ppa:deadsnakes/ppa
+RUN apt install -y python3.6
+RUN python3.6 -m pip install tarjan
+RUN apt-get install -y default-jdk
 
 RUN cd ~ ; git clone https://github.com/SRI-CSL/radler.git
 RUN cd ~/radler ; git checkout ros2 ; git submodule update --init --recursive
@@ -92,7 +97,7 @@ ENV ROS2_WS /tmp/ros2_ws
 RUN mkdir -p $ROS2_WS/src
 
 # setup entrypoint
-ENV ROS2_DISTRO dashing
+ENV ROS2_DISTRO foxy
 ENV ROS2_PREFIX /opt/ros
 WORKDIR $ROS2_WS
 
