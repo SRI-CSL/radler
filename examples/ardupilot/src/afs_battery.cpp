@@ -17,7 +17,7 @@ void AFS_Battery::step(const radl_in_t * i, const radl_in_flags_t* i_f, radl_out
 		cout << "afs battery : " << battery << endl;
 		if (battery < *RADL_THIS->min_battery) {
 			o->mode_change_rtl->val = true;
-			cout << "Return to Takeoff Location" << endl;
+			//cout << "Return to Takeoff Location" << endl;
 		}
 		else { 
 			o->mode_change_rtl->val = false;

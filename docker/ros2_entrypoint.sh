@@ -14,4 +14,11 @@ colcon build \
       -DSECURITY=ON --no-warn-unused-cli \
     --symlink-install
 source "$ROS2_WS/install/local_setup.bash"
+
+#sros2
+cd ~
+ros2 security create_keystore sros2_keys
+ros2 security create_key sros2_keys /talker_listener/talker
+ros2 security create_key sros2_keys /talker_listener/listener
+
 exec "$@"
