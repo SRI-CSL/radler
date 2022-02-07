@@ -40,7 +40,7 @@ Connect MAVROS with SITL.
 
 :: 
 
-  vagrant ssh -c "ros2 launch mavros descert.launch.py"
+  vagrant ssh -c "ros2 launch mavros apm.launch.py"
 
 Left two windows of the below snapshot show the ground control console and map of the environment launched from the SITL simulator on the top right window. On the right bottom window, one can observe some verbose that reads the Arducopter's configuration, which indicates a connection.
 
