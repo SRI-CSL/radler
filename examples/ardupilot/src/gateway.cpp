@@ -9,7 +9,7 @@ using namespace std;
 
 Gateway::Gateway() 
 {
-	node = rclcpp::Node::make_shared("afs_gateway");
+	node = rclcpp::Node::make_shared("gateway");
 
 	land_client = node->create_client<mavros_msgs::srv::CommandTOL>("/mavros/cmd/land");
 	bat_sub = node->create_subscription<sensor_msgs::msg::BatteryState>("/mavros/battery", rclcpp::SensorDataQoS(), std::bind(&Gateway::battery_state_cb, this, std::placeholders::_1));
