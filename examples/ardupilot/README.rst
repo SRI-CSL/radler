@@ -86,29 +86,19 @@ To install JDK:
   sudo apt-get install default-jdk
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-11-openjdk-amd64/lib/server/
 
-To install BeepBeep:
+To install BeepBeep 3 examples:
 
 ::
 
   sudo apt-get install ant
   cd ~
-  git clone https://github.com/liflab/beepbeep-3.git
-  cd beepbeep-3
-  ant download-deps
-  ant
-  cd ..
-  git clone https://github.com/liflab/beepbeep-3-palettes.git
-  cd beepbeep-3-palettes
-  ant download-deps
-  ant
-  ant (need twice for dependency)
-  cd ..
   git clone https://github.com/liflab/beepbeep-3-examples.git
   cd beepbeep-3-examples
   edit config.xml
     <zip>https://github.com/liflab/beepbeep-3-palettes/releases/download/v20181124/beepbeep-3-palettes-v20181124.zip</zip>
     to 
-    <zip>https://github.com/liflab/beepbeep-3-palettes/releases/download/20181124/beepbeep-3-palettes-v20181124.zip</zip>
+    <zip>https://github.com/liflab/beepbeep-3-palettes/releases/download/v20190917/beepbeep-3-palettes-v20190917.zip</zip>
+  ant download-deps
   mkdir Core/src
   mkdir doc
   ant
