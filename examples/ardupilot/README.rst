@@ -126,7 +126,7 @@ To install JDK:
   sudo apt-get install default-jdk
   export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-11-openjdk-amd64/lib/server/
 
-To install BeepBeep:
+To install BeepBeep 3 examples:
 
 ::
 
