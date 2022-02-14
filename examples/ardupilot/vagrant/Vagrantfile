@@ -191,6 +191,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       sudo ~/install_geographiclib_datasets.sh
       (echo ; echo "# Setup for ROS2" ; echo "source /opt/ros/foxy/setup.bash" ) >> ~/.bashrc
       (echo ; echo "# Setup for ROS2" ; echo "source /opt/ros/foxy/setup.bash" ) >> ~/.profile
+
+      #java
+      sudo apt-get install -y default-jdk
+      (echo ; echo "# Setup for JDK" ; echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-11-openjdk-amd64/lib/server" ) >> ~/.bashrc
+      (echo ; echo "# Setup for JDK" ; echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-11-openjdk-amd64/lib/server" ) >> ~/.profile
       source ~/.profile
 
       #ros2 build
@@ -206,7 +211,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       sudo add-apt-repository ppa:deadsnakes/ppa
       sudo apt install -y python3.6
       python3.6 -m pip install tarjan
-      sudo apt-get install -y default-jdk
       cd ~
       git clone https://github.com/SRI-CSL/radler.git
       cd radler
