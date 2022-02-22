@@ -189,13 +189,32 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       wget https://raw.githubusercontent.com/mavlink/mavros/ros2/mavros/scripts/install_geographiclib_datasets.sh -O ~/install_geographiclib_datasets.sh
       chmod a+x ~/install_geographiclib_datasets.sh
       sudo ~/install_geographiclib_datasets.sh
-      (echo ; echo "# Setup for ROS2" ; echo "source /opt/ros/foxy/setup.bash" ) >> ~/.bashrc
-      (echo ; echo "# Setup for ROS2" ; echo "source /opt/ros/foxy/setup.bash" ) >> ~/.profile
+      (echo ; echo "# Setup for ROS2" ; echo "source /opt/ros/foxy/setup.bash") >> ~/.bashrc
+      (echo ; echo "# Setup for ROS2" ; echo "source /opt/ros/foxy/setup.bash") >> ~/.profile
 
       #java
       sudo apt-get install -y default-jdk
-      (echo ; echo "# Setup for JDK" ; echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-11-openjdk-amd64/lib/server" ) >> ~/.bashrc
-      (echo ; echo "# Setup for JDK" ; echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-11-openjdk-amd64/lib/server" ) >> ~/.profile
+      (echo ; echo "# Setup for JDK" ; echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-11-openjdk-amd64/lib/server") >> ~/.bashrc
+      (echo ; echo "# Setup for JDK" ; echo "export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-11-openjdk-amd64/lib/server") >> ~/.profile
+
+      #beepbeep
+      sudo apt-get install ant
+      #cd ~
+      #git clone https://github.com/liflab/beepbeep-3-examples.git
+      #refer README for beepbeep installation
+
+      #daikon
+      cd ~
+      wget http://plse.cs.washington.edu/daikon/download/daikon-5.8.10.tar.gz
+      tar zxf daikon-5.8.10.tar.gz
+      cd daikon-5.8.10
+      make rebuild-everything
+      (echo ; echo "# Setup for daikon" ; echo "export DAIKONDIR=/home/vagrant/daikon-5.8.10" ; echo "source $DAIKONDIR/scripts/daikon.bashrc") >> ~/.bashrc
+      (echo ; echo "# Setup for daikon" ; echo "export DAIKONDIR=/home/vagrant/daikon-5.8.10" ; echo "source $DAIKONDIR/scripts/daikon.bashrc") >> ~/.profile
+
+      #classpath
+      (echo ; echo "export CLASSPATH=$CLASSPATH:/home/vagrant/daikon-5.8.10/java/daikon:/home/vagrant/radler/examples/ardupilot/jni:/home/vagrant/beepbeep-3-examples/beepbeep-3-examples.jar:/home/vagrant/daikon-5.8.10/daikon.jar:/home/vagrant/daikon-5.8.10/java/dcomp_rt.jar:/home/vagrant/daikon-5.8.10/java/ChicoryPremain.jar:/home/vagrant/daikon-5.8.10/java/dcomp_premain.jar") >> ~/.bashrc
+      (echo ; echo "export CLASSPATH=$CLASSPATH:/home/vagrant/daikon-5.8.10/java/daikon:/home/vagrant/radler/examples/ardupilot/jni:/home/vagrant/beepbeep-3-examples/beepbeep-3-examples.jar:/home/vagrant/daikon-5.8.10/daikon.jar:/home/vagrant/daikon-5.8.10/java/dcomp_rt.jar:/home/vagrant/daikon-5.8.10/java/ChicoryPremain.jar:/home/vagrant/daikon-5.8.10/java/dcomp_premain.jar") >> ~/.profile
       source ~/.profile
 
       #ros2 build

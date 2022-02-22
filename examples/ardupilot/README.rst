@@ -79,18 +79,11 @@ The altitude value on the ground control console indicates that the Arducopter l
 
 For the inception of Java code in the step function, we provide a use-case with Java Native Interface (JNI). The step function of esp (event stream processing) node calculates point distance between two successive (x,y) positions. BeepBeep (https://liflab.github.io/beepbeep-3/) is used for event stream processing engine. The *afs.radl* includes *cmake_library* information for JNI. JVM creation should be in the class constructor (refer *afs\_esp.h*) and JNI calls in the step function (refer *afs\_esp.cpp*). 
 
-To install JDK: 
-
-:: 
-
-  sudo apt-get install default-jdk
-  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/jvm/java-11-openjdk-amd64/lib/server/
-
 To install BeepBeep 3 examples:
 
 ::
 
-  sudo apt-get install ant
+  vagrant ssh
   cd ~
   git clone https://github.com/liflab/beepbeep-3-examples.git
   cd beepbeep-3-examples
@@ -103,18 +96,17 @@ To install BeepBeep 3 examples:
   mkdir doc
   ant
 
-To compile Java-side code:
+To compile Java-side code, CLASSPATH should include the above beepbeep-3-examples.jar:
 
 ::
 
   cd /path/to/radler/examples/ardupilot/jni
-  export CLASSPATH=~/beepbeep-3-examples/beepbeep-3-examples.jar
   javac PointDistance.java
  
-To run, edit Java class path (*-Djava.class.path*) in *afs\_esp.cpp* and execute *catkin_make* if needed. The default is *vagrant* user.
+To run, CLASSPATH should include beepbeep-3-examples.jar and /path/to/radler/examples/ardupilot/jni:
 
 ::
 
-  cd /tmp/catkin_ws
-  catkin_make (if class path changed)
-  ./devel/lib/afs/afs_esp
+  source ~/ros2_ws/install/local_setup.bash
+  cd ~/ros2_ws/install/afs/bin
+  ./afs_esp
