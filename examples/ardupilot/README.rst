@@ -22,7 +22,6 @@ Set up the SITL/MAVROS/Radler in a virtual machine environment using Vagrant.
 
   git clone https://github.com/ArduPilot/ardupilot.git
   cd ardupilot
-  git checkout 5a8b1639d0a36c882b67495a101ef2284027fca7
   cp /path/to/radler-ros2-branch/example/ardupilot/vagrant/Vagrantfile .
   vagrant up
   vagrant ssh

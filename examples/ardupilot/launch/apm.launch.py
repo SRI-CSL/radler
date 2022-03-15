@@ -14,7 +14,7 @@ def generate_launch_description():
         ),
         launch.actions.DeclareLaunchArgument(
             name='gcs_url',
-            default_value=''
+            default_value='udp://@'
         ),
         launch.actions.DeclareLaunchArgument(
             name='tgt_system',
