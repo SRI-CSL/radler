@@ -1,5 +1,5 @@
-Advanced Fail Safe of Arducopter using MAVROS (Vagrant) 
-=======================================================
+Advanced Fail Safe of Arducopter using MAVROS
+=============================================
 
 This demo shows the Radler code generation and its execution on SITL (software in the loop) simulator for the Arducopter advanced fail safe. In this demo MAVROS, ROS-based extendable communication node, on the companion computer communicates with ground control system.
 
@@ -91,7 +91,7 @@ To install BeepBeep 3 examples:
     to 
     <zip>https://github.com/liflab/beepbeep-3-palettes/releases/download/v20190917/beepbeep-3-palettes-v20190917.zip</zip>
   ant download-deps
-  mkdir Core/src
+  mkdir -p Core/src
   mkdir doc
   ant
 
@@ -109,3 +109,13 @@ To run, CLASSPATH should include beepbeep-3-examples.jar and /path/to/radler/exa
   source ~/ros2_ws/install/local_setup.bash
   cd ~/ros2_ws/install/afs/bin
   ./afs_esp
+
+If DAIKON invariant detector (https://plse.cs.washington.edu/daikon/) is enabled, .dtrace.gz file will be created in ~/ros2_ws/install/afs/bin directory.
+
+To regenerate and recompile from the RADL file:
+
+::
+
+  ./radler.sh --ws_dir ~/ros2_ws/src compile examples/ardupilot/afs.radl --plant plant --ROS
+  cd ~/ros2_ws
+  colcon build --cmake-args -DSECURITY=ON --no-warn-unused-cli --symlink-install

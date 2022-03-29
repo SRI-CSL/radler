@@ -16,8 +16,8 @@ To checkout repository::
 
 To get Radler working on a clean version of Ubuntu 20.04::
 
-	sudo apt-get install cmake python3-pip
-	sudo pip3 install tarjan pyyaml pydot
+        sudo apt-get install cmake python3-pip
+        sudo pip3 install tarjan pyyaml pydot
 
 To install ROS2 Foxy, follow the instructions from https://index.ros.org/doc/ros2/Installation/
 
@@ -33,10 +33,10 @@ Compile
 Radler generates files from the RADL file into a usual ROS2 structure, then a call to `colcon build` will generate the executables as usual.
 (e.g., see  `examples/pubsub/pubsub.radl`)::
 
-	mkdir -p /tmp/ros2_ws/src
-	./radler.sh --ws_dir /tmp/ros2_ws/src compile examples/pubsub/single_machine/pubsub.radl --plant plant --ROS
-	cd /tmp/ros2_ws
-	colcon build
+        mkdir -p /tmp/ros2_ws/src
+        ./radler.sh --ws_dir /tmp/ros2_ws/src compile examples/pubsub/single_machine/pubsub.radl --plant plant --ROS
+        cd /tmp/ros2_ws
+        colcon build
 
 Run
 ~~~~
