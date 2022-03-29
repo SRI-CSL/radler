@@ -6,17 +6,25 @@
 
 using namespace std;
 
+string getEnvVar(string const& key)
+{
+    char const* val = getenv(key.c_str());
+    return val == NULL ? string() : string(val);
+}
+
 AFS_esp::AFS_esp()
 {
   vm_args.version = JNI_VERSION_1_2;
   JavaVMOption* options;
   options = new JavaVMOption[2];
-  options[0].optionString =
-    "-Djava.class.path=/home/vagrant/radler/examples/ardupilot/jni:/home/vagrant/beepbeep-3-examples/beepbeep-3-examples.jar:/home/vagrant/daikon-5.8.10/daikon.jar daikon.Chicory";
+  string cp = "-Djava.class.path=" + getEnvVar("CLASSPATH");
+  options[0].optionString = const_cast<char*>(cp.c_str());
   options[1].optionString = "-Djava.compiler=NONE";
   vm_args.nOptions = 2;
   vm_args.options = options;
-  vm_args.ignoreUnrecognized = 1;
+  vm_args.ignoreUnrecognized = JNI_TRUE;
+
+  cout << "CreateJVM " << options[0].optionString << endl;
 
   // Construct a VM
   jint res = JNI_CreateJavaVM(&vm, (void **)&this->env, &this->vm_args);
@@ -34,7 +42,7 @@ void AFS_esp::step(const radl_in_t * i, const radl_in_flags_t* i_f, radl_out_t *
       cout << "position is stale" << endl;  
     if (radl_is_timeout(i_f->position))
       cout << "position is timeout" << endl;
-    return;
+    //return;
   }
 
   double pos_x = i->position->x;
@@ -53,6 +61,28 @@ void AFS_esp::step(const radl_in_t * i, const radl_in_flags_t* i_f, radl_out_t *
   } 
 
   env->CallStaticVoidMethod(cls, mid, jfloat(prev_pos_x), jfloat(prev_pos_y), jfloat(pos_x), jfloat(pos_y));
+
+  if(*RADL_THIS->daikon) {
+    jclass cls = env->FindClass("daikon/Chicory");
+    if (cls == 0) {
+      cout << "FindClass daikon.Chicory failed" << endl;
+      return;
+    }
+
+    jmethodID mid = env->GetStaticMethodID(cls, "main", "([Ljava/lang/String;)V");
+    if (mid == 0) {
+      cout << "GetStaticMethodID main failed" << endl;
+      return;
+    }
+
+    jobjectArray args = env->NewObjectArray(5, env->FindClass("java/lang/String"), NULL);
+    env->SetObjectArrayElement(args, 0, env->NewStringUTF("PointDistance"));
+    env->SetObjectArrayElement(args, 1, env->NewStringUTF(to_string(prev_pos_x).c_str()));
+    env->SetObjectArrayElement(args, 2, env->NewStringUTF(to_string(prev_pos_y).c_str()));
+    env->SetObjectArrayElement(args, 3, env->NewStringUTF(to_string(pos_x).c_str()));
+    env->SetObjectArrayElement(args, 4, env->NewStringUTF(to_string(pos_y).c_str()));
+    env->CallStaticVoidMethod(cls, mid, args);
+  }
 
   prev_pos_x = pos_x;
   prev_pos_y = pos_y;

@@ -103,6 +103,8 @@ afs_log : node {
 }
 
 afs_esp : node {
+  DEFS
+    daikon: bool true
   SUBSCRIBES
     position { TOPIC global_position_local MAXLATENCY 100msec }
   PERIOD 100msec

@@ -101,7 +101,8 @@ public class PointDistance
 	{
 		/* Create a new source made of arbitrary Point objects. */
 		QueueSource point_source = new QueueSource(1);
-		point_source.setEvents(getListOfPoints());
+		//point_source.setEvents(getListOfPoints());
+		point_source.setEvents(new Object[]{new Point(Float.parseFloat(args[0]), Float.parseFloat(args[1])), new Point(Float.parseFloat(args[2]), Float.parseFloat(args[3]))});
 		
 		/* Duplicate the output of source along two paths. */
 		Fork fork = new Fork(2);
@@ -124,7 +125,7 @@ public class PointDistance
 
 		/* Pull and print the first 10 events from the output. */
 		Pullable p = distance_proc.getPullableOutput(OUTPUT);
-		for (int i = 0; i < 10; i++)
+		//for (int i = 0; i < 10; i++)
 		{
 			float d = (Float) p.pull();
 			System.out.println(d);
