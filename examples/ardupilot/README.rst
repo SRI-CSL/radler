@@ -95,14 +95,14 @@ To install BeepBeep 3 examples:
   mkdir doc
   ant
 
-To compile Java-side code, CLASSPATH should include the above beepbeep-3-examples.jar:
+To compile Java-side code, CLASSPATH should include the above *beepbeep-3-examples.jar* (refer *../vagrant/setup.bash*):
 
 ::
 
-  cd /path/to/radler/examples/ardupilot/jni
+  cd ~/radler/examples/ardupilot/jni
   javac PointDistance.java
  
-To run, CLASSPATH should include beepbeep-3-examples.jar and /path/to/radler/examples/ardupilot/jni:
+To run, CLASSPATH should include *beepbeep-3-examples.jar* and */path/to/radler/examples/ardupilot/jni* (refer *../vagrant/setup.bash*):
 
 ::
 
@@ -110,12 +110,13 @@ To run, CLASSPATH should include beepbeep-3-examples.jar and /path/to/radler/exa
   cd ~/ros2_ws/install/afs/bin
   ./afs_esp
 
-If DAIKON invariant detector (https://plse.cs.washington.edu/daikon/) is enabled, .dtrace.gz file will be created in ~/ros2_ws/install/afs/bin directory.
+If DAIKON invariant detector (https://plse.cs.washington.edu/daikon/) is enabled in *afs.radl*, *.dtrace.gz* file will be created in *~/ros2_ws/install/afs/bin* directory.
 
 To regenerate and recompile from the RADL file:
 
 ::
 
+  cd ~/radler
   ./radler.sh --ws_dir ~/ros2_ws/src compile examples/ardupilot/afs.radl --plant plant --ROS
   cd ~/ros2_ws
   colcon build --cmake-args -DSECURITY=ON --no-warn-unused-cli --symlink-install
