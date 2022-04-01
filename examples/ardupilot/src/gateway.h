@@ -4,7 +4,7 @@
 #include "rclcpp/qos.hpp"
 
 #include "sensor_msgs/msg/battery_state.hpp"
-#include "mavros_msgs/srv/command_tol.hpp"
+#include "mavros_msgs/srv/set_mode.hpp"
 #include "nav_msgs/msg/odometry.hpp"
 
 class Gateway 
@@ -15,7 +15,7 @@ public:
 private:
   std::shared_ptr<rclcpp::Node> node;
 
-  rclcpp::Client<mavros_msgs::srv::CommandTOL>::SharedPtr land_client;
+  rclcpp::Client<mavros_msgs::srv::SetMode>::SharedPtr rtl_client;
 
   rclcpp::Subscription<sensor_msgs::msg::BatteryState>::SharedPtr bat_sub;
   sensor_msgs::msg::BatteryState::ConstSharedPtr bat_out_mbox;

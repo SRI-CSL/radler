@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "sensor_msgs/msg/battery_state.hpp"
-#include "mavros_msgs/srv/command_tol.hpp"
+#include "mavros_msgs/srv/set_mode.hpp"
 #include "nav_msgs/msg/odometry.hpp"
 
 using namespace std;
@@ -12,14 +12,15 @@ Gateway::Gateway()
 {
   node = rclcpp::Node::make_shared("gateway");
 
-  land_client = node->create_client<mavros_msgs::srv::CommandTOL>("/mavros/cmd/land");
+  rtl_client = node->create_client<mavros_msgs::srv::SetMode>("/mavros/set_mode");
   bat_sub = node->create_subscription<sensor_msgs::msg::BatteryState>("/mavros/battery", rclcpp::SensorDataQoS(), std::bind(&Gateway::battery_state_cb, this, std::placeholders::_1));
   pos_sub = node->create_subscription<nav_msgs::msg::Odometry>("/mavros/global_position/local", rclcpp::SensorDataQoS(), std::bind(&Gateway::position_cb, this, std::placeholders::_1));
 }
 
 void Gateway::step(const radl_in_t* i, const radl_in_flags_t* i_f, radl_out_t* o, radl_out_flags_t* o_f) 
 {
-  auto request = std::make_shared<mavros_msgs::srv::CommandTOL::Request>();
+  auto request = std::make_shared<mavros_msgs::srv::SetMode::Request>();
+  request->base_mode = 0;
 
   rclcpp::spin_some(node);
   if (this->bat_out_mbox) {
@@ -33,10 +34,19 @@ void Gateway::step(const radl_in_t* i, const radl_in_flags_t* i_f, radl_out_t* o
 
   if (!radl_is_stale(i_f->mode_change_rtl) && !radl_is_timeout(i_f->mode_change_rtl)) {
     if (i->mode_change_rtl->val) { 
-      cout << "mode change to LAND" << endl;
-      auto result = land_client->async_send_request(request);
-        if (rclcpp::spin_until_future_complete(node, result) != rclcpp::FutureReturnCode::SUCCESS)
-          cout << "failed to call service land" << endl;
+      cout << "mode change to RTL" << endl;
+      request->custom_mode = "RTL";
+
+      while (!rtl_client->wait_for_service(1s)) {
+        if (!rclcpp::ok()) {
+          cout <<  "interrupted while waiting for the service" << endl;
+          return;
+        }
+        cout << "service not available, waiting again" << endl;
+      }
+      auto result = rtl_client->async_send_request(request);
+      if (rclcpp::spin_until_future_complete(node, result) != rclcpp::FutureReturnCode::SUCCESS)
+        cout << "failed to call service rtl" << endl;
     }
   }
   if (this->pos_out_mbox) {
