@@ -3,9 +3,6 @@
 #include <jni.h>
 #include <iostream>
 #include <string>
-#include <sstream>
-#include <iomanip>     
-#include <ctime>
 #include <cassert>
 
 using namespace std;
