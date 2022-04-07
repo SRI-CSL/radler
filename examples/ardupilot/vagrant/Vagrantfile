@@ -193,11 +193,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       (echo ; echo "# Setup for ROS2" ; echo "source /opt/ros/foxy/setup.bash") >> ~/.profile
       source ~/.profile
 
+      #timesynch
+      sudo apt-get install -y virtualbox-guest-dkms virtualbox-guest-utils
+
       #beepbeep
       sudo apt-get install -y default-jdk ant
       #cd ~
       #git clone https://github.com/liflab/beepbeep-3-examples.git
       #refer README for beepbeep installation
+
+      #log4j
+      cd ~
+      wget https://dlcdn.apache.org/logging/log4j/2.17.2/apache-log4j-2.17.2-bin.tar.gz
+      tar zxvf apache-log4j-2.17.2-bin.tar.gz
 
       #daikon
       cd ~

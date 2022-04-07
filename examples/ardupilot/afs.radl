@@ -16,6 +16,12 @@ mavros_msgs : cmake_library {
   CMAKE_VAR_INCLUDE_DIRS "mavros_msgs_INCLUDE_DIRS"
 }
 
+std_msgs : cmake_library {
+  CMAKE_MODULE "std_msgs"
+  CMAKE_VAR_LIBRARIES "std_msgs_LIBRARIES"
+  CMAKE_VAR_INCLUDE_DIRS "std_msgs_INCLUDE_DIRS"
+}
+
 jni : cmake_library {
   CMAKE_MODULE "JNI"
   CMAKE_VAR_LIBRARIES "JNI_LIBRARIES"
@@ -65,7 +71,7 @@ gateway : node {
     target_altitude { TOPIC target_alt MAXLATENCY 100msec }
   PERIOD 100msec
   PATH "src"
-  CXX { HEADER "gateway.h" FILENAME "gateway.cpp" CLASS "Gateway" LIB sensor_msgs mavros_msgs nav_msgs}
+  CXX { HEADER "gateway.h" FILENAME "gateway.cpp" CLASS "Gateway" LIB sensor_msgs mavros_msgs nav_msgs std_msgs }
 } 
 
 afs_battery : node {

@@ -6,6 +6,7 @@
 #include "sensor_msgs/msg/battery_state.hpp"
 #include "mavros_msgs/srv/set_mode.hpp"
 #include "nav_msgs/msg/odometry.hpp"
+#include "std_msgs/msg/float64.hpp"
 
 class Gateway 
 {
@@ -24,4 +25,8 @@ private:
   rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr pos_sub;
   nav_msgs::msg::Odometry::ConstSharedPtr pos_out_mbox;
   void position_cb(const nav_msgs::msg::Odometry::ConstSharedPtr pos);
+
+  rclcpp::Subscription<std_msgs::msg::Float64>::SharedPtr alt_sub;
+  std_msgs::msg::Float64::ConstSharedPtr alt_out_mbox;
+  void altitude_cb(const std_msgs::msg::Float64::ConstSharedPtr alt);
 };
