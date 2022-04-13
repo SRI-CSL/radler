@@ -95,14 +95,14 @@ To install BeepBeep 3 examples:
   mkdir doc
   ant
 
-To compile Java-side code, CLASSPATH should include the above *beepbeep-3-examples.jar* (refer *../vagrant/setup.bash*):
+To compile Java-side code, CLASSPATH should include the above *beepbeep-3-examples.jar* (refer *./vagrant/setup.bash*):
 
 ::
 
   cd ~/radler/examples/ardupilot/jni
   javac PointDistance.java
  
-To run, CLASSPATH should include *beepbeep-3-examples.jar* and */path/to/radler/examples/ardupilot/jni* (refer *../vagrant/setup.bash*):
+To run, CLASSPATH should include *beepbeep-3-examples.jar* and */path/to/radler/examples/ardupilot/jni* (refer *./vagrant/setup.bash*):
 
 ::
 
@@ -111,6 +111,17 @@ To run, CLASSPATH should include *beepbeep-3-examples.jar* and */path/to/radler/
   ./afs_esp
 
 If DAIKON invariant detector (https://plse.cs.washington.edu/daikon/) is enabled in *afs.radl*, *.dtrace.gz* file will be created in *~/ros2_ws/install/afs/bin* directory.
+
+We utilize Apache Log4j 2 (https://logging.apache.org/log4j/2.x/) for logging purpose.
+Refer *./jni/log4j2.properties* for log4j2 properties to configure RollingFileAppender and to disable JNDI lookup.
+
+::
+
+  source ~/ros2_ws/install/local_setup.bash
+  cd ~/ros2_ws/install/afs/bin
+  ./afs_log
+
+The RollingFileAppender in Log4j will create *afs.log* file in *~/ros2_ws/install/afs/bin* directory to backup the altitude information.
 
 To regenerate and recompile from the RADL file:
 
