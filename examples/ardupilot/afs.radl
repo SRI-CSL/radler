@@ -86,20 +86,6 @@ afs_battery : node {
   CXX { HEADER "afs_battery.h" FILENAME "afs_battery.cpp" CLASS "AFS_Battery" }
 } 
 
-afs_altitude : node {
-  DEFS 
-    max_alt : float64 30
-    min_alt : float64 20
-  PUBLISHES
-    mode_change_althold { TOPIC mode_althold } 
-    target_altitude { TOPIC target_alt }
-  SUBSCRIBES 
-    altitude { TOPIC rel_alt MAXLATENCY 100msec }
-  PERIOD 100msec
-  PATH "src"
-  CXX { HEADER "afs_altitude.h" FILENAME "afs_altitude.cpp" CLASS "AFS_Altitude" }
-} 
-
 afs_log : node {
   SUBSCRIBES
     altitude { TOPIC rel_alt MAXLATENCY 100msec }
@@ -126,7 +112,7 @@ plant : plant {
         IMG "linux.img"
         IP 192.168.1.202
         NODES
-          gateway afs_battery afs_altitude afs_log 
+          gateway afs_battery afs_log afs_esp
       }
     }
 }
