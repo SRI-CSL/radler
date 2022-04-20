@@ -213,7 +213,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       tar zxf daikon-5.8.10.tar.gz
       cd daikon-5.8.10
       make rebuild-everything
-      (echo ; echo "# Setup for BeepBeep/Daikon" ; echo "source /home/vagrant/radler/examples/ardupilot/vagrant/setup.bash") >> ~/.profile
+      (echo ; echo "# Setup for BeepBepp/Log4J/Daikon" ; echo "source /home/vagrant/radler/examples/ardupilot/vagrant/setup.bash") >> ~/.profile
 
       #ros2 build
       pip3 install colcon-common-extensions colcon-mixin

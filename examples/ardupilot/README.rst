@@ -131,3 +131,40 @@ To regenerate and recompile from the RADL file:
   ./radler.sh --ws_dir ~/ros2_ws/src compile examples/ardupilot/afs.radl --plant plant --ROS
   cd ~/ros2_ws
   colcon build --cmake-args -DSECURITY=ON --no-warn-unused-cli --symlink-install
+
+Demo with SROS2
+---------------
+
+To generate a keystore, keys and certificates (refer *./vagrant/sros_keystore.bash*):
+
+::
+
+  cd ~/ros2_ws
+  ros2 security create_keystore sros2_keys
+  ros2 security create_key sros2_keys /afs/mavros
+  ros2 security create_key sros2_keys /afs/gateway
+  ros2 security create_key sros2_keys /afs/afs_battery
+  ros2 security create_key sros2_keys /afs/afs_esp
+  ros2 security create_key sros2_keys /afs/afs_log
+
+To define the SROS2 environment variables (refer *./vagrant/sros_env.bash*):
+::
+
+  export ROS_SECURITY_KEYSTORE=/home/vagrant/ros2_ws/sros2_keys
+  export ROS_SECURITY_ENABLE=true
+  export ROS_SECURITY_STRATEGY=Enforce
+  export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+
+To launch MAVROS with sros2:
+
+::
+
+  ros2 launch mavros apm_sros2.launch.py
+
+To run each node such as gateway node (refer *./vagrant/sros_env.bash*):
+
+::
+
+  source ~/ros2_ws/install/local_setup.bash
+  source ~/radler/examples/ardupilot/vagrant/sros_env.bash
+  ros2 run afs gateway --ros-args --enclave /afs/gateway
