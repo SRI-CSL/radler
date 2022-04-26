@@ -9,3 +9,4 @@ ln -sf ../../../../build/afs/gateway .
 ln -sf ../../../../build/afs/afs_battery .
 ln -sf ../../../../build/afs/afs_esp .
 ln -sf ../../../../build/afs/afs_log .
+cd -

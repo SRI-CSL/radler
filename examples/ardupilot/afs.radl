@@ -44,18 +44,7 @@ rel_alt : topic {
     data : float64 0
 }
 
-target_alt : topic {
-  FIELDS
-    hold : bool false
-    data : float64 0
-}
-
 mode_rtl : topic {
-  FIELDS
-    val : bool false
-}
-
-mode_althold : topic {
   FIELDS
     val : bool false
 }
@@ -67,8 +56,6 @@ gateway : node {
     position { TOPIC global_position_local }
   SUBSCRIBES 
     mode_change_rtl { TOPIC mode_rtl MAXLATENCY 100msec }
-    mode_change_althold { TOPIC mode_althold MAXLATENCY 100msec }
-    target_altitude { TOPIC target_alt MAXLATENCY 100msec }
   PERIOD 100msec
   PATH "src"
   CXX { HEADER "gateway.h" FILENAME "gateway.cpp" CLASS "Gateway" LIB sensor_msgs mavros_msgs nav_msgs std_msgs }
@@ -96,7 +83,7 @@ afs_log : node {
 
 afs_esp : node {
   DEFS
-    daikon: bool true
+    daikon: bool false
   SUBSCRIBES
     position { TOPIC global_position_local MAXLATENCY 100msec }
   PERIOD 100msec

@@ -155,7 +155,7 @@ To define the SROS2 environment variables (refer *./vagrant/sros_env.bash*):
   export ROS_SECURITY_STRATEGY=Enforce
   export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 
-To launch MAVROS with sros2:
+To launch MAVROS with SROS2:
 
 ::
 
