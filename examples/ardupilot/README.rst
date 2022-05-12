@@ -76,7 +76,7 @@ The altitude value on the ground control console indicates that the Arducopter l
 .. image:: ./rtl.png  
    :height: 300
 
-For the inception of Java code in the step function, we provide a use-case with Java Native Interface (JNI). The step function of esp (event stream processing) node calculates point distance between two successive (x,y) positions. BeepBeep (https://liflab.github.io/beepbeep-3/) is used for event stream processing engine. The *afs.radl* includes *cmake_library* information for JNI. JVM creation should be in the class constructor (refer *afs\_esp.h*) and JNI calls in the step function (refer *afs\_esp.cpp*). 
+For the inception of Java code in the step function, we provide a use-case with Java Native Interface (JNI). The step function of esp (event stream processing) node calculates point distance between two successive (x,y) positions. BeepBeep (https://liflab.github.io/beepbeep-3/) is used for event stream processing engine. We modified BeepBeep code example of PointDistance given in https://liflab.github.io/beepbeep-3-examples/_point_distance_8java_source.html. The *afs.radl* includes *cmake_library* information for JNI. JVM creation should be in the class constructor (refer *afs\_esp.h*) and JNI calls in the step function (refer *afs\_esp.cpp*).
 
 To install BeepBeep 3 examples:
 
@@ -168,3 +168,32 @@ To run each node such as gateway node (refer *./vagrant/sros_env.bash*):
   source ~/ros2_ws/install/local_setup.bash
   source ~/radler/examples/ardupilot/vagrant/sros_env.bash
   ros2 run afs gateway --ros-args --enclave /afs/gateway
+
+Security access controls are defined in *permissions.xml* file.
+To demonstrate a policy which only allows *gateway* node publishing messages on the specific topics such as those in *afs.radl* file:
+
+::
+
+  cd ~/ros2_ws/sros2_keys/enclaves/afs/gateway
+  edit <publish><topics> part of permissions.xml
+    replace
+      <topic>rt/*</topic>
+    with
+      <topic>rt/afs/rel_alt</topic>
+      <topic>rt/afs/global_position_local</topic>
+      <topic>rt/afs/battery</topic>
+      <topic>rt/parameter_events</topic>
+      <topic>rt/rosout</topic>
+      <topic>*/gateway/*</topic>
+
+To sign a new policy file *permissions.p7s* from the updated XML file *permissions.xml*:
+
+::
+
+  openssl smime -sign -text -in permissions.xml -out permissions.p7s --signer permissions_ca.cert.pem -inkey ~/ros2_ws/sros2_keys/private/permissions_ca.key.pem
+
+With the updated permissions, remapping the *battery* topic will fail.
+
+::
+
+  ros2 run afs gateway --ros-args --enclave /afs/gateway --remap /afs/battery:=/afs/not_battery
