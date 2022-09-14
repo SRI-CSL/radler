@@ -6,6 +6,8 @@ The following examples demonstrate the features of Radler, which work with both 
 
 - Controller_gateway: How to write a gateway to forward back and forth messages between Radler world and a local sandboxed ROS
 
+- ArduPilot: Advanced Fail Safe of Arducopter using MAVROS
+
 The following examples work with ROS (master branch).
 
 - Drone: AR.Drone demos using ardronelib sdk and ardrone_autonomy ROS driver
