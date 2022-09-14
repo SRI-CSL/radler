@@ -1,5 +1,9 @@
 Radler framework takes its inspiration from the Robot Operating System (ROS). In Radler framework, the sensors, controllers, and actuators are constructed from functional units called nodes. Each node executes independently with a period determined by a local clock and scheduling constraints. Radler supports a publish/subscribe architecture where nodes communicate by publishing on certain topics and subscribing to other topics. Radler uses ROS as a backend, i.e., each node and communication channels are dynamically setup by ROS.
 
+Radler can generate executable code for SROS2 with the intent that a significant part of the RADL specification and user code will stay the same or at least similar. 
+The adoption of ROS2 is critical to the security properties of both communication channel and resource isolation without the need of master node. 
+Radler codebase has been updated to be compatible with recent ROS2 releases https://github.com/SRI-CSL/radler/tree/ros2. 
+
 Getting Started 
 =============== 
 
