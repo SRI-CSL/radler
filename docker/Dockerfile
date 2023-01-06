@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # install basics
-RUN apt-get update && apt-get install -y tmux net-tools iputils-ping openssh-server openssh-client
+RUN apt-get update && apt-get install -y tmux net-tools iputils-ping openssh-server openssh-client git
 RUN apt-get install -y --no-install-recommends vim-tiny
 
 # install radler packages
