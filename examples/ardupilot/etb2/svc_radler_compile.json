@@ -1,0 +1,5 @@
+{
+    "ID": "radler",
+    "signature": ["string", "string", "string"],
+    "modes": ["++-"]
+}

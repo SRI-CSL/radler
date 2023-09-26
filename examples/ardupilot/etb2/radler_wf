@@ -1,0 +1,3 @@
+radler_build(RADL, WS, BUILD) :- radler_compile(RADL, WS, COMPILE), colcon_build(WS, BUILD).
+radler_compile(RADL, WS, RES) :- radler(RADL, WS, RES), equals(RES, "compiled").
+colcon_build(WS, RES) :- colcon(WS, RES), equals(RES, "built").
