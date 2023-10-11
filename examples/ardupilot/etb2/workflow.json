@@ -8,8 +8,8 @@
 		},
 		{
     			"ID": "radler",
-    			"signature": ["string", "string", "string"],
-    			"mode": "++-"
+    			"signature": ["string", "string", "string", "string"],
+    			"mode": "+++-"
 		},
 		{
     			"ID": "colcon",
