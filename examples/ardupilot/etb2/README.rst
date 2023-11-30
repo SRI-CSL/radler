@@ -32,7 +32,7 @@ Once the Colcon build process is complete, Radler generates a JSON file that des
   etb2 add-service --path=svc_colcon_build.json
 
 When a service is added, ETB2 auto-generates a wrapper for the service in ``wrappers/src/<serviceID>WRP.java`` code.
-The user needs to add the intended functionalities into the ``run()`` method. Please find below the contents of a fully developed wrapper for the Radler and Colcon services.
+The user needs to add the intended functionalities into the ``run()`` method. Please find ``radlerWRP.java`` and ``colconWRP.java`` files in this directory and copy the contents of a fully developed wrapper for the ``Radler`` and ``Colcon`` services under the `wrappers/src` directory, respectively.
 
 ::
 
