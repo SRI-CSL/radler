@@ -56,7 +56,7 @@ ETB uses Datalog as a scripting language to define workflows that employ service
 
   etb2 add-workflow --path=workflow.json
 
-The Datalog script is provided below for your reference.
+The Datalog script is provided below for your reference. In the example workflow provided, ``radler_build`` claim undergoes analysis through user-defined services like ``radler compile``, ``colcon build``, ``radler dump``, and ``radler plantdot``.
 
 :: 
 
@@ -66,16 +66,17 @@ The Datalog script is provided below for your reference.
   radler_plantdot(RADL, WS, RES) :- radler(RADL, WS, 'plantdot', RES), equals(RES, "plantdotted").
   colcon_build(WS, RES) :- colcon(WS, RES), equals(RES, "built").
 
-To add a claim to an ETB node, use the command ``etb2 add-claim --query=<query>``, where ``<query>`` represents the input query for which ETB2 will compute its corresponding claim and add it to the node. In this example, we assume that you have copied 'afs.radl' and the associated user code under the 'src' directory, and we assume the 'ros2_ws' workspace directory is located at '/tmp/'.
+To add a claim to an ETB node, use the command ``etb2 add-claim --query=<query>``, where ``<query>`` represents the input query for which ETB2 will compute its corresponding claim and add it to the node.  This process also generates the ROS2 structure, executables, JSON representation of Radler nodes and topics, and PNG representation of pub/sub relationships between Radler nodes.  In this example, we assume that you have copied 'afs.radl' and the associated user code under the 'src' directory, and we assume the 'ros2_ws' workspace directory is located at '/tmp/'.
 
 ::
 
   etb2 add-claim --query="radler_build('afs', 'ros2_ws', A)" verbose --level=debug
-  etb2 show-info
 
-Below is an example demonstrating a successful addition of the claim.
+Below is an example demonstrating a successful addition of the claim.  The ``radler_build`` query results are examined by ``etb2 show-info`` command.  ETB2 has incorporated a total of 13 claims, which Claim 11 being the primary one referencing four subclaims.  Each step of the workflow was analyzed by invoking services.  This demonstration highlights the successful integration of Radler and Colcon within the ETB2 framework.  It showcases an efficient workflow that not only generates essential codes and executables but also provides evidence-backed claims regarding the system's architecture.
 
 ::
+
+  etb2 show-info
 
   -------------------------------
     ETB2 node: [192.168.178.49:4120]
