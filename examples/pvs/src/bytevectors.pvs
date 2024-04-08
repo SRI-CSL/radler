@@ -1,0 +1,83 @@
+bytevectors[n : index] 	: THEORY
+
+  BEGIN
+
+   %Vectors go from 0...n-1, and so right rotate by i moves 0->i, 1->i+1, .., n-1 -> n + i - 1.
+   %left rotation moves 0 to n - i mod n.
+   %To rotate by i, we first rotate i mod 8 bytes, and then nrem(i, 8) bits. 
+
+   byv: TYPE = ARRAY[below(n) -> byte]
+   X, Y, Z: VAR byv
+
+   byvand(X, Y): byv = (LAMBDA (i: below(n)): u8and(X(i), Y(i)))
+   byvor(X, Y): byv =  (LAMBDA (i: below(n)): u8or(X(i), Y(i)))
+   byvxor(X, Y): byv =  (LAMBDA (i: below(n)): u8xor(X(i), Y(i)))
+   byvnot(X): byv =  (LAMBDA (i: below(n)): u8not(X(i)))
+
+   byvleftrot(X, (i: upto(n))): byv
+     = (LAMBDA (j: below(n)): X(nrem(u32plus(i, j), n)))
+
+   nextindex(i: below(n)): below(n) =
+     (LET j = u32plus(i, 1)
+        IN IF j = n then 0 ELSE j ENDIF)
+
+   precindex(i: below(n)): below(n) =
+      (IF i = 0 then u32minus(n, 1) ELSE u32minus(i, 1) ENDIF)
+
+   byvrightrot(X, (i: upto(n))): byv
+     = (LAMBDA (j: below(n)): X(nrem(u32plus(i, u32minus(n, j)), n)))
+
+
+   byvbitleftrot(X, (i : upto(8))): byv =
+      (LAMBDA (j : below(n)): u8plus(u8lshift(X(nextindex(j)), u8minus(8, i)),
+                                     u8rshift(X(j), i)))
+
+   byvbitrightrot(X, (i : upto(8))): byv =
+      (LAMBDA (j : below(n)): u8plus(u8lshift(X(j),  i),
+                                     u8rshift(X(precindex(j)), u8minus(8, i))))
+
+   byvleftrotate(X, (i: below(8 * n))): byv =
+     byvbitrightrot(byvrightrot(X, ndiv(i, 8)), nrem(i, 8))
+
+   byvrightrotate(X, (i: below(8 * n))): byv =
+     byvbitleftrot(byvleftrot(X, ndiv(i, 8)), nrem(i, 8))
+
+   byvXOR(X, Y): byv = (LAMBDA (j: below(n)): u8xor(X(j), Y(j)))
+
+   byv2bytestring(X): bytestring = (# length := n, seq := X #)
+
+   CONVERSION+ byv2bytestring
+
+
+  END bytevectors
+
+byvconcat[m, n: index]: THEORY
+BEGIN
+  ASSUMING
+   index_sum: ASSUMPTION m + n <= maxindex
+  ENDASSUMING
+  IMPORTING bytevectors
+  ++(X: byv[m], Y: byv[n]): byv[m+n] =
+   (LAMBDA (j: below(m + n)): IF j < m THEN X(j) ELSE Y(j - m) ENDIF)
+
+END byvconcat
+
+test_bytevectors: THEORY
+BEGIN
+  IMPORTING bytevectors%, byvconcat
+
+     IMPORTING hex
+
+   test1(i: index): hexstring =
+    (LET str = hex2bytestring("ABCDEF0123456789")
+      IN bytestring2hexstring(str WITH [`seq :=  byvrightrotate(str`seq, i)]))
+
+   test2: hexstring =
+      (LET str1 = hex2bytestring("ABCDEF"),
+           str2 = hex2bytestring("0123456789")
+	IN bytestring2hexstring(str1 ++ str2))
+
+
+
+
+END test_bytevectors

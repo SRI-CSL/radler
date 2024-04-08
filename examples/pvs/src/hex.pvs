@@ -1,0 +1,97 @@
+hex  % [ parameters ]
+		: THEORY
+
+  BEGIN
+
+   IMPORTING simplifications
+
+   X, Y, Z: VAR bytestring
+   
+   digit?(b: byte): bool = (b >= 48 AND b <= 57)
+   hexalpha?(b: byte): bool = (b >= 65 AND b <= 70) OR (b >= 97 AND b <= 102)
+   hexdigit?(b: byte): bool = digit?(b) OR hexalpha?(b)
+
+   hd, hd1, hd2: VAR (hexdigit?)
+   hexvalue(hd): byte =
+       (IF hd >= 97 THEN hd - 87 ELSIF hd >= 65 THEN hd - 55 ELSE hd - 48 ENDIF)
+   hexstring: TYPE = {X | (∀ (i: below(X`length)): hexdigit?(get(X, i)))}
+   hex2byte(hd1, hd2: (hexdigit?)): byte = u8plus(u8lshift(hexvalue(hd1), 4), hexvalue(hd2))
+   hX, hX1, hX2: VAR hexstring
+   hex2bytestring(hX): bytestring =
+   (LET len = IF hX`length = max32
+                 THEN u32div(max32, 2) + 1 %max32 is odd
+		 ELSE u32div(hX`length + 1, 2)%safe to add 1 first
+		 ENDIF
+     IN 
+      (# length := len,
+         seq := (LAMBDA (i: below(len)):
+	          LET twoi = u32times(i, 2)
+		   IN 
+	          IF u32plus(twoi, 1) = hX`length
+		   THEN hex2byte(get(hX, twoi), 48)%pad for odd length
+		   ELSE hex2byte(get(hX, twoi), get(hX, twoi + 1))
+		   ENDIF) #))
+
+   test_hex2bytestring: bytestring = hex2bytestring("ABCDEF0123456789")
+
+   hex0(b: byte): (hexdigit?) =
+     (LET hnum = u8rshift(b, 4)
+       IN IF hnum < 10 THEN 48 + hnum
+           ELSE u8plus(55, hnum) %65 to 70
+	   ENDIF)
+
+   hex1(b: byte): (hexdigit?) =
+     (LET hnum = u8rem(b, 16)%last four bits
+       IN IF hnum < 10 THEN 48 + hnum
+           ELSE u8plus(55,  hnum) %65 to 70
+	   ENDIF)
+	   
+   bytestring2hexstring(X | 2 * X`length < bytestring_bound): hexstring = %X has to be at most half max.
+    (LET len = u32times(X`length, 2)
+     IN (# length := len,
+           seq := (LAMBDA (i:below(len)):
+                   LET i2 = u32div(i, 2)
+   	            IN IF u32rem(i, 2) = 0
+	               THEN hex0(get(X, i2))
+	               ELSE hex1(get(X, i2))
+	               ENDIF) #))
+
+   test_bytestring2hexstring: hexstring = bytestring2hexstring("ABCDEF0123456789")
+
+   bytes2uint32(X, (i : below(X`length))): uint32
+   = (IF i + 3 < X`length
+      THEN u32lshift(get(X, i), 24) + u32lshift(get(X, i+1), 16) + u32lshift(get(X, i + 2), 8) + get(X, i+3)
+      ELSIF i + 2 < X`length
+      THEN u32lshift(get(X, i), 16) + u32lshift(get(X, i + 1), 8) + get(X, i + 2)
+      ELSIF i + 1 < X`length
+      THEN u32lshift(get(X, i), 8) + get(X, i + 1)
+      ELSE get(X, i)
+      ENDIF)
+
+   bytes2uint16(X, (i : below(X`length))): uint16
+   = (IF i + 1 < X`length
+      THEN u16lshift(get(X, i), 8) + get(X, i + 1)
+      ELSE get(X, i)
+      ENDIF)
+
+   bytes2uint8(X, (i : below(X`length))): uint8
+   = get(X, i)
+
+   bytes2uint64(X, (i : below(X`length))): uint64
+   = IF i + 3 <= X`length
+      THEN LET msw = bytes2uint32(X, i), %most significant word
+               lsw = bytes2uint32(X, i + 4)
+	    IN exp2(8) * msw + lsw
+      ELSE bytes2uint32(X, i)
+      ENDIF
+
+   equalUpto(X, Y, (i : uint32 | i <= min(X`length, Y`length))): bool =
+    (FORALL (j: below(i)): X`seq(j) = X`seq(j))
+
+   
+
+   bytes2uint32array(X: bytestring): ARRAY[below(u32ceiling(X`length/4)) -> uint32]
+   = (LAMBDA (j: below(u32ceiling(X`length/4))): bytes2uint32(X, 4*j))
+
+
+  END hex

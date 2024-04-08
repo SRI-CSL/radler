@@ -1,0 +1,43 @@
+pvs2cRijndael : cmake_library {
+  PATH "/home/vagrant/radler/examples/pvs/cmake"
+  CMAKE_MODULE "Rijndael"
+  CMAKE_VAR_LIBRARIES "RIJNDAEL_LIBRARIES"
+  CMAKE_VAR_INCLUDE_DIRS "RIJNDAEL_INCLUDE_DIRS"
+}
+
+basic_rate : duration 500msec
+
+aes_default : array { SIZE 64 TYPE "int8" VALUES 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 }
+
+aes_data : topic {
+  FIELDS
+    seq : int64 0
+    plain = aes_default
+    key = aes_default
+}
+
+Consumer : node {
+  PUBLISHES
+    aes { TOPIC aes_data }
+  PERIOD basic_rate
+  CXX { PATH "src" HEADER "Consumer.h" FILENAME "Consumer.cpp" CLASS "Consumer" }
+}
+
+Rijndael : node {
+  SUBSCRIBES aes { TOPIC aes_data MAXLATENCY 100msec}
+  PERIOD basic_rate
+  CXX { PATH "src" HEADER "Rijndael.h" FILENAME "Rijndael.cpp" CLASS "Rijndael" LIB pvs2cRijndael } 
+}
+
+sys1 : linux {
+  NODES_UID 1000
+  IMG "linux.img"
+  IP 192.168.10.201
+  NODES
+   Rijndael Consumer 
+}
+
+plant : plant {
+  MACHINES
+    host_computer { OS sys1 }
+}

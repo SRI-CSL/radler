@@ -1,0 +1,109 @@
+sums_def [T: TYPE, +: [T, T -> T], zero: T]: THEORY
+  BEGIN
+
+    ASSUMING IMPORTING algebra@group_def[T, +, zero]
+      group: ASSUMPTION group?(fullset[T])
+    ENDASSUMING
+
+    IMPORTING algebra@group[T, +, zero]
+
+    n: VAR nat
+
+    sum(X: ARRAY[nat -> T], n): RECURSIVE T = %sum from 0 to n-1
+      IF n = 0 THEN zero
+      	       ELSE sum(X, n-1) + X(n-1)
+      ENDIF
+    MEASURE n
+
+    pad(n)(X_f: ARRAY[below(n) -> T]): ARRAY[nat -> T] = LAMBDA (i: nat): IF i < n THEN X_f(i) ELSE zero ENDIF
+
+    sum_f(n)(X_f: ARRAY[below(n) -> T]): T = sum(pad(n)(X_f), n)
+
+    sum_equiv: LEMMA FORALL (n: nat, X, Y: ARRAY[nat -> T]):
+    		       (FORALL (k: below(n)): X(k) = Y(k)) IMPLIES
+			 sum(X, n) = sum(Y, n)
+
+    sum_sum_f_equiv: LEMMA FORALL (n: nat, X: ARRAY[nat -> T], Y: ARRAY[below(n) -> T]):
+    		             (FORALL (k: below(n)): X(k) = Y(k)) IMPLIES
+			       sum(X, n) = sum_f(n)(Y)
+
+    sum_f_add_indexn: LEMMA FORALL (n: nat, X: ARRAY[below(n + 1) -> T]):
+     		      	      sum_f(n + 1)(X) = sum_f(n)(LAMBDA (k: below(n)): X(k)) + X(n)
+
+    sum_add_index0: LEMMA FORALL (n: nat, X: ARRAY[nat -> T]):
+    		    	    X(0) + sum(LAMBDA (k: nat): X(k + 1), n) = sum(X, n + 1)
+
+    sum_f_add_index0: LEMMA FORALL (n: nat, X: ARRAY[below(n + 1) -> T]):
+    		    	      X(0) + sum_f(n)(LAMBDA (k: below(n)): X(k + 1)) = sum_f(n + 1)(X)
+
+    sum_zero: LEMMA FORALL (n: nat): sum(LAMBDA (k: nat): zero, n) = zero
+
+    sum_f_zero: LEMMA FORALL (n: nat): sum_f(n)(LAMBDA (k: below(n)): zero) = zero
+
+    sum_f_cut: LEMMA FORALL (n: nat): FORALL (m: upto(n), X: ARRAY[below(n) -> T]): sum_f(n)(X) = sum_f(m)(LAMBDA(k: below(m)): X(k)) + sum_f(n - m)(LAMBDA (k: below(n - m)): X(k + m))
+
+  END sums_def
+
+
+sums_abelian_group [T: type, +: [T, T -> T], zero: T]: THEORY
+  BEGIN
+
+    ASSUMING IMPORTING algebra@group_def[T, +, zero]
+      abel_group: ASSUMPTION abelian_group?(fullset[T])
+    ENDASSUMING
+
+    IMPORTING sums_def[T, +, zero]
+    IMPORTING algebra@abelian_group[T, +, zero]
+
+
+    sum_f_rev: LEMMA FORALL (n: nat, X: ARRAY[below(n) -> T]):
+    	       	       sum_f(n)(X) = sum_f(n)(LAMBDA (k: below(n)): X(n - 1 - k))
+
+    sum_sign_factor: LEMMA FORALL (A, B: ARRAY[nat -> T], n: nat): sum(A, n) + sum(B, n) = sum(LAMBDA (k: nat): A(k) + B(k), n)
+
+    sum_f_sign_factor: LEMMA FORALL (n: nat, A, B: ARRAY[below(n) -> T]): sum_f(n)(A) + sum_f(n)(B)
+    			       	     		             	     	  = sum_f(n)(LAMBDA (k: below(n)): A(k) + B(k))
+
+    sum_invert: LEMMA FORALL (A: ARRAY[nat -> ARRAY[nat -> T]], m: nat, n: nat):
+    		        sum(LAMBDA (k: nat): sum(LAMBDA (l: nat): A(k)(l), n), m)
+    		      	= sum(LAMBDA (l: nat): sum(LAMBDA (k: nat): A(k)(l), m), n)
+
+    sum_f_invert: LEMMA FORALL (m, n: nat, A: ARRAY[below(m) -> ARRAY[below(n) -> T]]):
+    		          sum_f(m)(LAMBDA (k: below(m)): sum_f(n)(LAMBDA (l: below(n)): A(k)(l)))
+    		          = sum_f(n)(LAMBDA (l: below(n)): sum_f(m)(LAMBDA (k: below(m)): A(k)(l)))
+
+    triangle_sum_f_invert: LEMMA FORALL (n: nat, A: ARRAY[k: below(n + 1) -> ARRAY[below(k + 1) -> T]]):
+    		                   sum_f(n + 1)(LAMBDA (k: below(n + 1)): sum_f(k + 1)(LAMBDA (l: below(k + 1)): A(k)(l)))
+    		      		   = sum_f(n + 1)(LAMBDA (l: below(n + 1)): sum_f(n - l + 1)(LAMBDA (k: below(n - l + 1)): A(k + l)(l)))
+    
+
+  END sums_abelian_group
+
+
+sums_ring [T: TYPE, +, *: [T, T -> T], zero: T]: THEORY
+  BEGIN
+
+    ASSUMING IMPORTING algebra@ring_def[T, +, *, zero]
+      ring: ASSUMPTION ring?(fullset[T])
+    ENDASSUMING
+
+    IMPORTING sums_abelian_group[T, +, zero]
+    
+    IMPORTING algebra@ring[T, +, *, zero]
+
+    a: VAR T
+
+    sum_times_const_r: LEMMA FORALL (A: ARRAY[nat -> T], n: nat):
+    		               a * sum(A, n) = sum(LAMBDA (k: nat): a * A(k), n)
+
+    sum_f_times_const_r: LEMMA FORALL (n: nat, A: ARRAY[below(n) -> T]):
+    		                 a * sum_f(n)(A) = sum_f(n)(LAMBDA (k: below(n)): a * A(k))
+
+    sum_times_const_l: LEMMA FORALL (A: ARRAY[nat -> T], n: nat):
+    		               sum(A, n) * a = sum(LAMBDA (k: nat): A(k) * a, n)     
+
+    sum_f_times_const_l: LEMMA FORALL (n: nat, A: ARRAY[below(n) -> T]):
+    		                 sum_f(n)(A) * a = sum_f(n)(LAMBDA (k: below(n)): A(k) * a)
+
+  END sums_ring
+

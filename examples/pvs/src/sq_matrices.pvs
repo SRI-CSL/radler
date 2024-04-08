@@ -1,0 +1,60 @@
+
+sq_matrices [T: TYPE, n: posnat, +, *: [T, T -> T], zero, one: T]: THEORY
+  BEGIN
+
+    ASSUMING IMPORTING algebra@ring_with_one_def[T, +, *, zero, one]
+      ring_with_one: ASSUMPTION ring_with_one?(fullset[T])
+    ENDASSUMING
+
+    IMPORTING sums_ring[T, +, *, zero]
+
+    sq_mat: TYPE = ARRAY[below(n) -> ARRAY[below(n) -> T]]
+
+    X, Y, Z: VAR sq_mat
+    j, k, l, m: VAR below(n)
+
+    ;+(X, Y): sq_mat = LAMBDA k: (LAMBDA l: X(k)(l) + Y(k)(l))
+    ;*(X, Y): sq_mat = LAMBDA j: (LAMBDA l: sum_f(n)(LAMBDA k: X(j)(k) * Y(k)(l)))
+
+    mat_zero: sq_mat = LAMBDA k: LAMBDA l: zero
+    mat_id: sq_mat = LAMBDA k: LAMBDA l: IF k = l THEN one ELSE zero ENDIF
+
+    IMPORTING ring_with_one_def[sq_mat, +, *, mat_zero, mat_id]
+
+    mat_ring: LEMMA ring?(fullset[sq_mat])
+    mat_ring_with_one: LEMMA ring_with_one?(fullset[sq_mat])
+
+
+  END sq_matrices
+
+
+vectors [T: TYPE, n: posnat, +, *: [T, T -> T], zero, one: T]: THEORY
+  BEGIN
+
+    ASSUMING IMPORTING algebra@ring_with_one_def[T, +, *, zero, one]
+      ring_with_one: ASSUMPTION ring_with_one?(fullset[T])
+    ENDASSUMING
+
+    IMPORTING sq_matrices[T, n, +, *, zero, one]
+
+    vector: TYPE = ARRAY[below(n) -> T]
+
+    X, Y: VAR vector
+    A, B: VAR sq_mat
+    i, k: VAR below(n)
+
+    ;+(X, Y): vector = LAMBDA i: X(i) + Y(i)
+    ;*(A, X): vector = LAMBDA i: sum_f(n)(LAMBDA k: A(i)(k) * X(k))
+
+    vec_zero: vector = LAMBDA i: zero
+    vec_one: vector = LAMBDA i: one
+
+    IMPORTING group_def[vector, +, vec_zero]
+
+    vec_abelian_group: LEMMA abelian_group?(fullset[vector])
+    prod_vec_associative: LEMMA FORALL (A, B, X): (A * B) * X = A * (B * X)
+
+    identity_times_vec: LEMMA FORALL X: mat_id * X = X
+
+  END vectors
+

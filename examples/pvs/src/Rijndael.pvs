@@ -1,0 +1,656 @@
+
+Rijndael  : THEORY
+
+  BEGIN
+
+   IMPORTING bytevectors
+
+   A, K, K0, K1, K2, K3: VAR byv[16]
+
+   get(A)(i, j: below(4)): byte
+    = A(i + 4 * j)
+
+   every(n: posnat) (P: [below(n) -> bool], i: upto(n)): RECURSIVE bool = % This is used to exhaust cases, typically on bytes
+      IF i = 0 THEN true
+        ELSE (P(i - 1) AND every(n)(P, i - 1))
+      ENDIF
+      MEASURE i
+
+   induct_every: LEMMA FORALL (n: posnat): (FORALL (P: [below(n) -> bool], i: upto(n)): every(n) (P, i) IMPLIES (FORALL (j: below(i)): P(j))) % I need this lemma (in Rijndael) to prove some TCCs
+
+
+   IMPORTING hex
+
+   SboxHex: hexstring =  "637c777bf26b6fc53001672bfed7ab76ca82c97dfa5947f0add4a2af9ca472c0b7fd9326363ff7cc34a5e5f171d8311504c723c31896059a071280e2eb27b27509832c1a1b6e5aa0523bd6b329e32f8453d100ed20fcb15b6acbbe394a4c58cfd0efaafb434d338545f9027f503c9fa851a3408f929d38f5bcb6da2110fff3d2cd0c13ec5f974417c4a77e3d645d197360814fdc222a908846eeb814de5e0bdbe0323a0a4906245cc2d3ac629195e479e7c8376d8dd54ea96c56f4ea657aae08ba78252e1ca6b4c6e8dd741f4bbd8b8a703eb5664803f60e613557b986c11d9ee1f8981169d98e949b1e87e9ce5528df8ca1890dbfe6426841992d0fb054bb16"
+
+    Sbox: byv[256] =
+     (LET X = hex2bytestring(SboxHex)
+      IN X`seq)
+
+    byteSubst(A) : byv[16] =
+      (LAMBDA (i:below(16)): Sbox(A(i)))
+
+    shiftRow(A): byv[16]
+     = (LAMBDA (k: below(16)):
+         LET i = u16rem(k, 4),
+             j = u16div(k, 4),
+	     ij: below(16) = j + i,
+	     l = u16rem(ij, 4)  %left-shift by i. How would Arsenal figure this out from A2.5?
+          IN get(A)(i, l))
+
+    byte_msb(x: byte): bool = ndiv(x, 128) > 0
+
+
+    T2(b: byte): byte =  %In A2.6, the else case is 2b xor 283, which overflows a byte!
+      IF NOT byte_msb(b) THEN u8lshift(b, 1) ELSE u8xor(u8lshift(b, 1), 27) ENDIF
+      
+    T3(b: byte): byte =
+      u8xor(T2(b), b)
+
+   timesConst (c: byte, b: byte): RECURSIVE byte =
+      IF c = 0
+        THEN 0
+	ELSIF u8rem(c, 2) = 1
+	  THEN u8xor(b, timesConst(u8div(c, 2), T2(b)))
+	  ELSE timesConst(u8div(c, 2), T2(b))
+      ENDIF
+      MEASURE c
+
+    mixColumn(A): byv[16]
+    = (LAMBDA (k: below(16)):
+         LET i = u16rem(k, 4),
+             j = u16div(k, 4)
+          IN COND i = 0 -> u8xor(u8xor(u8xor(T2(get(A)(0, j)), T3(get(A)(1, j))), get(A)(2, j)), get(A)(3, j)),
+    	          i = 1 -> u8xor(u8xor(u8xor(get(A)(0, j), T2(get(A)(1, j))), T3(get(A)(2, j))), get(A)(3, j)),
+    		  i = 2 -> u8xor(u8xor(u8xor(get(A)(0, j), get(A)(1, j)), T2(get(A)(2, j))), T3(get(A)(3, j))),
+    		  ELSE  -> u8xor(u8xor(u8xor(T3(get(A)(0, j)), get(A)(1, j)), get(A)(2, j)), T2(get(A)(3, j)))
+    	     ENDCOND)
+
+
+    % mixColumn(A): byv[16]
+    % = (LAMBDA (k: below(16)):
+    %      LET i = u16rem(k, 4),
+    %          j = u16div(k, 4)
+    %       IN COND i = 0 -> u8xor(u8xor(u8xor(timesConst(2, get(A)(0, j)), timesConst(3, get(A)(1, j))), get(A)(2, j)), get(A)(3, j)),
+    % 	          i = 1 -> u8xor(u8xor(u8xor(get(A)(0, j), timesConst(2, get(A)(1, j))), timesConst(3, get(A)(2, j))), get(A)(3, j)),
+    % 		  i = 2 -> u8xor(u8xor(u8xor(get(A)(0, j), get(A)(1, j)), timesConst(2, get(A)(2, j))), timesConst(3, get(A)(3, j))),
+    % 		  ELSE  -> u8xor(u8xor(u8xor(timesConst(3, get(A)(0, j)), get(A)(1, j)), get(A)(2, j)), timesConst(2, get(A)(3, j)))
+    % 	     ENDCOND)
+	     
+
+    roundkeyXOR(A, K): byv[16] %K is the round key
+     = byvXOR(A, K)
+
+    nextRoundKey(K, (rconst: byte)): byv[16] = 
+     LET K0: byv[4] = (LAMBDA (i : below(4)):
+	        IF i = 0
+	        THEN u8xor(u8xor(get(K)(0, 0), Sbox(get(K)(1, 3))), rconst)%wasteful recomputing of roundConst 
+                ELSE u8xor(get(K)(i, 0), Sbox(get(K)(nrem(i + 1, 4), 3)))
+                ENDIF),
+         K1: byv[4] = (LAMBDA (i : below(4)): u8xor(get(K)(i, 1), K0(i))),
+	 K2: byv[4] = (LAMBDA (i : below(4)): u8xor(get(K)(i, 2), K1(i))),
+	 K3: byv[4] = (LAMBDA (i : below(4)): u8xor(get(K)(i, 3), K2(i)))
+          IN (LAMBDA (i: below(16)):
+	         IF i < 4 THEN K0(i)
+		 ELSIF i < 8 THEN K1(i - 4)
+		 ELSIF i < 12 THEN K2(i - 8)
+	         ELSE K3(i - 12)
+		      ENDIF)
+
+   KK: VAR ARRAY[below(11) -> byv[16]]
+
+   allKeys(KK, (rconst : byte), (i: below(11))): RECURSIVE ARRAY[below(11) -> byv[16]] =
+     (IF i = 10
+       THEN KK
+       ELSE allKeys(KK WITH [(i + 1):= nextRoundKey(KK(i), rconst)], T2(rconst), i + 1)
+       ENDIF)
+       MEASURE 10 - i
+
+   Rijndael_step(A, K): byv[16] =
+    (LET A1 = byteSubst(A),
+        A2 = shiftRow(A1),
+        A3 = mixColumn(A2)
+     IN roundkeyXOR(A3, K))
+		      
+   Rijndael_rec(A, KK, (i : below(11))): RECURSIVE byv[16] =
+    (IF i >=  10 THEN roundkeyXOR(shiftRow(byteSubst(A)), KK(i))
+     ELSIF i = 0 THEN Rijndael_rec(roundkeyXOR(A, KK(i)),
+                                   KK,
+				   i + 1)
+     ELSE LET A4 = Rijndael_step(A, KK(i)) 
+	    IN Rijndael_rec(A4, KK, i + 1)
+    ENDIF)
+    MEASURE 10 - i
+
+   Rijndael(A, K):  byv[16] = Rijndael_rec(A, allKeys((LAMBDA (k: below(11)): K), 1, 0), 0)
+
+   hex16(X: byv[16]): hexstring =
+      bytestring2hexstring((# length := 16, seq := X #))
+
+   test0RD: hexstring =
+    (LET Input = hex2bytestring("3243f6a8885a308d313198a2e0370734"), 
+           Cipher = hex2bytestring("2b7e151628aed2a6abf7158809cf4f3c"), 
+	   Output = roundkeyXOR(Input`seq, Cipher`seq),
+	   Outputbytestring =  (# length := 16, seq := Output #)
+	   IN bytestring2hexstring(Outputbytestring))
+
+   testRijndael1: hexstring
+    = (LET Input = hex2bytestring("3243f6a8885a308d313198a2e0370734"), 
+           Cipher = hex2bytestring("2b7e151628aed2a6abf7158809cf4f3c"), 
+	   Output = Rijndael(Input`seq, Cipher`seq),
+	   Outputbytestring =  (# length := 16, seq := Output #)
+	   IN bytestring2hexstring(Outputbytestring))
+
+   invSboxHex: hexstring = "52096ad53036a538bf40a39e81f3d7fb7ce339829b2fff87348e4344c4dee9cb547b9432a6c2233dee4c950b42fac34e082ea16628d924b2765ba2496d8bd12572f8f66486689816d4a45ccc5d65b6926c704850fdedb9da5e154657a78d9d8490d8ab008cbcd30af7e45805b8b34506d02c1e8fca3f0f02c1afbd0301138a6b3a9111414f67dcea97f2cfcef0b4e67396ac7422e7ad3585e2f937e81c75df6e47f11a711d29c5896fb7620eaa18be1bfc563e4bc6d279209adbc0fe78cd5af41fdda8338807c731b11210592780ec5f60517fa919b54a0d2de57a9f93c99cefa0e03b4dae2af5b0c8ebbb3c83539961172b047eba77d626e169146355210c7d"
+
+   invSbox: byv[256] =
+     (LET X = hex2bytestring(invSboxHex)
+      IN X`seq)
+
+    invByteSubst(A) : byv[16] =
+      (LAMBDA (i:below(16)): invSbox(A(i)))
+
+    invShiftRow(A): byv[16]
+     = (LAMBDA (x: below(16)):
+         LET i = u16rem(x, 4),
+	     j = u16div(x, 4),
+	     ij: below(16) = j + 4 - i,
+	     l = u16rem(ij, 4) %inverse-shift
+	  IN get(A)(i, l))
+
+    invMixColumn(A): byv[16]
+     = (LAMBDA (k: below(16)):
+         LET i = u16rem(k, 4),
+             j = u16div(k, 4)
+          IN COND i = 0 -> u8xor(u8xor(u8xor(timesConst(14, get(A)(0,j)), timesConst(11, get(A)(1,j))), timesConst(13, get(A)(2,j))), timesConst(9, get(A)(3,j))),
+    	          i = 1 -> u8xor(u8xor(u8xor(timesConst(9, get(A)(0,j)), timesConst(14, get(A)(1,j))), timesConst(11, get(A)(2,j))), timesConst(13, get(A)(3,j))),
+    		  i = 2 -> u8xor(u8xor(u8xor(timesConst(13, get(A)(0,j)), timesConst(9, get(A)(1,j))), timesConst(14, get(A)(2,j))), timesConst(11, get(A)(3,j))),
+    		  ELSE  -> u8xor(u8xor(u8xor(timesConst(11, get(A)(0,j)), timesConst(13, get(A)(1,j))), timesConst(9, get(A)(2,j))), timesConst(14, get(A)(3,j)))
+    	     ENDCOND) %11 is byte 0B, 13 is 0D and 14 is 0E
+
+
+    invRijndael_step(A, K): byv[16] =
+     (LET A1 = roundkeyXOR(A, K),
+        A2 = invMixColumn(A1),
+        A3 = invShiftRow(A2)
+     IN invByteSubst(A3))
+		      
+   invRijndael_rec(A, KK, (i : below(11))): RECURSIVE byv[16] =
+    (IF i >= 10 THEN invByteSubst(invShiftRow(roundkeyXOR(A, KK(i))))
+     ELSIF i = 0 THEN roundkeyXOR(invRijndael_rec(A, KK, i + 1), KK(i))
+     ELSE invRijndael_step(invRijndael_rec(A, KK, i + 1), KK(i)) 
+    ENDIF)
+    MEASURE 10 - i
+
+   invRijndael(A, K):  byv[16] = invRijndael_rec(A, allKeys((LAMBDA (k: below(11)): K), 1, 0), 0)
+   
+   testInvRijndael1: hexstring
+    = (LET Input = hex2bytestring("3243f6a8885a308d313198a2e0370734"), 
+           Cipher = hex2bytestring("2b7e151628aed2a6abf7158809cf4f3c"), 
+	   Output = invRijndael(Rijndael(Input`seq, Cipher`seq), Cipher`seq
+	   ),
+	   Outputbytestring =  (# length := 16, seq := Output #)
+	   IN bytestring2hexstring(Outputbytestring))
+
+   testRijndael(hA, hK: hexstring): hexstring
+    = (LET Input = printh(hex2bytestring(hA)),
+           Cipher = printh(hex2bytestring(hK)),
+	   Output = printh(byv2bytestring(Rijndael(Input`seq, Cipher`seq))),
+	   Inverse = printh(byv2bytestring(invRijndael(Output`seq, Cipher`seq)))
+	 IN bytestring2hexstring(Inverse))
+	   
+
+
+
+  END Rijndael
+
+%======================================================== PROOFS OF INVERTIBILITY ============================================================================%
+
+abelian_byte_prerequisites : THEORY % used to prove the TCC that (byte, u8xor, 0) is an abelian group
+
+  BEGIN
+
+    XOR_associative: LEMMA FORALL (N: nat, bv1: bvec[N], bv2: bvec[N], bv3: bvec[N]): XOR(XOR(bv1, bv2), bv3) = XOR(bv1, XOR(bv2, bv3))
+
+    u8xor_associative: LEMMA FORALL (x: byte, y: byte, z: byte): u8xor(u8xor(x, y), z) = u8xor(x, u8xor(y, z))
+
+    u8xor_commutative: LEMMA commutative?(u8xor)
+
+    u8xor_0_r: LEMMA FORALL (x: byte): u8xor(x, 0) = x
+
+    u8xor_0_l: LEMMA FORALL (x: byte): u8xor(0, x) = x
+
+    u8xor_inv: LEMMA FORALL (x: byte): u8xor(x, x) = 0
+
+  END abelian_byte_prerequisites
+
+
+
+Rijndael_proofs : THEORY % This theory contains the proofs of the invertibility of each function used in Rijndael, and eventually of Rijndael
+
+  BEGIN
+
+    IMPORTING Rijndael
+
+    IMPORTING abelian_byte_prerequisites
+
+    IMPORTING sums_abelian_group[byte, u8xor, 0]
+
+
+%======================================================= INVERTIBILITY OF BYTESUBST ==========================================================================%
+
+    byteSubstUnsubst_id: LEMMA FORALL (i: below(256)): invSbox(Sbox(i)) = i
+
+    byteSubstInvertible: LEMMA FORALL (A: byv[16]): invByteSubst(byteSubst(A)) = A
+
+
+%======================================================= INVERTIBILITY OF SHIFTROW ===========================================================================%
+
+    shiftRowInvertible: LEMMA FORALL (A: byv[16]): invShiftRow(shiftRow(A)) = A
+
+
+%======================================================= INVERTIBILITY OF MIXCOLUMN ==========================================================================%
+
+        %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ REWRITING OF U8LSHIFT THROUGH BITVECTORS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
+
+    u8tobv(x: byte): bvec[8] = LAMBDA (i: below(8)): (u8rem(u16div(x, exp2(i)), 2) = 1)
+
+    bv_shift_left(x: bvec[8], j: upto(8)): bvec[8] =
+      LAMBDA (i: below(8)): IF i < j THEN false ELSE x^(i - j) ENDIF
+
+    u8_shift_left(x: byte, i: upto(8)): byte = bv2nat[8](bv_shift_left(u8tobv(x), i))
+
+    %u8xor(x: byte, y: byte): byte = bv2nat[8](bv_bitwise[8].XOR(u8tobv(x), u8tobv(y))) % I thought I would need to redefine u8xor, I don't understand how the standard definition from the prelude (that uses nat2bv) allows u8xor to actually compute cases - as nat2bv is defined as an implicit function
+
+
+
+    b2n_simplify: LEMMA FORALL (x: byte): IF u8rem(x, 2) = 1 THEN 1 ELSE 0 ENDIF = u8rem(x, 2)
+
+    bvtou8_inverts_rec: LEMMA FORALL (i: upto(8), x: byte): bv2nat_rec[8](i, u8tobv(x)) = nrem(x, exp2(i))
+
+    bvtou8_inverts: LEMMA FORALL (x: byte): bv2nat[8](u8tobv(x)) = x
+
+    u8tobv_rew: LEMMA FORALL (bv: bvec[8], x: byte): u8tobv(x) = bv IFF bv2nat[8](bv) = x
+
+    u8tobv_inverts: LEMMA FORALL (bv: bvec[8]): u8tobv(bv2nat[8](bv)) = bv
+
+    u8tobv_nat2bv: LEMMA u8tobv = nat2bv[8]
+
+    bv2nat_inverts: LEMMA FORALL (x: byte): bv2nat[8](u8tobv(x)) = x
+
+    AUTO_REWRITE u8tobv_inverts
+    AUTO_REWRITE bv2nat_inverts
+
+    AUTO_REWRITE nat2bv_inv[8]
+    AUTO_REWRITE bv2nat_inv[8]
+
+    
+    msb_rew: LEMMA FORALL (x: byte): byte_msb(x) = (x >= 128)
+
+    msb_rew2: LEMMA FORALL (x: byte): byte_msb(x) = nat2bv(x)(7)
+    
+    xor_msb: LEMMA FORALL (x: byte, y: byte): byte_msb(u8xor(x, y)) = (byte_msb(x) XOR byte_msb(y))
+    
+
+    u8lshift_iterate: LEMMA FORALL (x: byte, n: below(8)): u8lshift(x, n + 1) = u8lshift(u8lshift(x, 1), n)
+
+    u8_shift_left_iterate: LEMMA FORALL (x: byte, n: below(8)): u8_shift_left(x, n + 1) = u8_shift_left(u8_shift_left(x, 1), n)
+
+    u8lshift_equiv_1: LEMMA FORALL (x: byte): u8_shift_left(x, 1) = u8lshift(x, 1)
+
+    u8lshift_equiv: LEMMA FORALL (x: byte, i: upto(8)): u8_shift_left(x, i) = u8lshift(x, i)
+    
+
+        %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DISTRIBUTIVITY OF TIMESCONST ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
+	
+    shift_xor_commute: LEMMA FORALL (x, y: byte, i: below(8)): u8lshift(u8xor(x, y), i) = u8xor(u8lshift(x, i), u8lshift(y, i))
+
+    T2_morphism: LEMMA FORALL (x: byte, y: byte): T2(u8xor(x, y)) = u8xor(T2(x), T2(y))
+
+    timesConst_distributive_l: LEMMA distributive?(timesConst, u8xor)
+
+
+    % timesConst_commutative: LEMMA commutative?(timesConst) % this lemma isn't used in the later proofs. I proved it by exhausting all possible cases
+
+
+    %     %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ EXHAUSTIVE CHECK OF COORDINATE EQUALITY ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
+
+    % mixColumnInvertible_aa: LEMMA FORALL (a: byte):
+    % 			      u8xor(u8xor(u8xor(timesConst(14, timesConst(2, a)),
+    % 			      			timesConst(11, a)),
+    % 						timesConst(13, a)),
+    % 						timesConst(9, timesConst(3, a))) = a
+
+    % mixColumnInvertible_ab: LEMMA FORALL (b: byte):	
+    % 			      u8xor(u8xor(u8xor(timesConst(14, timesConst(3, b)),
+    % 			      			timesConst(11, timesConst(2, b))),
+    % 						timesConst(13, b)),
+    % 						timesConst(9, b)) = 0
+
+    % mixColumnInvertible_ac: LEMMA FORALL (c: byte):	
+    % 			      u8xor(u8xor(u8xor(timesConst(14, c),
+    % 			      			timesConst(11, timesConst(3, c))),
+    % 						timesConst(13, timesConst(2, c))),
+    % 						timesConst(9, c)) = 0
+
+    % mixColumnInvertible_ad: LEMMA FORALL (d: byte):	
+    % 			      u8xor(u8xor(u8xor(timesConst(14, d),
+    % 			      			timesConst(11, d)),
+    % 						timesConst(13, timesConst(3, d))),
+    % 						timesConst(9, timesConst(2, d))) = 0
+
+    % mixColumnInvertible_ba: LEMMA FORALL (a: byte):
+    % 			      u8xor(u8xor(u8xor(timesConst(9, timesConst(2, a)),
+    % 			      			timesConst(14, a)),
+    % 						timesConst(11, a)),
+    % 						timesConst(13, timesConst(3, a))) = 0
+
+    % mixColumnInvertible_bb: LEMMA FORALL (b: byte):	
+    % 			      u8xor(u8xor(u8xor(timesConst(9, timesConst(3, b)),
+    % 			      			timesConst(14, timesConst(2, b))),
+    % 						timesConst(11, b)),
+    % 						timesConst(13, b)) = b
+
+    % mixColumnInvertible_bc: LEMMA FORALL (c: byte):	
+    % 			      u8xor(u8xor(u8xor(timesConst(9, c),
+    % 			      			timesConst(14, timesConst(3, c))),
+    % 						timesConst(11, timesConst(2, c))),
+    % 						timesConst(13, c)) = 0
+
+    % mixColumnInvertible_bd: LEMMA FORALL (d: byte):	
+    % 			      u8xor(u8xor(u8xor(timesConst(9, d),
+    % 			      			timesConst(14, d)),
+    % 						timesConst(11, timesConst(3, d))),
+    % 						timesConst(13, timesConst(2, d))) = 0
+
+    % mixColumnInvertible_ca: LEMMA FORALL (a: byte):
+    % 			      u8xor(u8xor(u8xor(timesConst(13, timesConst(2, a)),
+    % 			      			timesConst(9, a)),
+    % 						timesConst(14, a)),
+    % 						timesConst(11, timesConst(3, a))) = 0
+
+    % mixColumnInvertible_cb: LEMMA FORALL (b: byte):	
+    % 			      u8xor(u8xor(u8xor(timesConst(13, timesConst(3, b)),
+    % 			      			timesConst(9, timesConst(2, b))),
+    % 						timesConst(14, b)),
+    % 						timesConst(11, b)) = 0
+
+    % mixColumnInvertible_cc: LEMMA FORALL (c: byte):	
+    % 			      u8xor(u8xor(u8xor(timesConst(13, c),
+    % 			      			timesConst(9, timesConst(3, c))),
+    % 						timesConst(14, timesConst(2, c))),
+    % 						timesConst(11, c)) = c
+
+    % mixColumnInvertible_cd: LEMMA FORALL (d: byte):	
+    % 			      u8xor(u8xor(u8xor(timesConst(13, d),
+    % 			      			timesConst(9, d)),
+    % 						timesConst(14, timesConst(3, d))),
+    % 						timesConst(11, timesConst(2, d))) = 0
+
+    % mixColumnInvertible_da: LEMMA FORALL (a: byte):
+    % 			      u8xor(u8xor(u8xor(timesConst(11, timesConst(2, a)),
+    % 			      			timesConst(13, a)),
+    % 						timesConst(9, a)),
+    % 						timesConst(14, timesConst(3, a))) = 0
+
+    % mixColumnInvertible_db: LEMMA FORALL (b: byte):	
+    % 			      u8xor(u8xor(u8xor(timesConst(11, timesConst(3, b)),
+    % 			      			timesConst(13, timesConst(2, b))),
+    % 						timesConst(9, b)),
+    % 						timesConst(14, b)) = 0
+
+    % mixColumnInvertible_dc: LEMMA FORALL (c: byte):	
+    % 			      u8xor(u8xor(u8xor(timesConst(11, c),
+    % 			      			timesConst(13, timesConst(3, c))),
+    % 						timesConst(9, timesConst(2, c))),
+    % 						timesConst(14, c)) = 0
+
+    % mixColumnInvertible_dd: LEMMA FORALL (d: byte):	
+    % 			      u8xor(u8xor(u8xor(timesConst(11, d),
+    % 			      			timesConst(13, d)),
+    % 						timesConst(9, timesConst(3, d))),
+    % 						timesConst(14, timesConst(2, d))) = d
+
+
+    %     %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ REWRITING OF XORS AS SUM TO PROVE ASSOCIATIVITY ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
+
+    % u8xor_sum_rewrite: LEMMA FORALL (x, y, z, w: byte): u8xor(u8xor(u8xor(x, y), z), w) = sum_f(4)(
+    %   		       	     	    	      	 	  LAMBDA (i: below(4)):
+    % 							    COND i = 0 -> x,
+    % 							    	 i = 1 -> y,
+    % 							    	 i = 2 -> z,
+    % 							    	 ELSE  -> w ENDCOND)
+
+    % sum_cond_commute: LEMMA FORALL (x11, x12, x13, x14, x21, x22, x23, x24, x31, x32, x33, x34, x41, x42, x43, x44: byte):
+    %   (LAMBDA (i: below(4)):
+    %         COND i = 0 ->
+    %                sum_f(4)
+    %                   (LAMBDA (i: below(4)):
+    %                      COND i = 0 -> x11,
+    %                           i = 1 -> x12,
+    %                           i = 2 -> x13,
+    %                           ELSE -> x14
+    %                      ENDCOND),
+    %              i = 1 ->
+    %                sum_f(4)
+    %                   (LAMBDA (i: below(4)):
+    %                      COND i = 0 -> x21,
+    %                           i = 1 -> x22,
+    %                           i = 2 -> x23,
+    %                           ELSE -> x24
+    %                      ENDCOND),
+    %              i = 2 ->
+    %                sum_f(4)
+    %                   (LAMBDA (i: below(4)):
+    %                      COND i = 0 -> x31,
+    %                           i = 1 -> x32,
+    %                           i = 2 -> x33,
+    %                           ELSE -> x34
+    %                      ENDCOND),
+    %              i = 3 ->
+    %                sum_f(4)
+    %                   (LAMBDA (i: below(4)):
+    %                      COND i = 0 -> x41,
+    %                           i = 1 -> x42,
+    %                           i = 2 -> x43,
+    %                           ELSE -> x44
+    %                       ENDCOND)
+    %         ENDCOND)
+    %   = (LAMBDA (i: below(4)):
+    %   	  sum_f(4)
+    % 	    (LAMBDA (j: below(4)):
+    % 	       COND i = 0 AND j = 0 -> x11,
+    % 	       	    i = 0 AND j = 1 -> x12,
+    % 		    i = 0 AND j = 2 -> x13,
+    % 	       	    i = 0 AND j = 3 -> x14,
+    % 		    i = 1 AND j = 0 -> x21,
+    % 	       	    i = 1 AND j = 1 -> x22,
+    % 		    i = 1 AND j = 2 -> x23,
+    % 	       	    i = 1 AND j = 3 -> x24,
+    % 		    i = 2 AND j = 0 -> x31,
+    % 	       	    i = 2 AND j = 1 -> x32,
+    % 		    i = 2 AND j = 2 -> x33,
+    % 	       	    i = 2 AND j = 3 -> x34,
+    % 		    i = 3 AND j = 0 -> x41,
+    % 	       	    i = 3 AND j = 1 -> x42,
+    % 		    i = 3 AND j = 2 -> x43,
+    % 	       	    ELSE            -> x44 ENDCOND))
+						    
+
+    % u8xor_associativity_max: LEMMA FORALL (x11, x12, x13, x14, x21, x22, x23, x24, x31, x32, x33, x34, x41, x42, x43, x44: byte):
+    %   u8xor(u8xor(u8xor( u8xor(u8xor(u8xor(x11, x12), x13), x14),
+    % 		       	 u8xor(u8xor(u8xor(x21, x22), x23), x24)),
+    % 		       	 u8xor(u8xor(u8xor(x31, x32), x33), x34)),
+    % 		       	 u8xor(u8xor(u8xor(x41, x42), x43), x44)) =
+    %   u8xor(u8xor(u8xor( u8xor(u8xor(u8xor(x11, x21), x31), x41),
+    % 		       	 u8xor(u8xor(u8xor(x12, x22), x32), x42)),
+    % 		       	 u8xor(u8xor(u8xor(x13, x23), x33), x43)),
+    % 		       	 u8xor(u8xor(u8xor(x14, x24), x34), x44))
+
+    % timesConst_distributivity_max: LEMMA FORALL (a, b, c, d, e: byte):
+    %   timesConst(a, u8xor(u8xor(u8xor(b, c), d), e)) =
+    %   u8xor(u8xor(u8xor(timesConst(a, b), timesConst(a, c)), timesConst(a, d)), timesConst(a, e))
+
+
+    %     %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ACTUAL INVERTIBILITY ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
+
+    % mixColumnInvertible: LEMMA FORALL (A: byv[16]): invMixColumn(mixColumn(A)) = A
+
+
+%============================================= ALTERNATE PROOF OF INVERTIBILITY OF MIXCOLUMN =================================================================%
+
+	%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ DEFINITION OF THE POLYNOMIALS M MOD WHICH WE ARE REASONING ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
+
+    M: sequence[bool] = LAMBDA (i: nat):
+       		      	  COND i = 0 OR i = 1 OR i = 3 OR i = 4 OR i = 8 -> true,
+			  ELSE       	      	       	      	       	 -> false ENDCOND
+			  
+
+    IMPORTING pol_modulo[bool, XOR, AND, false, true, M]
+    IMPORTING vectors[mod(M), 4, ++, **, pol_zero, pol_one]
+
+    degM: LEMMA deg(M) = 8
+    MbinIs283: LEMMA FORALL (i: below(8)): M(i) = nat2bv(27)(i)
+
+    modM2bvec(P: mod(M)): bvec[8] = LAMBDA (i: below(8)): P(i)
+    bvec2modM(bv: bvec[8]): mod(M) = LAMBDA (i: nat): IF i < 8 THEN bv^i ELSE false ENDIF
+
+    CONVERSION modM2bvec
+    CONVERSION bvec2modM
+
+    CONVERSION (LAMBDA (P: mod(M)): bv2nat(modM2bvec(P)))
+    CONVERSION (LAMBDA (n: nat): bvec2modM(u8tobv(n)))
+
+    modM2bvec_inv: LEMMA FORALL (bv: bvec[8]): modM2bvec(bvec2modM(bv)) = bv
+    bvec2modM_inv: LEMMA FORALL (P: mod(M)): bvec2modM(modM2bvec(P)) = P
+
+    AUTO_REWRITE modM2bvec_inv
+    AUTO_REWRITE bvec2modM_inv
+
+	%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ CONNECTION BETWEEN THE OPERATIONS DEFINED ON BYTES AND MODULO M ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
+
+    byv2byva(A: byv[16]): ARRAY[below(4) -> vector] = %byte vector (from the theory vector) array
+      LAMBDA (i: below(4)): (LAMBDA (j: below(4)):
+        get(A)(j, i))
+
+    byva2byv(X: ARRAY[below(4) -> vector]): byv[16] =
+      LAMBDA (i: below(16)): X(ndiv(i, 4))(nrem(i, 4))
+
+    pol2: mod(M) = Xn(1)
+    modTimes2: LEMMA FORALL (P: mod(M)): pol2 ** P = T2(P)
+
+    u8xorIsModPlus: LEMMA FORALL (x, y: byte): u8xor(x, y) = x ++ y
+    timesConstIsModProd: LEMMA FORALL (x, y: byte): timesConst(x, y) = x ** y
+
+
+    byvaInverts: LEMMA FORALL (A: byv[16]): byva2byv(byv2byva(A)) = A
+
+    byvInverts: LEMMA FORALL(X: ARRAY[below(4) -> vector]): byv2byva(byva2byv(X)) = X
+
+    AUTO_REWRITE byvaInverts
+    AUTO_REWRITE byvInverts
+
+
+	%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ REWRITING OF MIXCOLUMN WITH MATRICES ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
+
+    mixColumnMat: sq_mat =
+      LAMBDA (i: below(4)):
+        LAMBDA (j: below(4)):
+    	  COND i = 0 ->
+    	       COND j = 0 -> 2,
+    	    	    j = 1 -> 3,
+    	    	    j = 2 -> 1,
+    	    	    ELSE  -> 1
+    	       ENDCOND,
+    	       i = 1 ->
+    	       COND j = 0 -> 1,
+    	    	    j = 1 -> 2,
+    	    	    j = 2 -> 3,
+    	    	    ELSE  -> 1
+    	       ENDCOND,
+    	       i = 2 ->
+    	       COND j = 0 -> 1,
+    	    	    j = 1 -> 1,
+    	    	    j = 2 -> 2,
+    	    	    ELSE  -> 3
+    	       ENDCOND,
+    	       ELSE  ->
+    	       COND j = 0 -> 3,
+    	    	    j = 1 -> 1,
+    	    	    j = 2 -> 1,
+    	    	    ELSE  -> 2
+    	       ENDCOND
+    	  ENDCOND
+
+    mixColumn_aux(A: byv[16]): byv[16] =
+      LET X = byv2byva(A) IN
+      LET Y = LAMBDA (i: below(4)): mixColumnMat * (X(i)) IN
+      byva2byv(Y)
+
+
+    invMixColumnMat: sq_mat =
+      LAMBDA (i: below(4)):
+        LAMBDA (j: below(4)):
+    	  COND i = 0 ->
+    	       COND j = 0 -> 14,
+    	    	    j = 1 -> 11,
+    	    	    j = 2 -> 13,
+    	    	    ELSE  -> 9
+    	       ENDCOND,
+    	       i = 1 ->
+    	       COND j = 0 -> 9,
+    	    	    j = 1 -> 14,
+    	    	    j = 2 -> 11,
+    	    	    ELSE  -> 13
+    	       ENDCOND,
+    	       i = 2 ->
+    	       COND j = 0 -> 13,
+    	    	    j = 1 -> 9,
+    	    	    j = 2 -> 14,
+    	    	    ELSE  -> 11
+    	       ENDCOND,
+    	       ELSE  ->
+    	       COND j = 0 -> 11,
+    	    	    j = 1 -> 13,
+    	    	    j = 2 -> 9,
+    	    	    ELSE  -> 14
+    	       ENDCOND
+    	  ENDCOND
+
+    invMixColumn_aux(A: byv[16]): byv[16] =
+      LET X = byv2byva(A) IN
+      LET Y = LAMBDA (i: below(4)): invMixColumnMat * (X(i)) IN
+      byva2byv(Y)
+
+
+    timesConst1: LEMMA FORALL (x: byte): timesConst(1, x) = x %useful for the next proof
+
+    mixColumn_eq: LEMMA FORALL (A: byv[16]): mixColumn_aux(A) = mixColumn(A)
+    invMixColumn_eq: LEMMA FORALL (A: byv[16]): invMixColumn_aux(A) = invMixColumn(A)
+    
+
+	%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ PROOF OF THE INVERTIBILITY OF MIXCOLUMN ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~%
+
+    mixColumnMatInvertsCoords(i: below(16)): bool = (invMixColumnMat * mixColumnMat) (ndiv(i, 4))(nrem(i, 4)) = mat_id (ndiv(i, 4))(nrem(i, 4))
+
+    modPlusIsu8xor: LEMMA FORALL (P, Q: mod(M)): P ++ Q = bvec2modM(u8tobv(u8xor(P, Q)))
+    modProdIsTimesConst: LEMMA FORALL (P, Q: mod(M)): P ** Q = bvec2modM(u8tobv(timesConst(P, Q)))
+
+    mixColumnMatInverts: LEMMA invMixColumnMat * mixColumnMat = mat_id
+
+    mixColumnInvertible_aux: LEMMA FORALL (A: byv[16]): invMixColumn(mixColumn(A)) = A
+
+
+%================================== INVERTIBILITY OF EACH STEP, OF THE AUXILIARY FUNCTION AND OF RIJNDAEL ====================================================%
+
+    byvXOR_invertible: LEMMA FORALL (x: byv[16], k: byv[16]): byvXOR(byvXOR(x, k), k) = x
+
+    Rijndael_stepInvertible: LEMMA FORALL (A, K: byv[16]): invRijndael_step(Rijndael_step(A, K), K) = A
+
+    Rijndael_recInvertible: LEMMA FORALL (A: byv[16], KK: ARRAY [below(11) -> byv[16]], i: below(11)):
+      invRijndael_rec(Rijndael_rec(A, KK, i), KK, i) = A
+
+    RijndaelInvertible: LEMMA FORALL (A, K: byv[16]): invRijndael(Rijndael(A, K), K) = A
+
+
+  END Rijndael_proofs

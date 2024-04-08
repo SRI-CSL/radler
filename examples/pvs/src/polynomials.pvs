@@ -1,0 +1,192 @@
+polynomials [T: TYPE, +, *: [T, T -> T], zero:T] : THEORY
+
+  BEGIN
+
+  ASSUMING IMPORTING algebra@ring_def[T, +, *, zero]
+    ring: ASSUMPTION ring?(fullset[T])
+  ENDASSUMING
+
+  IMPORTING sums_ring[T, +, *, zero]
+  IMPORTING algebra@ring[T, +, *, zero]
+
+  polynomials?(P: sequence[T]): bool = EXISTS (n: nat): FORALL (m: above(n)): P(m) = zero
+  polynomials: TYPE = (polynomials?)
+
+  P, Q: VAR polynomials
+  a: VAR T
+
+  ;+(P, Q): polynomials = LAMBDA (i: nat): P(i) + Q(i)
+
+  ;*(P, Q): polynomials = LAMBDA (n: nat): sum_f(n + 1)(LAMBDA (k: below(n + 1)): P(k)*Q(n-k))
+
+  T_to_pol(a): polynomials = LAMBDA (i: nat): IF i = 0 THEN a ELSE zero ENDIF
+
+  CONVERSION T_to_pol
+
+  const_mul: LEMMA FORALL (P, a): (a * P = LAMBDA (i: nat): a * P(i) ) AND (P * a = LAMBDA (i: nat): P(i) * a )
+
+  deg(P): nat = min({n: nat | FORALL (m: above(n)): P(m) = zero}) % not exactly equivalent to the mathematical definition of degree, because deg(0) = 0 and not -∞ (we would need to define the max of an emptyset to be -∞), but this is not essential for what is following
+
+  deg_use: LEMMA FORALL (P), (n: above(deg(P))): P(n) = zero
+
+  deg_const: LEMMA FORALL a: deg(T_to_pol(a)) = 0
+
+
+
+  pol_zero: polynomials = LAMBDA (i: nat): zero
+
+  deg_pol_zero: LEMMA deg(pol_zero) = 0
+
+  pol_plus_zero: LEMMA FORALL P: P + pol_zero = P
+
+  zero_plus_pol: LEMMA FORALL P: pol_zero + P = P
+
+  pol_times_zero: LEMMA FORALL P: P * pol_zero = pol_zero
+
+  zero_times_pol: LEMMA FORALL P: pol_zero * P = pol_zero
+
+
+  IMPORTING algebra@ring_def[polynomials, +, *, pol_zero]
+
+
+  pol_ring: LEMMA ring?(fullset[polynomials])
+
+  IMPORTING algebra@ring[polynomials, +, *, pol_zero]
+
+  minus_rew: LEMMA inv(P) = LAMBDA (k: nat): inv(P(k))
+
+
+  END polynomials
+
+
+polynomials_division[T: TYPE, +, *: [T, T -> T], zero, one:T]: THEORY
+
+  BEGIN
+
+  ASSUMING IMPORTING algebra@field_def[T, +, *, zero, one]
+    field: ASSUMPTION field?(fullset[T])
+  ENDASSUMING
+
+  IMPORTING polynomials[T, +, *, zero]
+  IMPORTING algebra@field[T, +, *, zero, one]
+  
+  pol_one: polynomials = LAMBDA (k: nat): IF k = 0 THEN one ELSE zero ENDIF
+
+  nonzero_polynomials?(P: polynomials): bool = P /= pol_zero
+  nonzero_polynomials: NONEMPTY_TYPE = (nonzero_polynomials?) CONTAINING pol_one
+  nzpol: NONEMPTY_TYPE = nonzero_polynomials
+
+  A, P, Q: VAR polynomials
+  B, C: VAR nonzero_polynomials
+
+  times_pol_one: LEMMA FORALL P: P * pol_one = P
+  one_times_pol: LEMMA FORALL P: pol_one * P = P
+
+  IMPORTING algebra@ring_with_one_def[polynomials, +, *, pol_zero, pol_one]
+
+  pol_commutative_ring_with_one: LEMMA commutative_ring_with_one?(fullset[polynomials])
+
+  IMPORTING algebra@commutative_ring_with_one[polynomials, +, *, pol_zero, pol_one]
+
+
+  Xn(n: nat): polynomials = LAMBDA (k: nat): IF k = n THEN one ELSE zero ENDIF % the monomial X^n
+
+  monomial_deg: LEMMA FORALL (n: nat): deg(Xn(n)) = n
+
+  nonconst_polynomials?(P: polynomials): bool = deg(P) > 0
+  nonconst_polynomials: NONEMPTY_TYPE = (nonconst_polynomials?) CONTAINING Xn(1)
+  nonconst_is_nz: JUDGEMENT nonconst_polynomials SUBTYPE_OF nzpol
+
+  leading_coeff(P): T = P(deg(P))
+
+  leading_coeff_nz: LEMMA FORALL B: leading_coeff(B) /= zero
+
+  deg_minus: LEMMA deg(inv(P)) = deg(P)
+
+  deg_times: LEMMA FORALL (B, C): deg(B*C) = deg(B) + deg(C) % We need B and C to be nonzero because the definition we gave for deg gives deg(0) = 0
+
+  leading_coeff_times: LEMMA FORALL (B, C): leading_coeff(B*C) = leading_coeff(B) * leading_coeff(C)
+
+  leading_coeff_minus: LEMMA FORALL P: leading_coeff(inv(P)) = inv(leading_coeff(P))
+
+  deg_plus: LEMMA FORALL (P, Q): deg(P + Q) <= max(deg(P), deg(Q))
+
+  deg_plus_lt: LEMMA FORALL (A, B: nonconst_polynomials): deg(A + B) < max(deg(A), deg(B)) IFF (deg(A) = deg(B) AND leading_coeff(A) + leading_coeff(B) = zero)
+
+  leading_coeff_Xn: LEMMA FORALL (n: nat): leading_coeff(Xn(n)) = one
+
+  leading_coeff_const: LEMMA FORALL (a: T): leading_coeff(a) = a
+  
+
+  mod(P: nonconst_polynomials): NONEMPTY_TYPE = {Q | deg(Q) < deg(P)}
+
+  aux1: LEMMA FORALL (x1: [nz_T[T, +, *, zero], nz_T[T, +, *, zero]]): % one of the TCCs for the following lemma
+                restrict[[T, T], [nz_T[T, +, *, zero], nz_T[T, +, *, zero]], T](*)(x1) /= zero
+
+  euclid_pol: LEMMA FORALL (A: polynomials, B: nonconst_polynomials): EXISTS (Q), (R: mod(B)): A = B*Q + R
+
+  pol_unique_quotient: PROPOSITION FORALL (B: nonconst_polynomials), (Q1, Q2: polynomials), (R1, R2: mod(B)): B * Q1 + R1 = B * Q2 + R2 IMPLIES Q1 = Q2 
+
+  pol_unique_remainder: PROPOSITION FORALL (B: nonconst_polynomials), (Q1, Q2: polynomials), (R1, R2: mod(B)): B * Q1 + R1 = B * Q2 + R2 IMPLIES R1 = R2
+
+  pol_unique_division: COROLLARY FORALL (B: nonconst_polynomials), (Q1, Q2: polynomials), (R1, R2: mod(B)): B * Q1 + R1 = B * Q2 + R2 IMPLIES Q1 = Q2 AND R1 = R2
+
+
+  prem(A, (B: nonconst_polynomials)): {R: mod(B) |  EXISTS Q: A = B * Q + R}
+
+  prem_def: LEMMA FORALL (B: nonconst_polynomials, R : mod(B)): prem(P, B) = R IFF EXISTS Q: P = B * Q + R
+
+  prem_simplify: LEMMA FORALL (B: nonconst_polynomials, R: mod(B)): prem(B * Q + R, B) = R
+
+  prem_simplify2: LEMMA FORALL (B: nonconst_polynomials): prem(B * Q + P, B) = prem(P, B)
+
+  pdiv(A, (B: nonconst_polynomials)): {Q |  A = B * Q + prem(A, B)}
+
+  pdiv_simplify: LEMMA FORALL (B: nonconst_polynomials, R: mod(B)): pdiv(B * Q + R, B) = Q
+
+  pdiv_simplify2: LEMMA FORALL (B: nonconst_polynomials): pdiv(B * Q + P, B) = Q + pdiv(P, B)
+
+  pdiv_deg: LEMMA FORALL (B: nonconst_polynomials): deg(pdiv(A, B)) = max(deg(A) - deg(B), 0)
+
+
+  prem_sum1: LEMMA FORALL (B: nonconst_polynomials): prem(prem(P, B) + Q, B) = prem(P + Q, B)
+
+  prem_sum2: LEMMA FORALL (B: nonconst_polynomials): prem(P + prem(Q, B), B) = prem(P + Q, B)
+
+  prem_prod1: LEMMA FORALL (B: nonconst_polynomials): prem(prem(P, B) * Q, B) = prem(P * Q, B)
+
+  prem_prod2: LEMMA FORALL (B: nonconst_polynomials): prem(P * prem(Q, B), B) = prem(P * Q, B)
+
+  END polynomials_division
+
+
+pol_modulo[T: TYPE, +, *: [T, T -> T], zero, one:T, P: sequence[T]]: THEORY
+  BEGIN
+
+  ASSUMING IMPORTING algebra@field_def[T, +, *, zero, one]
+    field: ASSUMPTION field?(fullset[T])
+    	   IMPORTING polynomials_division[T, +, *, zero, one]
+    pol: ASSUMPTION polynomials?(P)
+    nonconst_pol: ASSUMPTION nonconst_polynomials?(P)
+  ENDASSUMING
+
+  IMPORTING polynomials_division[T, +, *, zero, one]
+
+  A, B, C: VAR mod(P)
+
+  ;++(A, B): mod(P) = prem(A + B, P)
+  ;**(A, B): mod(P) = prem(A * B, P)
+
+  IMPORTING ring_def[mod(P), ++, **, pol_zero]
+  IMPORTING ring_with_one_def[mod(P), ++, **, pol_zero, pol_one]
+
+  modP: NONEMPTY_TYPE = mod(P) 
+
+  pol_modulo_ring: LEMMA ring?(fullset[modP])
+
+  pol_modulo_commutative_ring_with_one: LEMMA commutative_ring_with_one?(fullset[modP])
+
+  IMPORTING commutative_ring_with_one[mod(P), ++, **, pol_zero, pol_one]
+  
+
+  END pol_modulo

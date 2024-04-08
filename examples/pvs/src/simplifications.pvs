@@ -1,0 +1,17 @@
+simplifications : THEORY
+
+  BEGIN
+
+    nrem_simplify: LEMMA FORALL (i: posnat, x: int, y: mod(i)): nrem(i*x + y, i) = y
+
+    ndiv_simplify: LEMMA FORALL (i: posnat, x: int, y: mod(i)): ndiv(i*x + y, i) = x
+
+    nrem_simplify2: LEMMA FORALL (i: posnat, x: int, k: int): nrem(x + k * i, i) = nrem(x, i)
+
+    ndiv_simplify2: LEMMA FORALL (i: posnat, x: int, k: int): ndiv(x + k * i, i) = ndiv(x, i) + k
+
+    nrem_times_simplify: LEMMA FORALL (i: posnat, x: int, k: posnat): nrem(k*x, k*i) = k * nrem(x, i)
+
+    ndiv_times_simplify: LEMMA FORALL (i: posnat, x: int, k: posnat): ndiv(k*x, k*i) = ndiv(x, i)
+
+  END simplifications
