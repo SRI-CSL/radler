@@ -11,7 +11,7 @@ stdio, stdlib, inttypes, stdbool, stdarg, string, fcntl, math, sys/mman, sys/sta
 ::
 
   sudo apt-get install libgmp3-dev
-  cd /parh/to/radler/examples/pvs/src
+  cd /path/to/radler/examples/pvs/src
   cc -O3 -Wall -shared -o libRijndael.so pvslib.c finite_sequences_c.c integer_bv_ops_c.c bv_c.c bit_c.c file_c.c bytestrings_c.c gen_strings_c.c strings_c.c ordinals_c.c ordstruct_adt_c.c integertypes_c.c exp2_c.c euclidean_division_c.c real_defs_c.c Rijndael_c.c bytevectors_c.c hex_c.c simplifications_c.c Rijndael_m.c -lgmp -fPIC
   sudo mv libRijndael.so /usr/lib/x86_64-linux-gnu/
 
