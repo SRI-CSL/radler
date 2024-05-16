@@ -28,7 +28,7 @@ Excerpt from the example system’s RADL description below:
 
 ::
 
-   basic_rate : duration 50msec
+     basic_rate : duration 50msec
 
      thermometer_data : topic { FIELDS temp : float32 75 }
      thermostat_button : topic { FIELDS status : bool true }
@@ -77,7 +77,7 @@ exemplified in the RADL description above).
 
 ::
 
-   void Thermostat::step(const radl_in_t* in, const radl_in_flags_t* inflags,
+     void Thermostat::step(const radl_in_t* in, const radl_in_flags_t* inflags,
                            radl_out_t* out, radl_out_flags_t* outflags)
      {
        // change the set temperature 
@@ -115,7 +115,7 @@ A physical specification is provided by a value of type plant:
 
 ::
 
-   sys1 : linux {
+     sys1 : linux {
        IP 192.168.1.201
        NODES heater
      }
