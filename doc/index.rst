@@ -7,6 +7,7 @@
 Introduction 
 ++++++++++++ 
 .. include:: ../README.rst 
+.. include:: ../docker/README.rst 
 
 Radler usage 
 ++++++++++++++
