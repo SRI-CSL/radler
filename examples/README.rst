@@ -8,6 +8,8 @@ The following examples demonstrate the features of Radler, which work with both 
 
 - ArduPilot: Advanced Fail Safe of Arducopter using MAVROS
 
+- PVS: How to use PVS2C-generated codes in the step function
+
 The following examples work with ROS (master branch).
 
 - Drone: AR.Drone demos using ardronelib sdk and ardrone_autonomy ROS driver
