@@ -1,5 +1,5 @@
-The Example of Room Temperature Regulation
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Room Temperature Regulation
+===========================
 
 .. image:: house_thermo_node_topic.png
   :width: 600
