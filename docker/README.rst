@@ -1,5 +1,9 @@
+To test with Docker image  
+-------------------------
+
 To build the radler/ros2 docker image::
 
+  cd /path/to/radler/docker
   docker build -t radler/ros2 .
   
 To test pubsub example::
