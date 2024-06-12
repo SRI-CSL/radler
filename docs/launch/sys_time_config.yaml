@@ -1,0 +1,10 @@
+# sys_time
+time:
+  ros__parameters:
+    time_ref_source: "fcu"  # time_reference source
+    timesync_mode: MAVLINK
+    timesync_avg_alpha: 0.6 # timesync averaging factor
+conn:
+  ros__parameters:
+    timesync_rate: 10.0    # TIMESYNC rate in Hertz (feature disabled if 0.0)
+    system_time_rate: 1.0  # send system time to FCU rate in Hertz (disabled if 0.0)

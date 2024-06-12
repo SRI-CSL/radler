@@ -1,0 +1,3 @@
+mavros:
+  ros__parameters:
+    plugin_allowlist: ['setpoint_position'] 

@@ -1,0 +1,21 @@
+{
+	"scriptPath": "radler_wf",
+	"queries": [
+		{
+    			"ID": "radler_build",
+    			"signature": ["string", "string", "string"],
+    			"mode": "++-"
+		},
+		{
+    			"ID": "radler",
+    			"signature": ["string", "string", "string", "string"],
+    			"mode": "+++-"
+		},
+		{
+    			"ID": "colcon",
+    			"signature": ["string", "string"],
+    			"mode": "+-"
+		}
+
+	]
+}

@@ -1,0 +1,129 @@
+
+settings : module_settings {
+    MODULE_BASE_PATH "src"
+}
+
+basic_rate : duration 50msec
+
+house : node {
+    SUBSCRIBES
+        heater_rate { TOPIC heater_data MAXLATENCY 1msec}
+    PUBLISHES
+        house_temp : publication { TOPIC house_data }
+    PERIOD basic_rate
+    CXX { HEADER   "house.h"
+          FILENAME "house.cpp"
+          CLASS "House" }
+}
+
+house_data : topic {
+    FIELDS
+        temp : float32 75.0
+}
+
+thermometer : node {
+    SUBSCRIBES
+        heater_rate { TOPIC heater_data MAXLATENCY 1msec}
+        house_temp { TOPIC house_data MAXLATENCY 1msec}
+    PUBLISHES
+        thermometer_temp { TOPIC thermometer_data }
+    PERIOD 10msec
+    CXX { HEADER "thermometer.h" FILENAME "thermometer.cpp" CLASS "Thermometer" }
+}
+
+thermometer_data : topic {
+    FIELDS
+        temp : float32 75
+}
+
+thermostat_button : topic {
+    FIELDS
+        status : bool true
+}
+
+buttons : node {
+  PUBLISHES
+    but { TOPIC thermostat_button }
+    set { TOPIC thermostat_set }
+  PERIOD 10msec
+  CXX { HEADER "button.h" FILENAME "button.cpp" CLASS "Button" }
+}
+
+thermostat_set : topic {
+    FIELDS
+        temp : float32 75
+}
+
+
+thermostat : node {
+    SUBSCRIBES
+        thermostat_switch { TOPIC thermostat_button MAXLATENCY 1msec}
+        thermometer_temp { TOPIC thermometer_data MAXLATENCY 1msec}
+        thermostat_set_temp { TOPIC thermostat_set MAXLATENCY 1msec}
+    PUBLISHES
+        heater_switch { TOPIC thermostat_data }
+    CXX
+        { HEADER "thermostat.h" FILENAME "thermostat.cpp" CLASS "Thermostat" }
+    PERIOD basic_rate
+}
+
+thermostat_data : topic {
+    FIELDS
+        switch_on : bool true
+}
+
+heater : node {
+    SUBSCRIBES
+        heater_switch { TOPIC thermostat_data MAXLATENCY 1msec }
+    PUBLISHES
+        heater_rate { TOPIC heater_data }
+    PERIOD
+        basic_rate
+    CXX { HEADER "heater.h" FILENAME "heater.cpp" CLASS "Heater" }
+}
+
+heater_data : topic {
+    FIELDS
+        rate : float32 3
+}
+
+sys1 : linux {
+  NODES_UID 1000
+  IMG "linux.img"
+  IP 1.1.1.1
+  NODES
+   heater
+}
+
+sys2 : linux {
+  NODES_UID 1000
+  IMG "linux.img"
+  IP 1.1.1.2
+  NODES
+   thermostat
+}
+
+sys3 : linux {
+  NODES_UID 1000
+  IMG "linux.img"
+  IP 1.1.1.3
+  NODES
+   thermometer house buttons
+}
+
+
+
+plant : plant {
+  MACHINES
+    house_heater {
+      OS sys1
+    }
+    house_computer {
+      OS l1 : lynxsecure {
+        VMS
+          vm1 { OS sys2 }
+          vm2 { OS sys3 }
+      }
+    }
+}
+

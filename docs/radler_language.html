@@ -1,18 +1,18 @@
+<!DOCTYPE html>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" data-content_root="./">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>File constraints &#8212; radler 1.0 documentation</title>
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>File constraints &#8212; radler 2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css?v=def86cc0" />
+    
+    <script src="_static/documentation_options.js?v=60dbed4a"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
   </head><body>
@@ -22,7 +22,8 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="index.html">radler 1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">radler 2.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">File constraints</a></li> 
       </ul>
     </div>  
 
@@ -31,13 +32,13 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="file-constraints">
-<h1>File constraints<a class="headerlink" href="#file-constraints" title="Permalink to this headline">¶</a></h1>
+  <section id="file-constraints">
+<h1>File constraints<a class="headerlink" href="#file-constraints" title="Link to this heading">¶</a></h1>
 <p>A radl description file is a text file, preferably encoded in utf8, with
 extension “.radl”. Such a file is called in short a radl file.</p>
-</div>
-<div class="section" id="meta-syntax-rules">
-<h1>Meta syntax rules<a class="headerlink" href="#meta-syntax-rules" title="Permalink to this headline">¶</a></h1>
+</section>
+<section id="meta-syntax-rules">
+<h1>Meta syntax rules<a class="headerlink" href="#meta-syntax-rules" title="Link to this heading">¶</a></h1>
 <p>A radl file define a module whose name is the file name. A module is a
 set of value declarations. A declaration may be an alias, used to
 declare a value equal to another one but with a new name. The name of a
@@ -46,8 +47,8 @@ value. The type of a value may also be omitted, note that if the type is
 ambiguous, the inference will choose one. When defining a class field,
 one may declare a new value or refer to another value by its
 identifier.</p>
-<div class="section" id="grammar">
-<h2>Grammar<a class="headerlink" href="#grammar" title="Permalink to this headline">¶</a></h2>
+<section id="grammar">
+<h2>Grammar<a class="headerlink" href="#grammar" title="Link to this heading">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>module := decl*
 decl := alias | NAME? (&#39;:&#39; TYPE)? TYPEVALUE | NAME? (&#39;:&#39; CLASS)? class_value
 alias := NAME = identifier
@@ -58,9 +59,9 @@ identifier := root_name | identifier &#39;.&#39; NAME
 root_name := NAME
 </pre></div>
 </div>
-</div>
-<div class="section" id="grammar-terminals">
-<h2>Grammar terminals<a class="headerlink" href="#grammar-terminals" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="grammar-terminals">
+<h2>Grammar terminals<a class="headerlink" href="#grammar-terminals" title="Link to this heading">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">NAME</span></code> terminal is a spaceless word beginning with a letter which
 may contain numbers and underscore (the regex
 <code class="docutils literal notranslate"><span class="pre">[a-zA-Z][a-zA-Z0-9_]*</span></code>). <code class="docutils literal notranslate"><span class="pre">NAME</span></code> is also restricted not to be a
@@ -74,53 +75,53 @@ declarations of the form</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&#39;class&#39; CLASS (FIELDNAME (TYPE|CLASS) (&#39;*&#39;|&#39;+&#39;|&#39;?&#39;)?)*
 </pre></div>
 </div>
-</div>
-<div class="section" id="keywords">
-<h2>Keywords<a class="headerlink" href="#keywords" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="keywords">
+<h2>Keywords<a class="headerlink" href="#keywords" title="Link to this heading">¶</a></h2>
 <p>Keywords are all <code class="docutils literal notranslate"><span class="pre">TYPE</span></code>, <code class="docutils literal notranslate"><span class="pre">CLASS</span></code> and <code class="docutils literal notranslate"><span class="pre">FIELDNAME</span></code> plus the
 <code class="docutils literal notranslate"><span class="pre">extra_keywords</span></code> entry of
 <a class="reference external" href="https://github.com/SRI-CSL/radler/blob/master/radler/radlr/language.py">language.py</a>.</p>
-</div>
-<div class="section" id="white-spaces">
-<h2>White spaces<a class="headerlink" href="#white-spaces" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="white-spaces">
+<h2>White spaces<a class="headerlink" href="#white-spaces" title="Link to this heading">¶</a></h2>
 <p>The syntax requires all terminals to be whitespace separated. A whitespace is any number greater than 1 of space, tabulation and end of line.</p>
-</div>
-<div class="section" id="comments">
-<h2>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="comments">
+<h2>Comments<a class="headerlink" href="#comments" title="Link to this heading">¶</a></h2>
 <p>After <code class="docutils literal notranslate"><span class="pre">#</span></code>, any character is discarded up to the end of line.</p>
-</div>
-</div>
-<div class="section" id="identifier-scoping-rules">
-<h1>Identifier scoping rules<a class="headerlink" href="#identifier-scoping-rules" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="scoping-regions">
-<h2>Scoping regions<a class="headerlink" href="#scoping-regions" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="identifier-scoping-rules">
+<h1>Identifier scoping rules<a class="headerlink" href="#identifier-scoping-rules" title="Link to this heading">¶</a></h1>
+<section id="scoping-regions">
+<h2>Scoping regions<a class="headerlink" href="#scoping-regions" title="Link to this heading">¶</a></h2>
 <p>A file <code class="docutils literal notranslate"><span class="pre">MODULE</span></code>.radl defines an implicit scoping region for its
 content whose name is <code class="docutils literal notranslate"><span class="pre">MODULE</span></code>. Sub-regions are defined by class
 values. A class value declaration defines one and only one nested
 scoping region, syntactically delimited by matching braces, whose name
 is the declaration <code class="docutils literal notranslate"><span class="pre">NAME</span></code>.</p>
-</div>
-<div class="section" id="local-unicity-of-names">
-<h2>Local unicity of names<a class="headerlink" href="#local-unicity-of-names" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="local-unicity-of-names">
+<h2>Local unicity of names<a class="headerlink" href="#local-unicity-of-names" title="Link to this heading">¶</a></h2>
 <p>Inside each region (not comprising its sub-regions), <code class="docutils literal notranslate"><span class="pre">NAME</span></code> of each
 declarations are unique. Moreover, each module name <code class="docutils literal notranslate"><span class="pre">MODULE</span></code> is
 ensured to be unique.</p>
-</div>
-<div class="section" id="global-unicity-of-qualified-names">
-<h2>Global unicity of qualified names<a class="headerlink" href="#global-unicity-of-qualified-names" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="global-unicity-of-qualified-names">
+<h2>Global unicity of qualified names<a class="headerlink" href="#global-unicity-of-qualified-names" title="Link to this heading">¶</a></h2>
 <p>A qualified name (qname) is an identifier whose <code class="docutils literal notranslate"><span class="pre">root_name</span></code> is a
 module name. By unicity of module names and declaration names, a qname
 defines a value uniquely.</p>
-</div>
-<div class="section" id="resolution-of-identifiers-to-qualified-names">
-<h2>Resolution of identifiers to qualified names<a class="headerlink" href="#resolution-of-identifiers-to-qualified-names" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="resolution-of-identifiers-to-qualified-names">
+<h2>Resolution of identifiers to qualified names<a class="headerlink" href="#resolution-of-identifiers-to-qualified-names" title="Link to this heading">¶</a></h2>
 <p>When resolving an identifier, the first step is the resolution of its
 <code class="docutils literal notranslate"><span class="pre">root_name</span></code>, which is matched with the closest enclosing scoping region
 or in the last resort to another module name. At that point, the
 <code class="docutils literal notranslate"><span class="pre">root_name</span></code> is replaced by the qualified name of its matching region
 and the identifier becomes a qualified name.</p>
-<div class="section" id="example">
-<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">----</span> <span class="n">file</span><span class="p">:</span> <span class="n">module1</span><span class="o">.</span><span class="n">radl</span> <span class="o">----</span>
 <span class="n">x</span> <span class="p">:</span> <span class="n">int32</span> <span class="mi">0</span>
 <span class="n">s</span> <span class="p">:</span> <span class="n">struct</span> <span class="p">{</span> <span class="n">FIELDS</span> <span class="n">x</span> <span class="p">:</span> <span class="n">int32</span> <span class="mi">42</span> <span class="p">}</span>
@@ -156,15 +157,15 @@ and replacing it to get <code class="docutils literal notranslate"><span class="
 <code class="docutils literal notranslate"><span class="pre">module2.s.x</span></code>, <code class="docutils literal notranslate"><span class="pre">module2.x</span></code>, and <code class="docutils literal notranslate"><span class="pre">module1.s.x</span></code>, the <code class="docutils literal notranslate"><span class="pre">root_name</span></code> is
 found to be a module name meaning that these identifiers are already
 qualified names.</p>
-</div>
-</div>
-<div class="section" id="shadowing">
-<h2>Shadowing<a class="headerlink" href="#shadowing" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="shadowing">
+<h2>Shadowing<a class="headerlink" href="#shadowing" title="Link to this heading">¶</a></h2>
 <p>While using qualified names for identifiers permit to overcome most
 possible shadowings, a region will shadow any module with identical
 name.</p>
-<div class="section" id="id1">
-<h3>Example<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<section id="id1">
+<h3>Example<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span> <span class="n">file</span><span class="p">:</span> <span class="n">module3</span><span class="o">.</span><span class="n">radl</span> <span class="o">---</span>
 
 <span class="n">module1</span> <span class="p">:</span> <span class="n">struct</span> <span class="p">{</span> <span class="n">FIELDS</span>
@@ -179,13 +180,13 @@ name.</p>
 the struct named <code class="docutils literal notranslate"><span class="pre">module1</span></code> shadows the actual module <code class="docutils literal notranslate"><span class="pre">module1</span></code>.
 Note that in this example, since <code class="docutils literal notranslate"><span class="pre">module3.module1.x</span></code> isn’t
 declared, the compiler will complain that it is missing.</p>
-</div>
-</div>
-</div>
-<div class="section" id="radler-language">
-<h1>Radler language<a class="headerlink" href="#radler-language" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="logical-level">
-<h2>Logical level<a class="headerlink" href="#logical-level" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+</section>
+<section id="radler-language">
+<h1>Radler language<a class="headerlink" href="#radler-language" title="Link to this heading">¶</a></h1>
+<section id="logical-level">
+<h2>Logical level<a class="headerlink" href="#logical-level" title="Link to this heading">¶</a></h2>
 <p>The two main classes used to describe the logical level are node and
 topic. Their full definitions may be found in
 <a class="reference external" href="https://github.com/SRI-CSL/radler/blob/master/radler/radlr/language.py">language.py</a>. The most
@@ -202,8 +203,8 @@ important elements are:</p>
            <span class="nb">bool</span><span class="o">/</span><span class="n">struct</span><span class="o">/</span><span class="n">array</span><span class="o">/</span><span class="n">duration</span><span class="o">/</span><span class="n">time</span> <span class="o">+</span>
 </pre></div>
 </div>
-<div class="section" id="nodes">
-<h3>Nodes<a class="headerlink" href="#nodes" title="Permalink to this headline">¶</a></h3>
+<section id="nodes">
+<h3>Nodes<a class="headerlink" href="#nodes" title="Link to this heading">¶</a></h3>
 <p>When creating a node, Radler will construct one instance of the
 provided C++ class (the <code class="docutils literal notranslate"><span class="pre">CXX</span></code> field). The step method of this
 instance will be called at a fixed frequency defined by the node’s
@@ -212,36 +213,36 @@ to have a worst case execution time no greater than the one described
 here in the <code class="docutils literal notranslate"><span class="pre">WCET</span></code> field. At each call, the step function is
 provided with the messages received from its subscriptions and is
 required to write the messages it has to publish.</p>
-</div>
-<div class="section" id="topics">
-<h3>Topics<a class="headerlink" href="#topics" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="topics">
+<h3>Topics<a class="headerlink" href="#topics" title="Link to this heading">¶</a></h3>
 <p>A topic (defined uniquely by its name) is a purely logical way to
 define point-to-point communications between one producer and
 multiple consumers. There can be exactly one node
 publishing to a topic while  many  nodes can subscribe to
 it.</p>
-</div>
-</div>
-<div class="section" id="external-files-and-path">
-<h2>External files and <code class="docutils literal notranslate"><span class="pre">PATH</span></code><a class="headerlink" href="#external-files-and-path" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="file-reference">
-<h3>File reference<a class="headerlink" href="#file-reference" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="external-files-and-path">
+<h2>External files and <code class="docutils literal notranslate"><span class="pre">PATH</span></code><a class="headerlink" href="#external-files-and-path" title="Link to this heading">¶</a></h2>
+<section id="file-reference">
+<h3>File reference<a class="headerlink" href="#file-reference" title="Link to this heading">¶</a></h3>
 <p>An external file is described by a string representing its path. This
 path may be absolute (for example “/etc/example.cfg”) or relative
 (“src/defs.h”). Relative paths are resolved relatively to the working
 directory of the scoping region. Absolute path files are not
 recommended, but may be useful in very specific cases.</p>
-</div>
-<div class="section" id="working-directory-of-a-region-path-and-module-base-path">
-<h3>Working directory of a region, <code class="docutils literal notranslate"><span class="pre">PATH</span></code> and <code class="docutils literal notranslate"><span class="pre">MODULE_BASE_PATH</span></code><a class="headerlink" href="#working-directory-of-a-region-path-and-module-base-path" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="working-directory-of-a-region-path-and-module-base-path">
+<h3>Working directory of a region, <code class="docutils literal notranslate"><span class="pre">PATH</span></code> and <code class="docutils literal notranslate"><span class="pre">MODULE_BASE_PATH</span></code><a class="headerlink" href="#working-directory-of-a-region-path-and-module-base-path" title="Link to this heading">¶</a></h3>
 <p>If a <code class="docutils literal notranslate"><span class="pre">PATH</span></code> field exists in a region, it is used to set the working
 directory of this region relatively to the parent region’s working
 directory. The module working directory is the directory of the
 module file except when it is redefined by the <code class="docutils literal notranslate"><span class="pre">MODULE_BASE_PATH</span></code>
 of the <code class="docutils literal notranslate"><span class="pre">module_settings</span></code> value.</p>
-</div>
-<div class="section" id="id2">
-<h3>Example<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id2">
+<h3>Example<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">----</span> <span class="n">file</span><span class="p">:</span> <span class="n">path1</span><span class="o">.</span><span class="n">radl</span> <span class="o">----</span>
 <span class="n">n</span><span class="p">:</span> <span class="n">node</span> <span class="p">{</span>
     <span class="n">PATH</span> <span class="s2">&quot;nodes/example&quot;</span>
@@ -267,21 +268,21 @@ and the file referred by “n.cpp” is
 </div>
 <p>By adding this <code class="docutils literal notranslate"><span class="pre">module_settings</span></code> value, “n.cpp” refers to
 “/usr/pathexample/nodes/example/src/n.cpp”.</p>
-</div>
-</div>
-<div class="section" id="libraries">
-<h2>Libraries<a class="headerlink" href="#libraries" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="libraries">
+<h2>Libraries<a class="headerlink" href="#libraries" title="Link to this heading">¶</a></h2>
 <p>Any user code needing libraries has to be declared as using a library
 with the <code class="docutils literal notranslate"><span class="pre">LIB</span></code> field. This field allows two forms of libraries,
 <code class="docutils literal notranslate"><span class="pre">cmake_library</span></code> and <code class="docutils literal notranslate"><span class="pre">static_library</span></code>.</p>
-<div class="section" id="static-library">
-<h3>Static library<a class="headerlink" href="#static-library" title="Permalink to this headline">¶</a></h3>
+<section id="static-library">
+<h3>Static library<a class="headerlink" href="#static-library" title="Link to this heading">¶</a></h3>
 <p>Static libraries are of the simplest form, gathering a set of source
 files in their <code class="docutils literal notranslate"><span class="pre">CXX</span></code> field while the library header files are found
 in the <code class="docutils literal notranslate"><span class="pre">HEADER_PATHS</span></code> paths.</p>
-</div>
-<div class="section" id="cmake-library">
-<h3>Cmake library<a class="headerlink" href="#cmake-library" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="cmake-library">
+<h3>Cmake library<a class="headerlink" href="#cmake-library" title="Link to this heading">¶</a></h3>
 <p>The cmake library enables the use of arbitrarily complex libraries
 since it is a user defined cmake script. The <code class="docutils literal notranslate"><span class="pre">CMAKE_MODULE</span></code> field
 provide the cmake module name used to find it in the working
@@ -293,26 +294,26 @@ defining respectively the libraries to be linked against and the
 include directories. Both variable names can be specified if their
 naming doesn’t follow this convention, respectively with the fields
 <code class="docutils literal notranslate"><span class="pre">CMAKE_VAR_LIBRARIES</span></code> and <code class="docutils literal notranslate"><span class="pre">CMAKE_VAR_INCLUDE_DIRS</span></code>.</p>
-</div>
-</div>
-<div class="section" id="typing">
-<h2>Typing<a class="headerlink" href="#typing" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="inference">
-<h3>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="typing">
+<h2>Typing<a class="headerlink" href="#typing" title="Link to this heading">¶</a></h2>
+<section id="inference">
+<h3>Inference<a class="headerlink" href="#inference" title="Link to this heading">¶</a></h3>
 <p>When a value is type annotated, it is checked to be of this type. If no
 type annotation is provided, the kind of the value is extracted from
 the ones possible in the value declaration context. If there is an
 ambiguity, it chooses the first relevant one in the order of declaration
 in <a class="reference external" href="https://github.com/SRI-CSL/radler/blob/master/radler/radlr/language.py">language.py</a>.</p>
-</div>
-<div class="section" id="checking">
-<h3>Checking<a class="headerlink" href="#checking" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="checking">
+<h3>Checking<a class="headerlink" href="#checking" title="Link to this heading">¶</a></h3>
 <p>User values are checked to be correct with their type with the
 function <code class="docutils literal notranslate"><span class="pre">check_type</span></code> found in
 <a class="reference external" href="https://github.com/SRI-CSL/radler/blob/master/radler/radlr/language.py">language.py</a>.</p>
-</div>
-<div class="section" id="subtyping">
-<h3>Subtyping<a class="headerlink" href="#subtyping" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="subtyping">
+<h3>Subtyping<a class="headerlink" href="#subtyping" title="Link to this heading">¶</a></h3>
 <p>Subtyping allows for example to use a 16bits integer (<code class="docutils literal notranslate"><span class="pre">int16</span></code>)
 where a 32bits integer is required (<code class="docutils literal notranslate"><span class="pre">int32</span></code>). For now, subtyping is
 only done on <code class="docutils literal notranslate"><span class="pre">sized_types</span></code> by allowing a type to be used in a
@@ -320,38 +321,38 @@ bigger version. <code class="docutils literal notranslate"><span class="pre">siz
 <a class="reference external" href="https://github.com/SRI-CSL/radler/blob/master/radler/radlr/language.py">language.py</a>. User values
 are checked to fit the type’s size with the function
 <code class="docutils literal notranslate"><span class="pre">check_type_size</span></code>.</p>
-</div>
-</div>
-</div>
-<div class="section" id="user-code">
-<h1>User code<a class="headerlink" href="#user-code" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="compilation">
-<h2>Compilation<a class="headerlink" href="#compilation" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="include-directories">
-<h3>Include directories<a class="headerlink" href="#include-directories" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+</section>
+<section id="user-code">
+<h1>User code<a class="headerlink" href="#user-code" title="Link to this heading">¶</a></h1>
+<section id="compilation">
+<h2>Compilation<a class="headerlink" href="#compilation" title="Link to this heading">¶</a></h2>
+<section id="include-directories">
+<h3>Include directories<a class="headerlink" href="#include-directories" title="Link to this heading">¶</a></h3>
 <p>The generated code is setup so that user code is compiled with the
 necessary include folders, i.e., the specified library header folders
 and the working directory of the file references.</p>
-</div>
-<div class="section" id="compiler-definitions">
-<h3>Compiler definitions<a class="headerlink" href="#compiler-definitions" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="compiler-definitions">
+<h3>Compiler definitions<a class="headerlink" href="#compiler-definitions" title="Link to this heading">¶</a></h3>
 <p>The user code is compiled with the following definitions:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">IN_RADL_GENERATED_CONTEXT</span></code> : The basic definition to detect if the code is compiled within Radler compilation chain.</li>
-<li><code class="docutils literal notranslate"><span class="pre">RADL_NODE_NAME</span></code> : The name of the current radl node.</li>
-<li><code class="docutils literal notranslate"><span class="pre">RADL_NODE_QNAME</span></code> : Which is set to the node qname (with dot separators, for example “<code class="docutils literal notranslate"><span class="pre">modulename.nodename</span></code>”).</li>
-<li><code class="docutils literal notranslate"><span class="pre">RADL_MODULE_NAME</span></code> : The name of the current radl module.</li>
-<li><code class="docutils literal notranslate"><span class="pre">RADL_MODULE</span></code> : A pointer to the current module ast root.</li>
-<li><code class="docutils literal notranslate"><span class="pre">RADL_HEADER</span></code> : The radl generated header to be included by the user code (defining input and output data types).</li>
-<li><code class="docutils literal notranslate"><span class="pre">RADL_STATE</span></code> : The radl default name to be used for the C state type (if not specified in the radl file).</li>
-<li><code class="docutils literal notranslate"><span class="pre">RADL_STEP_FUN</span></code> : The default name to be used for the C step function (if not specified in the radl file).</li>
-<li><code class="docutils literal notranslate"><span class="pre">RADL_INIT_FUN</span></code> : The default name to be used for the C init function (if not specified in the radl file).</li>
-<li><code class="docutils literal notranslate"><span class="pre">RADL_FINISH_FUN</span></code> : The default name to be used for the C finish function (if not specified in the radl file).</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IN_RADL_GENERATED_CONTEXT</span></code> : The basic definition to detect if the code is compiled within Radler compilation chain.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RADL_NODE_NAME</span></code> : The name of the current radl node.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RADL_NODE_QNAME</span></code> : Which is set to the node qname (with dot separators, for example “<code class="docutils literal notranslate"><span class="pre">modulename.nodename</span></code>”).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RADL_MODULE_NAME</span></code> : The name of the current radl module.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RADL_MODULE</span></code> : A pointer to the current module ast root.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RADL_HEADER</span></code> : The radl generated header to be included by the user code (defining input and output data types).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RADL_STATE</span></code> : The radl default name to be used for the C state type (if not specified in the radl file).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RADL_STEP_FUN</span></code> : The default name to be used for the C step function (if not specified in the radl file).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RADL_INIT_FUN</span></code> : The default name to be used for the C init function (if not specified in the radl file).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RADL_FINISH_FUN</span></code> : The default name to be used for the C finish function (if not specified in the radl file).</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="c-node-definition">
-<h2>C++ node definition<a class="headerlink" href="#c-node-definition" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="c-node-definition">
+<h2>C++ node definition<a class="headerlink" href="#c-node-definition" title="Link to this heading">¶</a></h2>
 <p>Each node is a Mealy machine. The user provide a class which will be
 instantiated with the default constructor to generate an instance
 representing the state of the machine. Then, the <code class="docutils literal notranslate"><span class="pre">step</span></code> method of this
@@ -362,45 +363,45 @@ signature of the <code class="docutils literal notranslate"><span class="pre">st
 </div>
 <p>The four argument types are structures defined in the generated header
 file.</p>
-<div class="section" id="the-input-structure-radl-in-t">
-<h3>The input structure <code class="docutils literal notranslate"><span class="pre">radl_in_t</span></code><a class="headerlink" href="#the-input-structure-radl-in-t" title="Permalink to this headline">¶</a></h3>
+<section id="the-input-structure-radl-in-t">
+<h3>The input structure <code class="docutils literal notranslate"><span class="pre">radl_in_t</span></code><a class="headerlink" href="#the-input-structure-radl-in-t" title="Link to this heading">¶</a></h3>
 <p>This structure has one field per subscription of the node. The field
 name is the radl name of the subscription. Each field is in turn a
 structure reflecting the topic of the subscription, whose fields are
 the name of the radl topic <code class="docutils literal notranslate"><span class="pre">FIELDS</span></code>.</p>
-</div>
-<div class="section" id="the-output-structure-radl-out-t">
-<h3>The output structure <code class="docutils literal notranslate"><span class="pre">radl_out_t</span></code><a class="headerlink" href="#the-output-structure-radl-out-t" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="the-output-structure-radl-out-t">
+<h3>The output structure <code class="docutils literal notranslate"><span class="pre">radl_out_t</span></code><a class="headerlink" href="#the-output-structure-radl-out-t" title="Link to this heading">¶</a></h3>
 <p>It is similar to the input structure except that is is used by the
 step function to publish its publications. To this effect, the step
 function has to fill the output structure.</p>
-</div>
-<div class="section" id="the-flag-structures-radl-in-flags-t-radl-out-flags-t">
-<h3>The flag structures <code class="docutils literal notranslate"><span class="pre">radl_in_flags_t</span></code>, <code class="docutils literal notranslate"><span class="pre">radl_out_flags_t</span></code><a class="headerlink" href="#the-flag-structures-radl-in-flags-t-radl-out-flags-t" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="the-flag-structures-radl-in-flags-t-radl-out-flags-t">
+<h3>The flag structures <code class="docutils literal notranslate"><span class="pre">radl_in_flags_t</span></code>, <code class="docutils literal notranslate"><span class="pre">radl_out_flags_t</span></code><a class="headerlink" href="#the-flag-structures-radl-in-flags-t-radl-out-flags-t" title="Link to this heading">¶</a></h3>
 <p>Similarly to the input and output structures, these have a field for
 each subscription (resp. publication). The type of each field is a
 <code class="docutils literal notranslate"><span class="pre">radl_flags_t</span></code> as described in
 <a class="reference external" href="https://github.com/SRI-CSL/radler/blob/master/radl_lib/include/radl_flags.h">radl_flags.h</a>.</p>
-</div>
-</div>
-<div class="section" id="id3">
-<h2>C node definition<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="id3">
+<h2>C node definition<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
 <p>This is the same as the C++ case, except that instead of a class, the user needs to
 provide 4 things. To describe them, we use the default names provided by
 radl, but those may be decided in the radl file.</p>
 <ul class="simple">
-<li>A state type, that we call <code class="docutils literal notranslate"><span class="pre">RADL_STATE</span></code> here</li>
-<li>An init function of signature : <code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">RADL_INIT_FUN(RADL_STATE</span> <span class="pre">*)</span></code></li>
-<li>A step function of signature :
-<code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">RADL_STEP_FUN(RADL_STATE</span> <span class="pre">*,</span> <span class="pre">const</span> <span class="pre">radl_in_t*,</span> <span class="pre">const</span> <span class="pre">radl_inflags_t*,</span> <span class="pre">radl_out_t*,</span> <span class="pre">radl_outflags_t*)</span></code></li>
-<li>A finish function of signature :
-<code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">RADL_FINISH_FUN(RADL_STATE</span> <span class="pre">*)</span></code></li>
+<li><p>A state type, that we call <code class="docutils literal notranslate"><span class="pre">RADL_STATE</span></code> here</p></li>
+<li><p>An init function of signature : <code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">RADL_INIT_FUN(RADL_STATE</span> <span class="pre">*)</span></code></p></li>
+<li><p>A step function of signature :
+<code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">RADL_STEP_FUN(RADL_STATE</span> <span class="pre">*,</span> <span class="pre">const</span> <span class="pre">radl_in_t*,</span> <span class="pre">const</span> <span class="pre">radl_inflags_t*,</span> <span class="pre">radl_out_t*,</span> <span class="pre">radl_outflags_t*)</span></code></p></li>
+<li><p>A finish function of signature :
+<code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">RADL_FINISH_FUN(RADL_STATE</span> <span class="pre">*)</span></code></p></li>
 </ul>
-</div>
-<div class="section" id="the-flags">
-<h2>The flags<a class="headerlink" href="#the-flags" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="computation-of-the-output-flags">
-<h3>Computation of the output flags<a class="headerlink" href="#computation-of-the-output-flags" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="the-flags">
+<h2>The flags<a class="headerlink" href="#the-flags" title="Link to this heading">¶</a></h2>
+<section id="computation-of-the-output-flags">
+<h3>Computation of the output flags<a class="headerlink" href="#computation-of-the-output-flags" title="Link to this heading">¶</a></h3>
 <p>The main idea of flags is to have some Boolean metadata attached to
 messages, which by default propagate through nodes. To this effect,
 the default value of the output flags of each publication of a node
@@ -418,9 +419,9 @@ while the preset output flags are provided to the step function to
 give it a chance to turn on or off the desired flags. So, if the step
 function doesn’t change the output flags, they will propagate the
 input flags.</p>
-</div>
-<div class="section" id="computation-of-the-input-flag-radl-stale">
-<h3>Computation of the input flag <code class="docutils literal notranslate"><span class="pre">radl_STALE</span></code><a class="headerlink" href="#computation-of-the-input-flag-radl-stale" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="computation-of-the-input-flag-radl-stale">
+<h3>Computation of the input flag <code class="docutils literal notranslate"><span class="pre">radl_STALE</span></code><a class="headerlink" href="#computation-of-the-input-flag-radl-stale" title="Link to this heading">¶</a></h3>
 <p>The so-called stale flag has the broad meaning that its associated
 value isn’t “fresh”. More precisely, it either means that the
 publisher of the value flagged it as stale (by automatic propagation
@@ -429,9 +430,9 @@ the step function. In the latter case, the step function gets the
 same input value (the mailbox hasn’t changed) but it is flagged as
 stale. To check if a subscription <code class="docutils literal notranslate"><span class="pre">s</span></code> is stale, one simply calls
 <code class="docutils literal notranslate"><span class="pre">radl_is_stale(in_flags-&gt;s)</span></code> which returns a Boolean.</p>
-</div>
-<div class="section" id="computation-of-the-input-flag-radl-timeout">
-<h3>Computation of the input flag <code class="docutils literal notranslate"><span class="pre">radl_TIMEOUT</span></code><a class="headerlink" href="#computation-of-the-input-flag-radl-timeout" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="computation-of-the-input-flag-radl-timeout">
+<h3>Computation of the input flag <code class="docutils literal notranslate"><span class="pre">radl_TIMEOUT</span></code><a class="headerlink" href="#computation-of-the-input-flag-radl-timeout" title="Link to this heading">¶</a></h3>
 <p>The so-called timeout flag has the broad meaning that its associated
 value has violated the timing constraints. More precisely, it either
 means that the publisher of the value flagged it as timeout (by
@@ -440,9 +441,9 @@ message since period of the publisher plus the maxlatency. In the
 latter case, timing constraints are exceeded and something unexpected
 is happening. To check if a subscription <code class="docutils literal notranslate"><span class="pre">s</span></code> is timeout, one simply
 calls <code class="docutils literal notranslate"><span class="pre">radl_is_timeout(in_flags-&gt;s)</span></code> which returns a Boolean.</p>
-</div>
-<div class="section" id="turning-off-on-output-flags">
-<h3>Turning off/on output flags<a class="headerlink" href="#turning-off-on-output-flags" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="turning-off-on-output-flags">
+<h3>Turning off/on output flags<a class="headerlink" href="#turning-off-on-output-flags" title="Link to this heading">¶</a></h3>
 <p>The function <code class="docutils literal notranslate"><span class="pre">radl_turn_on</span></code> is used to turn on a flag. For example
 to turn on the stale flag of the publication <code class="docutils literal notranslate"><span class="pre">p</span></code>, we would do:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">radl_turn_on</span><span class="p">(</span><span class="n">rald_STALE</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">out_flags</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">);</span>
@@ -450,43 +451,43 @@ to turn on the stale flag of the publication <code class="docutils literal notra
 </div>
 <p>To turn off flags, the similar function <code class="docutils literal notranslate"><span class="pre">rald_turn_off</span></code> should be
 used.</p>
-</div>
-</div>
-<div class="section" id="introspection">
-<h2>Introspection<a class="headerlink" href="#introspection" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="introspection">
+<h2>Introspection<a class="headerlink" href="#introspection" title="Link to this heading">¶</a></h2>
 <p>To allow more robust and generic user code, it is possible to access
 values defined in the radl description.</p>
-<div class="section" id="modules-root-entries">
-<h3>Modules root entries<a class="headerlink" href="#modules-root-entries" title="Permalink to this headline">¶</a></h3>
+<section id="modules-root-entries">
+<h3>Modules root entries<a class="headerlink" href="#modules-root-entries" title="Link to this heading">¶</a></h3>
 <p>The generic way of doing so is to use the generated module root ast
 access functions. For example if we want to read the radl value of
 qname <code class="docutils literal notranslate"><span class="pre">module1.x</span></code>, one will first call the <code class="docutils literal notranslate"><span class="pre">radlast_module1</span></code>
 function to get to the module root entry.</p>
-</div>
-<div class="section" id="shortcuts">
-<h3>Shortcuts<a class="headerlink" href="#shortcuts" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="shortcuts">
+<h3>Shortcuts<a class="headerlink" href="#shortcuts" title="Link to this heading">¶</a></h3>
 <p>Instead of needing to know the current module name and call the
 corresponding root ast access function, one can use the provided
 macro <code class="docutils literal notranslate"><span class="pre">RADL_MODULE</span></code>. When writing a step function, one can directly
 access the node it is used in by using the <code class="docutils literal notranslate"><span class="pre">RADL_THIS</span></code> macro.</p>
-</div>
-<div class="section" id="field-access">
-<h3>Field access<a class="headerlink" href="#field-access" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="field-access">
+<h3>Field access<a class="headerlink" href="#field-access" title="Link to this heading">¶</a></h3>
 <p>The generic rule is that fields of values are the names of the
 declared value inside this value. This name is in turn</p>
 <ul class="simple">
-<li>a pointer to the value (the generic case)</li>
-<li>the value itself (for a <code class="docutils literal notranslate"><span class="pre">topic</span></code>, a <code class="docutils literal notranslate"><span class="pre">struct</span></code> or inside them).</li>
+<li><p>a pointer to the value (the generic case)</p></li>
+<li><p>the value itself (for a <code class="docutils literal notranslate"><span class="pre">topic</span></code>, a <code class="docutils literal notranslate"><span class="pre">struct</span></code> or inside them).</p></li>
 </ul>
-</div>
-<div class="section" id="the-defs-field">
-<h3>The <code class="docutils literal notranslate"><span class="pre">DEFS</span></code> field<a class="headerlink" href="#the-defs-field" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="the-defs-field">
+<h3>The <code class="docutils literal notranslate"><span class="pre">DEFS</span></code> field<a class="headerlink" href="#the-defs-field" title="Link to this heading">¶</a></h3>
 <p>To allow the user to define values which are not radl relevant, but
 that should be statically defined and shared, we added the <code class="docutils literal notranslate"><span class="pre">DEFS</span></code>
 field in the <code class="docutils literal notranslate"><span class="pre">node</span></code> and <code class="docutils literal notranslate"><span class="pre">topic</span></code> classes.</p>
-</div>
-<div class="section" id="id4">
-<h3>Example<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id4">
+<h3>Example<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
 <p>Consider the following radl description:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">----</span> <span class="n">file</span><span class="p">:</span> <span class="n">introspec</span><span class="o">.</span><span class="n">radl</span> <span class="o">----</span>
 <span class="n">x</span> <span class="p">:</span> <span class="n">int32</span> <span class="mi">1</span>
@@ -535,18 +536,20 @@ writing the step function of <code class="docutils literal notranslate"><span cl
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RADL_THIS</span><span class="o">-&gt;</span><span class="n">s</span><span class="o">.</span><span class="n">z</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="index.html">Table Of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="index.html">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">File constraints</a></li>
 <li><a class="reference internal" href="#meta-syntax-rules">Meta syntax rules</a><ul>
 <li><a class="reference internal" href="#grammar">Grammar</a></li>
@@ -627,6 +630,7 @@ writing the step function of <code class="docutils literal notranslate"><span cl
 </li>
 </ul>
 
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -634,18 +638,16 @@ writing the step function of <code class="docutils literal notranslate"><span cl
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -656,12 +658,13 @@ writing the step function of <code class="docutils literal notranslate"><span cl
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="index.html">radler 1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="index.html">radler 2.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">File constraints</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2016, SRI International.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+    &#169; Copyright 2016, SRI International.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
     </div>
   </body>
 </html>

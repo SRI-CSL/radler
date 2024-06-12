@@ -1,0 +1,52 @@
+gpio_lib : static_library {
+	PATH "src/gpio"
+	HEADER_PATHS ""
+	CXX { PATH "" FILENAME "GPIOClass.cpp" }
+}
+
+button_topic : topic {
+    FIELDS 
+	on : bool false  
+}
+
+led : node {
+    DEFS
+        print_data: bool true
+    PATH "src" 
+    SUBSCRIBES
+        button_status { TOPIC button_topic MAXLATENCY 10msec }
+    PERIOD 1000msec
+    CXX { HEADER "led.h" FILENAME "led.cpp" CLASS "Led" LIB gpio_lib }  
+}
+
+button : node {
+    DEFS
+        print_data: bool true
+    PATH "src" 
+    PUBLISHES
+        button_status { TOPIC button_topic }
+    PERIOD 1000msec
+    CXX { HEADER "button.h" FILENAME "button.cpp" CLASS "Button" LIB gpio_lib }
+}
+
+plant : plant {
+  MACHINES
+    machine2 {
+      OS linux {
+        NODES_UID 1000
+        IMG "linux.img"
+        IP 192.168.1.202
+        NODES
+          led
+        }
+    }
+    machine3 {
+      OS linux {
+        NODES_UID 1000
+        IMG "linux.img"
+        IP 192.168.1.203
+        NODES
+	  button           
+        }
+    }
+}

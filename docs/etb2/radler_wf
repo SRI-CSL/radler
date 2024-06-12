@@ -1,0 +1,5 @@
+radler_build(RADL, WS, PLANTDOT) :- radler_compile(RADL, WS, COMPILE), colcon_build(WS, BUILD), radler_dump(RADL, WS, DUMP), radler_plantdot(RADL, WS, PLANTDOT).
+radler_compile(RADL, WS, RES) :- radler(RADL, WS, 'compile', RES), equals(RES, "compiled").
+radler_dump(RADL, WS, RES) :- radler(RADL, WS, 'dump', RES), equals(RES, "jsonized").
+radler_plantdot(RADL, WS, RES) :- radler(RADL, WS, 'plantdot', RES), equals(RES, "plantdotted").
+colcon_build(WS, RES) :- colcon(WS, RES), equals(RES, "built").

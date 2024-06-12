@@ -1,0 +1,105 @@
+sensor_msgs : cmake_library {
+  CMAKE_MODULE "sensor_msgs"
+  CMAKE_VAR_LIBRARIES "sensor_msgs_LIBRARIES"
+  CMAKE_VAR_INCLUDE_DIRS "sensor_msgs_INCLUDE_DIRS"
+}
+
+nav_msgs : cmake_library {
+  CMAKE_MODULE "nav_msgs"
+  CMAKE_VAR_LIBRARIES "nav_msgs_LIBRARIES"
+  CMAKE_VAR_INCLUDE_DIRS "nav_msgs_INCLUDE_DIRS"
+}
+
+mavros_msgs : cmake_library {
+  CMAKE_MODULE "mavros_msgs"
+  CMAKE_VAR_LIBRARIES "mavros_msgs_LIBRARIES"
+  CMAKE_VAR_INCLUDE_DIRS "mavros_msgs_INCLUDE_DIRS"
+}
+
+std_msgs : cmake_library {
+  CMAKE_MODULE "std_msgs"
+  CMAKE_VAR_LIBRARIES "std_msgs_LIBRARIES"
+  CMAKE_VAR_INCLUDE_DIRS "std_msgs_INCLUDE_DIRS"
+}
+
+jni : cmake_library {
+  CMAKE_MODULE "JNI"
+  CMAKE_VAR_LIBRARIES "JNI_LIBRARIES"
+  CMAKE_VAR_INCLUDE_DIRS "JNI_INCLUDE_DIRS"
+}
+
+battery : topic {
+  FIELDS
+    percentage : float32 1
+}
+
+global_position_local : topic {
+  FIELDS
+    x : float64 0
+    y : float64 0
+}
+
+rel_alt : topic {
+  FIELDS
+    data : float64 0
+}
+
+mode_rtl : topic {
+  FIELDS
+    val : bool false
+}
+
+gateway : node {
+  PUBLISHES
+    battery_status { TOPIC battery }
+    altitude { TOPIC rel_alt }
+    position { TOPIC global_position_local }
+  SUBSCRIBES 
+    mode_change_rtl { TOPIC mode_rtl MAXLATENCY 100msec }
+  PERIOD 100msec
+  PATH "src"
+  CXX { HEADER "gateway.h" FILENAME "gateway.cpp" CLASS "Gateway" LIB sensor_msgs mavros_msgs nav_msgs std_msgs }
+} 
+
+afs_battery : node {
+  DEFS
+    min_battery : float32 0.9 
+  PUBLISHES
+    mode_change_rtl { TOPIC mode_rtl } 
+  SUBSCRIBES 
+    battery_status { TOPIC battery MAXLATENCY 100msec }
+  PERIOD 100msec
+  PATH "src"
+  CXX { HEADER "afs_battery.h" FILENAME "afs_battery.cpp" CLASS "AFS_Battery" }
+} 
+
+afs_log : node {
+  SUBSCRIBES
+    altitude { TOPIC rel_alt MAXLATENCY 100msec }
+  PERIOD 100msec
+  PATH "src"
+  CXX { HEADER "afs_log.h" FILENAME "afs_log.cpp" CLASS "AFS_Log" LIB jni }
+}
+
+afs_esp : node {
+  DEFS
+    daikon: bool false
+  SUBSCRIBES
+    position { TOPIC global_position_local MAXLATENCY 100msec }
+  PERIOD 100msec
+  PATH "src"
+  CXX { HEADER "afs_esp.h" FILENAME "afs_esp.cpp" CLASS "AFS_esp" LIB jni }
+}
+
+plant : plant {
+  MACHINES
+    machine1 {
+      OS linux {
+        NODES_UID 1000
+        IMG "linux.img"
+        IP 192.168.1.202
+        NODES
+          gateway afs_battery afs_log afs_esp
+      }
+    }
+}
