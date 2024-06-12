@@ -19,4 +19,4 @@ Generate target files using Sphinx.
     make html
     make latexpdf 
 
-You will find your html/latex under _build directory. 
+You will find your HTML/LaTeX files under the _build directory. Copy the HTML files to the /docs directory for GitHub Pages at https://sri-csl.github.io/radler/.
