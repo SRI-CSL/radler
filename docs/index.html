@@ -1,18 +1,18 @@
+<!DOCTYPE html>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" data-content_root="./">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Introduction &#8212; radler 1.0 documentation</title>
-    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
-    <script type="text/javascript" src="_static/jquery.js"></script>
-    <script type="text/javascript" src="_static/underscore.js"></script>
-    <script type="text/javascript" src="_static/doctools.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Introduction &#8212; radler 2.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css?v=def86cc0" />
+    
+    <script src="_static/documentation_options.js?v=60dbed4a"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" /> 
   </head><body>
@@ -22,7 +22,8 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
-        <li class="nav-item nav-item-0"><a href="#">radler 1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">radler 2.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Introduction</a></li> 
       </ul>
     </div>  
 
@@ -33,32 +34,33 @@
             
   <div class="toctree-wrapper compound">
 </div>
-<div class="section" id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<section id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h1>
 <p>Radler framework takes its inspiration from the Robot Operating System (ROS). In Radler framework, the sensors, controllers, and actuators are constructed from functional units called nodes. Each node executes independently with a period determined by a local clock and scheduling constraints. Radler supports a publish/subscribe architecture where nodes communicate by publishing on certain topics and subscribing to other topics.</p>
-<div class="section" id="getting-started">
-<h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h2>
+<section id="getting-started">
+<h2>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">¶</a></h2>
 <p>Find the documentation at <a class="reference external" href="https://sri-csl.github.io/radler/">https://sri-csl.github.io/radler/</a></p>
-<div class="section" id="to-install">
-<h3>To install<a class="headerlink" href="#to-install" title="Permalink to this headline">¶</a></h3>
+<section id="to-install">
+<h3>To install<a class="headerlink" href="#to-install" title="Link to this heading">¶</a></h3>
 <p>To checkout repository:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">SRI</span><span class="o">-</span><span class="n">CSL</span><span class="o">/</span><span class="n">radler</span><span class="o">.</span><span class="n">git</span>
 <span class="n">cd</span> <span class="n">radler</span>
 <span class="n">git</span> <span class="n">submodule</span> <span class="n">update</span> <span class="o">--</span><span class="n">init</span> <span class="o">--</span><span class="n">recursive</span>
 </pre></div>
 </div>
-<p>To get Radler working on a clean version of Ubuntu 18.04:</p>
+<p>To get Radler working on a clean version of Ubuntu 20.04:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">cmake</span> <span class="n">python3</span><span class="o">-</span><span class="n">pip</span>
-<span class="n">sudo</span> <span class="n">pip3</span> <span class="n">install</span> <span class="n">tarjan</span> <span class="n">pyyaml</span>
+<span class="n">sudo</span> <span class="n">pip3</span> <span class="n">install</span> <span class="n">tarjan</span> <span class="n">pyyaml</span> <span class="n">pydot</span>
 </pre></div>
 </div>
-<p>To install ROS2 Bouncy, follow the instructions from <a class="reference external" href="https://index.ros.org/doc/ros2/Installation/">https://index.ros.org/doc/ros2/Installation/</a></p>
+<p>To install ROS2 Foxy, follow the instructions from <a class="reference external" href="https://index.ros.org/doc/ros2/Installation/">https://index.ros.org/doc/ros2/Installation/</a></p>
 <p>To install colcon, follow the instructions from <a class="reference external" href="https://colcon.readthedocs.io/en/released/user/installation.html">https://colcon.readthedocs.io/en/released/user/installation.html</a></p>
-</div>
-<div class="section" id="to-compile-and-run">
-<h3>To compile and run<a class="headerlink" href="#to-compile-and-run" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="compile">
-<h4>Compile<a class="headerlink" href="#compile" title="Permalink to this headline">¶</a></h4>
+<p>Sample Vagrantfile is available from <a class="reference external" href="https://github.com/SRI-CSL/radler/blob/ros2/examples/ardupilot/vagrant/Vagrantfile">https://github.com/SRI-CSL/radler/blob/ros2/examples/ardupilot/vagrant/Vagrantfile</a></p>
+</section>
+<section id="to-compile-and-run">
+<h3>To compile and run<a class="headerlink" href="#to-compile-and-run" title="Link to this heading">¶</a></h3>
+<section id="compile">
+<h4>Compile<a class="headerlink" href="#compile" title="Link to this heading">¶</a></h4>
 <p>Radler generates files from the RADL file into a usual ROS2 structure, then a call to <cite>colcon build</cite> will generate the executables as usual.
 (e.g., see  <cite>examples/pubsub/pubsub.radl</cite>):</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ros2_ws</span><span class="o">/</span><span class="n">src</span>
@@ -67,9 +69,9 @@
 <span class="n">colcon</span> <span class="n">build</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="run">
-<h4>Run<a class="headerlink" href="#run" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="run">
+<h4>Run<a class="headerlink" href="#run" title="Link to this heading">¶</a></h4>
 <p>The simplest way of running it is to source the ros2 workspace we just compiled and invoke it by name directly:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="n">install</span><span class="o">/</span><span class="n">local_setup</span><span class="o">.</span><span class="n">bash</span>
 <span class="o">./</span><span class="n">install</span><span class="o">/</span><span class="n">pubsub</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">listener</span>
@@ -78,36 +80,87 @@
 </div>
 <p>You should see the output of the two nodes explaining that they are communicating. For more details see <cite>pubsub</cite> example documentation.</p>
 <p>You can stop everything by typing Ctrl-C.</p>
+</section>
+</section>
+<section id="to-test-with-docker-image">
+<h3>To test with Docker image<a class="headerlink" href="#to-test-with-docker-image" title="Link to this heading">¶</a></h3>
+<p>To build the radler/ros2 docker image:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">radler</span><span class="o">/</span><span class="n">docker</span>
+<span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">radler</span><span class="o">/</span><span class="n">ros2</span> <span class="o">.</span>
+</pre></div>
 </div>
+<p>To test pubsub example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">rm</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">t</span> <span class="n">radler</span><span class="o">/</span><span class="n">ros2</span><span class="p">:</span><span class="n">latest</span> <span class="n">talker</span>
+<span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">rm</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">t</span> <span class="n">radler</span><span class="o">/</span><span class="n">ros2</span><span class="p">:</span><span class="n">latest</span> <span class="n">listener</span>
+</pre></div>
 </div>
+<p>You should see the output of the two nodes explaining that they are communicating. For more details see <cite>pubsub</cite> example documentation.</p>
+<p>You can stop everything by typing Ctrl-C.</p>
+<p>To try SROS2 (<a class="reference external" href="https://github.com/ros2/sros2/blob/foxy/SROS2_Linux.md">https://github.com/ros2/sros2/blob/foxy/SROS2_Linux.md</a>), start a container for both talker and listener nodes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">env</span><span class="o">-</span><span class="n">file</span> <span class="n">sros_env</span><span class="o">.</span><span class="n">list</span> <span class="o">--</span><span class="n">rm</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">t</span> <span class="n">radler</span><span class="o">/</span><span class="n">ros2</span><span class="p">:</span><span class="n">latest</span> <span class="n">bash</span>
+</pre></div>
 </div>
+<p>Inside of the container, run listener and talker nodes with security feature on:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">run</span> <span class="n">demo_nodes_py</span> <span class="n">listener</span> <span class="o">--</span><span class="n">ros</span><span class="o">-</span><span class="n">args</span> <span class="o">--</span><span class="n">enclave</span> <span class="o">/</span><span class="n">talker_listener</span><span class="o">/</span><span class="n">listener</span>
+<span class="n">ros2</span> <span class="n">run</span> <span class="n">demo_nodes_py</span> <span class="n">talker</span> <span class="o">--</span><span class="n">ros</span><span class="o">-</span><span class="n">args</span> <span class="o">--</span><span class="n">enclave</span> <span class="o">/</span><span class="n">talker_listener</span><span class="o">/</span><span class="n">talker</span>
+</pre></div>
 </div>
-<div class="section" id="radler-usage">
-<h1>Radler usage<a class="headerlink" href="#radler-usage" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="commands">
-<h2>Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="radler-sh">
-<h3>radler.sh<a class="headerlink" href="#radler-sh" title="Permalink to this headline">¶</a></h3>
+<p>To run the above talker_listener demo on two containers, start one container c1:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">env</span><span class="o">-</span><span class="n">file</span> <span class="n">sros_env</span><span class="o">.</span><span class="n">list</span> <span class="o">--</span><span class="n">rm</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">t</span> <span class="n">radler</span><span class="o">/</span><span class="n">ros2</span><span class="p">:</span><span class="n">latest</span> <span class="n">bash</span>
+</pre></div>
+</div>
+<p>Inside of the container c1, prepare talker keys for SROS2 authentication and encryption:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tar</span> <span class="n">zchvf</span> <span class="n">talker</span><span class="o">.</span><span class="n">tgz</span> <span class="n">sros2_keys</span><span class="o">/</span><span class="n">enclaves</span><span class="o">/</span><span class="n">talker_listener</span><span class="o">/</span><span class="n">talker</span>
+</pre></div>
+</div>
+<p>Start another container c2:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">env</span><span class="o">-</span><span class="n">file</span> <span class="n">sros_env</span><span class="o">.</span><span class="n">list</span> <span class="o">--</span><span class="n">rm</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">t</span> <span class="n">radler</span><span class="o">/</span><span class="n">ros2</span><span class="p">:</span><span class="n">latest</span> <span class="n">bash</span>
+</pre></div>
+</div>
+<p>Copy talker keys from the container c1 to the container c2:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">ps</span>
+<span class="n">docker</span> <span class="n">cp</span> <span class="n">c1_CONTAINER_ID</span><span class="p">:</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">talker</span><span class="o">.</span><span class="n">tgz</span> <span class="o">.</span>
+<span class="n">docker</span> <span class="n">cp</span> <span class="n">talker</span><span class="o">.</span><span class="n">tgz</span> <span class="n">c2_CONTAINER_ID</span><span class="p">:</span><span class="o">/</span><span class="n">root</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>Inside of the container c2, untar talker keys and run talker node:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tar</span> <span class="n">zxvf</span> <span class="n">talker</span><span class="o">.</span><span class="n">tgz</span>
+<span class="n">ros2</span> <span class="n">run</span> <span class="n">demo_nodes_py</span> <span class="n">talker</span> <span class="o">--</span><span class="n">ros</span><span class="o">-</span><span class="n">args</span> <span class="o">--</span><span class="n">enclave</span> <span class="o">/</span><span class="n">talker_listener</span><span class="o">/</span><span class="n">talker</span>
+</pre></div>
+</div>
+<p>Inside of the container c1, run listener node:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">run</span> <span class="n">demo_nodes_py</span> <span class="n">listener</span> <span class="o">--</span><span class="n">ros</span><span class="o">-</span><span class="n">args</span> <span class="o">--</span><span class="n">enclave</span> <span class="o">/</span><span class="n">talker_listener</span><span class="o">/</span><span class="n">listener</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="radler-usage">
+<h1>Radler usage<a class="headerlink" href="#radler-usage" title="Link to this heading">¶</a></h1>
+<section id="commands">
+<h2>Commands<a class="headerlink" href="#commands" title="Link to this heading">¶</a></h2>
+<section id="radler-sh">
+<h3>radler.sh<a class="headerlink" href="#radler-sh" title="Link to this heading">¶</a></h3>
 <p>radler.sh is a simple bash script used to run the actual python Radler
 script radler/main.py</p>
-</div>
-<div class="section" id="radler-script">
-<h3>Radler script<a class="headerlink" href="#radler-script" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="radler-script">
+<h3>Radler script<a class="headerlink" href="#radler-script" title="Link to this heading">¶</a></h3>
 <p>The script may be used to  handle object files with the subcommands
 <code class="docutils literal notranslate"><span class="pre">obj_version</span></code> and <code class="docutils literal notranslate"><span class="pre">obj_compatible</span></code> or to compile .radl description
 with the <code class="docutils literal notranslate"><span class="pre">compile</span></code> subcommand. The script has two levels of arguments.
 The arguments before the subcommand and the one after, specific to the
 subcommand.</p>
-<div class="section" id="generic-arguments">
-<h4>Generic arguments<a class="headerlink" href="#generic-arguments" title="Permalink to this headline">¶</a></h4>
+<section id="generic-arguments">
+<h4>Generic arguments<a class="headerlink" href="#generic-arguments" title="Link to this heading">¶</a></h4>
 <p>The full list of arguments is provided by the <code class="docutils literal notranslate"><span class="pre">--help</span></code> argument.</p>
 <p><code class="docutils literal notranslate"><span class="pre">--ws_dir</span></code></p>
 <p>This is used to specify where is the workspace directory. The
 workspace directory is where the files are generated. This is by
 default equal to <code class="docutils literal notranslate"><span class="pre">src</span></code>.</p>
-</div>
-<div class="section" id="compile-subcommand">
-<h4>Compile subcommand<a class="headerlink" href="#compile-subcommand" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="compile-subcommand">
+<h4>Compile subcommand<a class="headerlink" href="#compile-subcommand" title="Link to this heading">¶</a></h4>
 <p>The full list of arguments for the <code class="docutils literal notranslate"><span class="pre">compile</span></code> subcommand is available
 as the <code class="docutils literal notranslate"><span class="pre">--help</span></code> argument to the subcommand
 (<code class="docutils literal notranslate"><span class="pre">radler.sh</span> <span class="pre">compile</span> <span class="pre">--help</span></code>).</p>
@@ -121,26 +174,28 @@ to give the object files of those modules with this argument.</p>
 module, with the ‘.radlo’ extension. Moreover it is by default
 written at the root of the workspace directory. This command can be used
 to change the name and directory of the generated object file.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="examples">
-<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
-<p>The following examples demonstrate the features of Radler, which work with both ROS and ROS2.</p>
+</section>
+</section>
+</section>
+</section>
+<section id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h1>
+<p>The following examples demonstrate the features of Radler, which work with both ROS (master branch) and ROS2 (ros2 branch).</p>
 <ul class="simple">
-<li>Pubsub: How to write pub/sub on single/multi machine</li>
-<li>House_thermo: Toy example of a distributed house heating system modeling</li>
-<li>Controller_gateway: How to write a gateway to forward back and forth messages between Radler world and a local sandboxed ROS</li>
+<li><p>Pubsub: How to write pub/sub on single/multi machine</p></li>
+<li><p>House_thermo: Toy example of a distributed house heating system modeling</p></li>
+<li><p>Controller_gateway: How to write a gateway to forward back and forth messages between Radler world and a local sandboxed ROS</p></li>
+<li><p>ArduPilot: Advanced Fail Safe of Arducopter using MAVROS</p></li>
+<li><p>PVS: How to use PVS2C-generated codes in the step function</p></li>
 </ul>
-<p>The following examples work with ROS.</p>
+<p>The following examples work with ROS (master branch).</p>
 <ul class="simple">
-<li>Drone: AR.Drone demos using ardronelib sdk and ardrone_autonomy ROS driver</li>
-<li>Raspberrypi: Raspberry Pi 2/B+ demo using GPIO</li>
-<li>Android: Android demos via ROS-enabled Android application and Android NDK</li>
+<li><p>Drone: AR.Drone demos using ardronelib sdk and ardrone_autonomy ROS driver</p></li>
+<li><p>Raspberrypi: Raspberry Pi 2/B+ demo using GPIO</p></li>
+<li><p>Android: Android demos via ROS-enabled Android application and Android NDK</p></li>
 </ul>
-<div class="section" id="pubsub">
-<h2>Pubsub<a class="headerlink" href="#pubsub" title="Permalink to this headline">¶</a></h2>
+<section id="pubsub">
+<h2>Pubsub<a class="headerlink" href="#pubsub" title="Link to this heading">¶</a></h2>
 <p>This simple examples demonstrate how to write pubsub on single/multi machine.</p>
 <p>To generate the files from the .radl description, do:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ros2_ws</span><span class="o">/</span><span class="n">src</span>
@@ -156,14 +211,164 @@ to change the name and directory of the generated object file.</p>
 <span class="o">./</span><span class="n">install</span><span class="o">/</span><span class="n">pubsub</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">talker</span>
 </pre></div>
 </div>
+<p>For multi_machine testing, use a different .radl file with modified plant section to list IPs for each machine in multi_machine directory as below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">radler</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">ws_dir</span><span class="o">=/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ros2_ws</span><span class="o">/</span><span class="n">src</span> <span class="nb">compile</span> <span class="n">examples</span><span class="o">/</span><span class="n">pubsub</span><span class="o">/</span><span class="n">multi_machine</span><span class="o">/</span><span class="n">pubsub</span><span class="o">.</span><span class="n">radl</span> <span class="o">--</span><span class="n">plant</span> <span class="n">plant</span> <span class="o">--</span><span class="n">ROS</span>
+</pre></div>
 </div>
-<div class="section" id="house-thermo">
-<h2>House_thermo<a class="headerlink" href="#house-thermo" title="Permalink to this headline">¶</a></h2>
-<p>Toy example modeling a distributed house heating system.
-It uses the same Radler features as the <cite>pubsub</cite> example.</p>
+<p>On machine 1:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="n">install</span><span class="o">/</span><span class="n">local_setup</span><span class="o">.</span><span class="n">bash</span>
+<span class="o">./</span><span class="n">install</span><span class="o">/</span><span class="n">pubsub</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">talker</span>
+</pre></div>
 </div>
-<div class="section" id="controller-gateway">
-<h2>Controller_Gateway<a class="headerlink" href="#controller-gateway" title="Permalink to this headline">¶</a></h2>
+<p>On machine 2:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="n">install</span><span class="o">/</span><span class="n">local_setup</span><span class="o">.</span><span class="n">bash</span>
+<span class="o">./</span><span class="n">install</span><span class="o">/</span><span class="n">pubsub</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">listener</span>
+</pre></div>
+</div>
+</section>
+<section id="room-temperature-regulation">
+<h2>Room Temperature Regulation<a class="headerlink" href="#room-temperature-regulation" title="Link to this heading">¶</a></h2>
+<a class="reference internal image-reference" href="house_thermo_node_topic.png"><img alt="house_thermo_node_topic.png" src="house_thermo_node_topic.png" style="width: 600px;" />
+</a>
+<p>Five nodes (in ellipse) communicate through six topics (in rectangle).
+The <code class="docutils literal notranslate"><span class="pre">button</span></code> node publishes to <code class="docutils literal notranslate"><span class="pre">thermostat_button</span></code> and
+<code class="docutils literal notranslate"><span class="pre">thermostat_set</span></code> topics to generate signals that control the behavior
+of thermostat by means of switching on/off and setting the target
+temperature, respectively. The <code class="docutils literal notranslate"><span class="pre">thermostat</span></code> node subscribes from
+<code class="docutils literal notranslate"><span class="pre">thermostat_button</span></code>, <code class="docutils literal notranslate"><span class="pre">thermostat_set</span></code>, <code class="docutils literal notranslate"><span class="pre">thermometer_data</span></code> topics
+and publishes to <code class="docutils literal notranslate"><span class="pre">thermostat_data</span></code> topic to regulate a room
+temperature within min/max. The <code class="docutils literal notranslate"><span class="pre">thermometer</span></code> node subscribes from
+<code class="docutils literal notranslate"><span class="pre">house_data</span></code> topic and publishes to <code class="docutils literal notranslate"><span class="pre">heater_data</span></code> topic to measure
+the room temperature with sensing noise. The <code class="docutils literal notranslate"><span class="pre">heater</span></code> node is the
+actuator that subscribes from <code class="docutils literal notranslate"><span class="pre">thermostat_data</span></code> and publishes to
+<code class="docutils literal notranslate"><span class="pre">heater_data</span></code>. The <code class="docutils literal notranslate"><span class="pre">house</span></code> node provides the physical room
+temperature by subscribing from <code class="docutils literal notranslate"><span class="pre">heater_data</span></code> and publishing to
+<code class="docutils literal notranslate"><span class="pre">house_data</span></code> while the <code class="docutils literal notranslate"><span class="pre">thermometer</span></code> node provides the digital
+sampled sensed temperature. A system consisting of these nodes was
+defined in a RADL description with user code in each step function. The
+Radler build process generates the glue code for scheduling,
+communications, and failure detections for executables.</p>
+<p>At the logical level, there are two main value types; node and topic.
+Excerpt from the example system’s RADL description below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">basic_rate</span> <span class="p">:</span> <span class="n">duration</span> <span class="mi">50</span><span class="n">msec</span>
+
+<span class="n">thermometer_data</span> <span class="p">:</span> <span class="n">topic</span> <span class="p">{</span> <span class="n">FIELDS</span> <span class="n">temp</span> <span class="p">:</span> <span class="n">float32</span> <span class="mi">75</span> <span class="p">}</span>
+<span class="n">thermostat_button</span> <span class="p">:</span> <span class="n">topic</span> <span class="p">{</span> <span class="n">FIELDS</span> <span class="n">status</span> <span class="p">:</span> <span class="nb">bool</span> <span class="n">true</span> <span class="p">}</span>
+<span class="n">thermostat_set</span> <span class="p">:</span> <span class="n">topic</span> <span class="p">{</span> <span class="n">FIELDS</span> <span class="n">temp</span> <span class="p">:</span> <span class="n">float32</span> <span class="mi">75</span> <span class="p">}</span>
+
+<span class="n">thermostat_data</span> <span class="p">:</span> <span class="n">topic</span> <span class="p">{</span> <span class="n">FIELDS</span> <span class="n">switch_on</span> <span class="p">:</span> <span class="nb">bool</span> <span class="n">true</span> <span class="p">}</span>
+
+<span class="n">thermostat</span> <span class="p">:</span> <span class="n">node</span> <span class="p">{</span>
+  <span class="n">SUBSCRIBES</span>
+    <span class="n">thermometer_temp</span> <span class="p">{</span> <span class="n">TOPIC</span> <span class="n">thermometer_data</span> <span class="n">MAXLATENCY</span> <span class="mi">1</span><span class="n">msec</span> <span class="p">}</span>
+    <span class="n">thermostat_switch</span> <span class="p">{</span> <span class="n">TOPIC</span> <span class="n">thermostat_button</span> <span class="n">MAXLATENCY</span> <span class="mi">1</span><span class="n">msec</span> <span class="p">}</span>
+    <span class="n">thermostat_set_temp</span> <span class="p">{</span> <span class="n">TOPIC</span> <span class="n">thermostat_set</span> <span class="n">MAXLATENCY</span> <span class="mi">1</span><span class="n">msec</span> <span class="p">}</span>
+  <span class="n">PUBLISHES</span>
+    <span class="n">heater_switch</span> <span class="p">{</span> <span class="n">TOPIC</span> <span class="n">thermostat_data</span> <span class="p">}</span>
+  <span class="n">PATH</span> <span class="s2">&quot;src&quot;</span>
+  <span class="n">CXX</span>
+    <span class="p">{</span> <span class="n">HEADER</span> <span class="s2">&quot;thermostat.h&quot;</span> <span class="n">FILENAME</span> <span class="s2">&quot;thermostat.cpp&quot;</span> <span class="n">CLASS</span> <span class="s2">&quot;Thermostat&quot;</span> <span class="p">}</span>
+  <span class="n">PERIOD</span> <span class="n">basic_rate</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A node is described with fields such as <code class="docutils literal notranslate"><span class="pre">PERIOD</span></code>, <code class="docutils literal notranslate"><span class="pre">PUBLISHES</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">SUBSCRIBES</span></code>. When the <code class="docutils literal notranslate"><span class="pre">thermostat</span></code> node is created, Radler
+constructs one instance of the provided C++ class specified in the
+<code class="docutils literal notranslate"><span class="pre">CXX</span></code> field. The step function of this instance will be called at a
+fixed frequency defined by the node’s period (the <code class="docutils literal notranslate"><span class="pre">PERIOD</span></code> field). At
+each call, the step function is provided with the messages received from
+its subscriptions and is required to write the messages that it has to
+publish (the <code class="docutils literal notranslate"><span class="pre">SUBSCRIBES</span></code> and <code class="docutils literal notranslate"><span class="pre">PUBLISHES</span></code> fields). A topic is
+uniquely defined by its name. For example, <code class="docutils literal notranslate"><span class="pre">thermometer_data</span></code>,
+<code class="docutils literal notranslate"><span class="pre">thermostat_button</span></code>, <code class="docutils literal notranslate"><span class="pre">thermostat_set</span></code> topics are referenced as
+<code class="docutils literal notranslate"><span class="pre">thermometer_temp</span></code>, <code class="docutils literal notranslate"><span class="pre">thermostat_switch</span></code>, <code class="docutils literal notranslate"><span class="pre">thermostat_set_temp</span></code>,
+respectively. The <code class="docutils literal notranslate"><span class="pre">thermostat</span></code> node publishes to the
+<code class="docutils literal notranslate"><span class="pre">thermostat_data</span></code> topic referenced as <code class="docutils literal notranslate"><span class="pre">heater_switch</span></code> and <code class="docutils literal notranslate"><span class="pre">heater</span></code>
+node subscribes from it. A topic is a purely logical way of defining
+point-to-point communications between one producer and multiple
+consumers. That is, there can be exactly one node publishing to a topic
+(e.g., <code class="docutils literal notranslate"><span class="pre">house_data</span></code>) while many nodes (e.g., <code class="docutils literal notranslate"><span class="pre">thermometer_1</span></code> …
+<code class="docutils literal notranslate"><span class="pre">thermometer_n</span></code> in case of multiple sensors) can subscribe from it.
+The communication occurs via bounded latency channel (the <code class="docutils literal notranslate"><span class="pre">MAXLATENCY</span></code>
+field) for each topic.</p>
+<p>Below code segment shows the step function of the <code class="docutils literal notranslate"><span class="pre">thermostat</span></code> node,
+that is provided by the user (C++ class specified in the <code class="docutils literal notranslate"><span class="pre">CXX</span></code> field
+under the directory specified in the <code class="docutils literal notranslate"><span class="pre">PATH</span></code> field, as being
+exemplified in the RADL description above).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">void</span> <span class="n">Thermostat</span><span class="p">::</span><span class="n">step</span><span class="p">(</span><span class="n">const</span> <span class="n">radl_in_t</span><span class="o">*</span> <span class="ow">in</span><span class="p">,</span> <span class="n">const</span> <span class="n">radl_in_flags_t</span><span class="o">*</span> <span class="n">inflags</span><span class="p">,</span>
+                      <span class="n">radl_out_t</span><span class="o">*</span> <span class="n">out</span><span class="p">,</span> <span class="n">radl_out_flags_t</span><span class="o">*</span> <span class="n">outflags</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="o">//</span> <span class="n">change</span> <span class="n">the</span> <span class="nb">set</span> <span class="n">temperature</span>
+  <span class="n">this</span><span class="o">-&gt;</span><span class="n">set_temp</span> <span class="o">=</span> <span class="ow">in</span><span class="o">-&gt;</span><span class="n">thermostat_set_temp</span><span class="o">-&gt;</span><span class="n">temp</span><span class="p">;</span>
+
+  <span class="o">//</span> <span class="nb">set</span> <span class="n">the</span> <span class="n">status</span>
+  <span class="n">this</span><span class="o">-&gt;</span><span class="n">status</span> <span class="o">=</span> <span class="ow">in</span><span class="o">-&gt;</span><span class="n">thermostat_switch</span><span class="o">-&gt;</span><span class="n">status</span><span class="p">;</span>
+
+  <span class="o">//</span> <span class="n">decide</span> <span class="n">whether</span> <span class="n">to</span> <span class="n">switch</span> <span class="n">on</span> <span class="n">the</span> <span class="n">heater</span>
+  <span class="k">if</span> <span class="p">(</span><span class="ow">in</span><span class="o">-&gt;</span><span class="n">thermometer_temp</span><span class="o">-&gt;</span><span class="n">temp</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">this</span><span class="o">-&gt;</span><span class="n">set_temp</span> <span class="o">+</span> <span class="n">this</span><span class="o">-&gt;</span><span class="n">tol</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">out</span><span class="o">-&gt;</span><span class="n">heater_switch</span><span class="o">-&gt;</span><span class="n">switch_on</span> <span class="o">=</span> <span class="n">false</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">this</span><span class="o">-&gt;</span><span class="n">status</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="ow">in</span><span class="o">-&gt;</span><span class="n">thermometer_temp</span><span class="o">-&gt;</span><span class="n">temp</span> <span class="o">&lt;</span> <span class="n">this</span><span class="o">-&gt;</span><span class="n">set_temp</span><span class="p">))</span> <span class="p">{</span>
+    <span class="n">out</span><span class="o">-&gt;</span><span class="n">heater_switch</span><span class="o">-&gt;</span><span class="n">switch_on</span> <span class="o">=</span> <span class="n">true</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">out</span><span class="o">-&gt;</span><span class="n">heater_switch</span><span class="o">-&gt;</span><span class="n">switch_on</span> <span class="o">=</span> <span class="n">this</span><span class="o">-&gt;</span><span class="n">status</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A class will be instantiated with the default constructor to generate an
+instance representing the state of the Mealy machine. Subsequently, the
+step function of this instance will be called to execute one step of the
+machine. The signature of the step function should specify the input
+(<code class="docutils literal notranslate"><span class="pre">radl_in_t*</span></code>) and output (<code class="docutils literal notranslate"><span class="pre">radl_out_t*</span></code>) structures define the
+node’s subscription and publication, respectively. In the example, the
+step function of the <code class="docutils literal notranslate"><span class="pre">thermostat</span></code> node regulates the room temperature
+by switching on/off state of the heater. The flag structures
+(<code class="docutils literal notranslate"><span class="pre">radl_inflags_t*,</span> <span class="pre">radl_outflags_t*</span></code>) can be used to check if a
+subscription, e.g., <code class="docutils literal notranslate"><span class="pre">thermometer_temp</span></code>, is stale or timeout by calling
+<code class="docutils literal notranslate"><span class="pre">radl_is_stale(iflag-&gt;thermometer_temp)</span></code> or
+<code class="docutils literal notranslate"><span class="pre">radl</span> <span class="pre">_is_timeout(iflag-&gt;thermometer_temp)</span></code>, respectively. These
+Boolean metadata attached to messages are by default propagate through
+nodes unless the explicitly being turned off (<code class="docutils literal notranslate"><span class="pre">radl_turn_off</span></code>).</p>
+<p>A physical specification is provided by a value of type plant:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sys1</span> <span class="p">:</span> <span class="n">linux</span> <span class="p">{</span>
+  <span class="n">IP</span> <span class="mf">192.168.1.201</span>
+  <span class="n">NODES</span> <span class="n">heater</span>
+<span class="p">}</span>
+
+<span class="n">sys2</span> <span class="p">:</span> <span class="n">linux</span> <span class="p">{</span>
+  <span class="n">IP</span> <span class="mf">192.168.1.202</span>
+  <span class="n">NODES</span> <span class="n">thermostat</span>
+<span class="p">}</span>
+
+<span class="n">sys3</span> <span class="p">:</span> <span class="n">linux</span> <span class="p">{</span>
+  <span class="n">IP</span> <span class="mf">192.168.1.203</span>
+  <span class="n">NODES</span> <span class="n">thermometer</span> <span class="n">house</span> <span class="n">buttons</span>
+<span class="p">}</span>
+
+<span class="n">plant</span> <span class="p">:</span> <span class="n">plant</span> <span class="p">{</span>
+  <span class="n">MACHINES</span>
+    <span class="n">house_heater</span> <span class="p">{</span> <span class="n">OS</span> <span class="n">sys1</span> <span class="p">}</span>
+    <span class="n">house_computer</span> <span class="p">{</span>
+      <span class="n">OS</span> <span class="n">l1</span> <span class="p">:</span> <span class="n">lynxsecure</span> <span class="p">{</span>
+        <span class="n">VMS</span>
+          <span class="n">vm1</span> <span class="p">{</span> <span class="n">OS</span> <span class="n">sys2</span> <span class="p">}</span>
+          <span class="n">vm2</span> <span class="p">{</span> <span class="n">OS</span> <span class="n">sys3</span> <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">MACHINES</span></code> field lists the machines that will be used by the
+system. In the example, three machines are defined by the operating
+system that it runs (the <code class="docutils literal notranslate"><span class="pre">OS</span></code> field). The <code class="docutils literal notranslate"><span class="pre">IP</span></code> and <code class="docutils literal notranslate"><span class="pre">NODES</span></code> fields
+specify the IP address assigned for the OS and the nodes that run on the
+OS. In the example, three nodes (i.e., <code class="docutils literal notranslate"><span class="pre">thermometer</span></code>, <code class="docutils literal notranslate"><span class="pre">house</span></code>,
+<code class="docutils literal notranslate"><span class="pre">buttons</span></code>) run on the Linux with IP address of <code class="docutils literal notranslate"><span class="pre">192.168.1.203</span></code> while
+<code class="docutils literal notranslate"><span class="pre">heater</span></code> and <code class="docutils literal notranslate"><span class="pre">thermostat</span></code> nodes run on a separate Linux machine.</p>
+</section>
+<section id="controller-gateway">
+<h2>Controller_Gateway<a class="headerlink" href="#controller-gateway" title="Link to this heading">¶</a></h2>
 <p>This example demonstrates how to write a gateway to forward back-and-forth messages between Radler world and a local sandboxed ROS.</p>
 <p>Radler world is defined in the radl_files folder. It consists of .radl description containing three nodes. A device stub publishing an integer, an actuator stub subscribing to a float and a gateway node for an external controller node, forwarding device msgs to it and forwarding actuators msgs from it.</p>
 <p>To complete the example, a stub of a sandboxed ROS controller node is also provided in the sandboxed_ros_controller folder.</p>
@@ -175,7 +380,7 @@ It uses the same Radler features as the <cite>pubsub</cite> example.</p>
 </pre></div>
 </div>
 <p>Then to compile everything and get ROS executables, do:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">radler</span><span class="o">/</span><span class="n">example</span><span class="o">/</span><span class="n">controller_gateway</span><span class="o">/</span><span class="n">sandboxed_ros_controller</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ros2_ws</span><span class="o">/</span><span class="n">src</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">radler</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">controller_gateway</span><span class="o">/</span><span class="n">sandboxed_ros_controller</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ros2_ws</span><span class="o">/</span><span class="n">src</span>
 <span class="n">cd</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ros2_ws</span>
 <span class="n">colcon</span> <span class="n">build</span>
 </pre></div>
@@ -188,9 +393,189 @@ It uses the same Radler features as the <cite>pubsub</cite> example.</p>
 <span class="o">./</span><span class="n">install</span><span class="o">/</span><span class="n">sandboxed_ros_controller</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sandboxed_ros_controller_node</span>
 </pre></div>
 </div>
+</section>
+<section id="advanced-fail-safe-of-arducopter-using-mavros">
+<h2>Advanced Fail Safe of Arducopter using MAVROS<a class="headerlink" href="#advanced-fail-safe-of-arducopter-using-mavros" title="Link to this heading">¶</a></h2>
+<p>This demo shows the Radler code generation and its execution on SITL (software in the loop) simulator for the Arducopter advanced fail safe. In this demo MAVROS, ROS-based extendable communication node, on the companion computer communicates with ground control system.</p>
+<p>Radler architecture consists of the logical and physical parts.  The logical part is specified in terms of node and topic similar to ROS. The nodes execute independently and periodically, and subscribe from and publish to topics. For example, battery node executes its step function with period of 100 milli seconds, subscribes from battery status topic, and publishes to mode change topic. Physical parts map nodes to the process on specific machines, in this case companion computer.
+The step function of battery node controls mode to return to takeoff location when battery level below threshold.
+The step function of gateway node forwards back-and-forth messages between Radler and ROS worlds on the companion computer.
+Radler build process generates the glue code for scheduling, communication, and failure detection such as timeout or stale.</p>
+<a class="reference internal image-reference" href="rqt.png"><img alt="rqt.png" src="rqt.png" style="height: 500px;" />
+</a>
+<p>The above graph shows the nodes and topics used in this demo. Note that we are using ROS service to change the flight mode which is not shown here. Also gateway subscribes from the relative altitude topic which will be used for another Radler node for altitude-related control such as altitude hold.</p>
+<p>More information on Ardupilot can be found from ArduPilot Development Site <a class="reference external" href="https://ardupilot.org/dev/index.html">https://ardupilot.org/dev/index.html</a>.</p>
+<p>Set up the SITL/MAVROS/Radler in a virtual machine environment using Vagrant.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">ArduPilot</span><span class="o">/</span><span class="n">ardupilot</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">ardupilot</span>
+<span class="n">cp</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">radler</span><span class="o">-</span><span class="n">ros2</span><span class="o">-</span><span class="n">branch</span><span class="o">/</span><span class="n">example</span><span class="o">/</span><span class="n">ardupilot</span><span class="o">/</span><span class="n">vagrant</span><span class="o">/</span><span class="n">Vagrantfile</span> <span class="o">.</span>
+<span class="n">vagrant</span> <span class="n">up</span>
+<span class="n">vagrant</span> <span class="n">ssh</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">vagrant</span>
+<span class="n">git</span> <span class="n">submodule</span> <span class="n">update</span> <span class="o">--</span><span class="n">init</span> <span class="o">--</span><span class="n">recursive</span>
+<span class="n">exit</span>
+</pre></div>
 </div>
-<div class="section" id="demos-using-ar-drone-on-ros">
-<h2>Demos using AR.Drone on ROS<a class="headerlink" href="#demos-using-ar-drone-on-ros" title="Permalink to this headline">¶</a></h2>
+<p>Start SITL simulator.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vagrant</span> <span class="n">ssh</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;sim_vehicle.py -v ArduCopter --console --map -m --out=127.0.0.1:14550&quot;</span>
+</pre></div>
+</div>
+<p>Connect MAVROS with SITL.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vagrant</span> <span class="n">ssh</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;ros2 launch mavros apm.launch.py&quot;</span>
+</pre></div>
+</div>
+<p>Left two windows of the below snapshot show the ground control console and map of the environment launched from the SITL simulator on the top right window. On the right bottom window, one can observe some verbose that reads the Arducopter’s configuration, which indicates a connection.</p>
+<a class="reference internal image-reference" href="sitl_mavros.png"><img alt="sitl_mavros.png" src="sitl_mavros.png" style="height: 300px;" />
+</a>
+<p>Launch Radler nodes (in different terminals for more clarity).
+The battery status topic published in the ROS side is subscribed by the gateway node which forwards it to the battery node on the Radler side via Radler pub/sub channel.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vagrant</span> <span class="n">ssh</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;source ~/ros2_ws/install/local_setup.bash; ~/ros2_ws/install/afs/bin/gateway&quot;</span>
+<span class="n">vagrant</span> <span class="n">ssh</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;source ~/ros2_ws/install/local_setup.bash; ~/ros2_ws/install/afs/bin/afs_battery&quot;</span>
+</pre></div>
+</div>
+<p>On the simulator side (upper right window of below snapshot), change the Arducopter’s mode to GUIDED, arm throttle, then takeoff to an altitude (e.g., 30 meters) and one can observe the console window changing battery level and altitude.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mode</span> <span class="n">guided</span>
+<span class="n">arm</span> <span class="n">throttle</span>
+<span class="n">takeoff</span> <span class="mi">30</span>
+</pre></div>
+</div>
+<p>On the map (bottom left window), create a target position with altitude, then observe the Arducopter flying to the target.</p>
+<a class="reference internal image-reference" href="takeoff.png"><img alt="takeoff.png" src="takeoff.png" style="height: 300px;" />
+</a>
+<p>When the battery level hits below threshold (i.e., 90%) the mode change to return to takeoff location is published by battery node. The gateway node subscribes from it and calls ROS service to set custom mode of the Arducopter. Note that the mode change to RTL on the simulator side.</p>
+<p>On the map window of below snapshot, one can observe that the Arducopter heading to the takeoff location.</p>
+<p>The altitude value on the ground control console indicates that the Arducopter landing to the takeoff location.</p>
+<a class="reference internal image-reference" href="rtl.png"><img alt="rtl.png" src="rtl.png" style="height: 300px;" />
+</a>
+<p>For the inception of Java code in the step function, we provide a use-case with Java Native Interface (JNI). The step function of esp (event stream processing) node calculates point distance between two successive (x,y) positions. BeepBeep (<a class="reference external" href="https://liflab.github.io/beepbeep-3/">https://liflab.github.io/beepbeep-3/</a>) is used for event stream processing engine. We modified BeepBeep code example of PointDistance given in <a class="reference external" href="https://liflab.github.io/beepbeep-3-examples/_point_distance_8java_source.html">https://liflab.github.io/beepbeep-3-examples/_point_distance_8java_source.html</a>. The <em>afs.radl</em> includes <em>cmake_library</em> information for JNI. JVM creation should be in the class constructor (refer <em>afs_esp.h</em>) and JNI calls in the step function (refer <em>afs_esp.cpp</em>).</p>
+<p>To install BeepBeep 3 examples:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vagrant</span> <span class="n">ssh</span>
+<span class="n">cd</span> <span class="o">~</span>
+<span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">liflab</span><span class="o">/</span><span class="n">beepbeep</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="n">examples</span><span class="o">.</span><span class="n">git</span>
+<span class="n">cd</span> <span class="n">beepbeep</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="n">examples</span>
+<span class="n">edit</span> <span class="n">config</span><span class="o">.</span><span class="n">xml</span>
+  <span class="o">&lt;</span><span class="nb">zip</span><span class="o">&gt;</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">liflab</span><span class="o">/</span><span class="n">beepbeep</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="n">palettes</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">v20181124</span><span class="o">/</span><span class="n">beepbeep</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="n">palettes</span><span class="o">-</span><span class="n">v20181124</span><span class="o">.</span><span class="n">zip</span><span class="o">&lt;/</span><span class="nb">zip</span><span class="o">&gt;</span>
+  <span class="n">to</span>
+  <span class="o">&lt;</span><span class="nb">zip</span><span class="o">&gt;</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">liflab</span><span class="o">/</span><span class="n">beepbeep</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="n">palettes</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">v20190917</span><span class="o">/</span><span class="n">beepbeep</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="n">palettes</span><span class="o">-</span><span class="n">v20190917</span><span class="o">.</span><span class="n">zip</span><span class="o">&lt;/</span><span class="nb">zip</span><span class="o">&gt;</span>
+<span class="n">ant</span> <span class="n">download</span><span class="o">-</span><span class="n">deps</span>
+<span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="n">Core</span><span class="o">/</span><span class="n">src</span>
+<span class="n">mkdir</span> <span class="n">doc</span>
+<span class="n">ant</span>
+</pre></div>
+</div>
+<p>To compile Java-side code, CLASSPATH should include the above <em>beepbeep-3-examples.jar</em> (refer <em>./vagrant/setup.bash</em>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">radler</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">ardupilot</span><span class="o">/</span><span class="n">jni</span>
+<span class="n">javac</span> <span class="n">PointDistance</span><span class="o">.</span><span class="n">java</span>
+</pre></div>
+</div>
+<p>To run, CLASSPATH should include <em>beepbeep-3-examples.jar</em> and <em>/path/to/radler/examples/ardupilot/jni</em> (refer <em>./vagrant/setup.bash</em>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">~/</span><span class="n">ros2_ws</span><span class="o">/</span><span class="n">install</span><span class="o">/</span><span class="n">local_setup</span><span class="o">.</span><span class="n">bash</span>
+<span class="n">cd</span> <span class="o">~/</span><span class="n">ros2_ws</span><span class="o">/</span><span class="n">install</span><span class="o">/</span><span class="n">afs</span><span class="o">/</span><span class="nb">bin</span>
+<span class="o">./</span><span class="n">afs_esp</span>
+</pre></div>
+</div>
+<p>If DAIKON invariant detector (<a class="reference external" href="https://plse.cs.washington.edu/daikon/">https://plse.cs.washington.edu/daikon/</a>) is enabled in <em>afs.radl</em>, <em>.dtrace.gz</em> file will be created in <em>~/ros2_ws/install/afs/bin</em> directory.</p>
+<p>We utilize Apache Log4j 2 (<a class="reference external" href="https://logging.apache.org/log4j/2.x/">https://logging.apache.org/log4j/2.x/</a>) for logging purpose.
+Refer <em>./jni/log4j2.properties</em> for log4j2 properties to configure RollingFileAppender and to disable JNDI lookup.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">~/</span><span class="n">ros2_ws</span><span class="o">/</span><span class="n">install</span><span class="o">/</span><span class="n">local_setup</span><span class="o">.</span><span class="n">bash</span>
+<span class="n">cd</span> <span class="o">~/</span><span class="n">ros2_ws</span><span class="o">/</span><span class="n">install</span><span class="o">/</span><span class="n">afs</span><span class="o">/</span><span class="nb">bin</span>
+<span class="o">./</span><span class="n">afs_log</span>
+</pre></div>
+</div>
+<p>The RollingFileAppender in Log4j will create <em>afs.log</em> file in <em>~/ros2_ws/install/afs/bin</em> directory to backup the altitude information.</p>
+<p>To regenerate and recompile from the RADL file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">radler</span>
+<span class="o">./</span><span class="n">radler</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">ws_dir</span> <span class="o">~/</span><span class="n">ros2_ws</span><span class="o">/</span><span class="n">src</span> <span class="nb">compile</span> <span class="n">examples</span><span class="o">/</span><span class="n">ardupilot</span><span class="o">/</span><span class="n">afs</span><span class="o">.</span><span class="n">radl</span> <span class="o">--</span><span class="n">plant</span> <span class="n">plant</span> <span class="o">--</span><span class="n">ROS</span>
+<span class="n">cd</span> <span class="o">~/</span><span class="n">ros2_ws</span>
+<span class="n">colcon</span> <span class="n">build</span> <span class="o">--</span><span class="n">cmake</span><span class="o">-</span><span class="n">args</span> <span class="o">-</span><span class="n">DSECURITY</span><span class="o">=</span><span class="n">ON</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">warn</span><span class="o">-</span><span class="n">unused</span><span class="o">-</span><span class="n">cli</span> <span class="o">--</span><span class="n">symlink</span><span class="o">-</span><span class="n">install</span>
+</pre></div>
+</div>
+<section id="demo-with-sros2">
+<h3>Demo with SROS2<a class="headerlink" href="#demo-with-sros2" title="Link to this heading">¶</a></h3>
+<p>To generate a keystore, keys and certificates (refer <em>./vagrant/sros_keystore.bash</em>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">ros2_ws</span>
+<span class="n">ros2</span> <span class="n">security</span> <span class="n">create_keystore</span> <span class="n">sros2_keys</span>
+<span class="n">ros2</span> <span class="n">security</span> <span class="n">create_key</span> <span class="n">sros2_keys</span> <span class="o">/</span><span class="n">afs</span><span class="o">/</span><span class="n">mavros</span>
+<span class="n">ros2</span> <span class="n">security</span> <span class="n">create_key</span> <span class="n">sros2_keys</span> <span class="o">/</span><span class="n">afs</span><span class="o">/</span><span class="n">gateway</span>
+<span class="n">ros2</span> <span class="n">security</span> <span class="n">create_key</span> <span class="n">sros2_keys</span> <span class="o">/</span><span class="n">afs</span><span class="o">/</span><span class="n">afs_battery</span>
+<span class="n">ros2</span> <span class="n">security</span> <span class="n">create_key</span> <span class="n">sros2_keys</span> <span class="o">/</span><span class="n">afs</span><span class="o">/</span><span class="n">afs_esp</span>
+<span class="n">ros2</span> <span class="n">security</span> <span class="n">create_key</span> <span class="n">sros2_keys</span> <span class="o">/</span><span class="n">afs</span><span class="o">/</span><span class="n">afs_log</span>
+</pre></div>
+</div>
+<p>To define the SROS2 environment variables (refer <em>./vagrant/sros_env.bash</em>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">ROS_SECURITY_KEYSTORE</span><span class="o">=/</span><span class="n">home</span><span class="o">/</span><span class="n">vagrant</span><span class="o">/</span><span class="n">ros2_ws</span><span class="o">/</span><span class="n">sros2_keys</span>
+<span class="n">export</span> <span class="n">ROS_SECURITY_ENABLE</span><span class="o">=</span><span class="n">true</span>
+<span class="n">export</span> <span class="n">ROS_SECURITY_STRATEGY</span><span class="o">=</span><span class="n">Enforce</span>
+<span class="n">export</span> <span class="n">RMW_IMPLEMENTATION</span><span class="o">=</span><span class="n">rmw_fastrtps_cpp</span>
+</pre></div>
+</div>
+<p>To launch MAVROS with SROS2:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">launch</span> <span class="n">mavros</span> <span class="n">apm_sros2</span><span class="o">.</span><span class="n">launch</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>To run each node such as gateway node (refer <em>./vagrant/sros_env.bash</em>):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">source</span> <span class="o">~/</span><span class="n">ros2_ws</span><span class="o">/</span><span class="n">install</span><span class="o">/</span><span class="n">local_setup</span><span class="o">.</span><span class="n">bash</span>
+<span class="n">source</span> <span class="o">~/</span><span class="n">radler</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">ardupilot</span><span class="o">/</span><span class="n">vagrant</span><span class="o">/</span><span class="n">sros_env</span><span class="o">.</span><span class="n">bash</span>
+<span class="n">ros2</span> <span class="n">run</span> <span class="n">afs</span> <span class="n">gateway</span> <span class="o">--</span><span class="n">ros</span><span class="o">-</span><span class="n">args</span> <span class="o">--</span><span class="n">enclave</span> <span class="o">/</span><span class="n">afs</span><span class="o">/</span><span class="n">gateway</span>
+</pre></div>
+</div>
+<p>Security access controls are defined in <em>permissions.xml</em> file.
+To demonstrate a policy which only allows <em>gateway</em> node publishing messages on the specific topics such as those in <em>afs.radl</em> file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">ros2_ws</span><span class="o">/</span><span class="n">sros2_keys</span><span class="o">/</span><span class="n">enclaves</span><span class="o">/</span><span class="n">afs</span><span class="o">/</span><span class="n">gateway</span>
+<span class="n">edit</span> <span class="o">&lt;</span><span class="n">publish</span><span class="o">&gt;&lt;</span><span class="n">topics</span><span class="o">&gt;</span> <span class="n">part</span> <span class="n">of</span> <span class="n">permissions</span><span class="o">.</span><span class="n">xml</span>
+  <span class="n">replace</span>
+    <span class="o">&lt;</span><span class="n">topic</span><span class="o">&gt;</span><span class="n">rt</span><span class="o">/*&lt;/</span><span class="n">topic</span><span class="o">&gt;</span>
+  <span class="k">with</span>
+    <span class="o">&lt;</span><span class="n">topic</span><span class="o">&gt;</span><span class="n">rt</span><span class="o">/</span><span class="n">afs</span><span class="o">/</span><span class="n">rel_alt</span><span class="o">&lt;/</span><span class="n">topic</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">topic</span><span class="o">&gt;</span><span class="n">rt</span><span class="o">/</span><span class="n">afs</span><span class="o">/</span><span class="n">global_position_local</span><span class="o">&lt;/</span><span class="n">topic</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">topic</span><span class="o">&gt;</span><span class="n">rt</span><span class="o">/</span><span class="n">afs</span><span class="o">/</span><span class="n">battery</span><span class="o">&lt;/</span><span class="n">topic</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">topic</span><span class="o">&gt;</span><span class="n">rt</span><span class="o">/</span><span class="n">parameter_events</span><span class="o">&lt;/</span><span class="n">topic</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">topic</span><span class="o">&gt;</span><span class="n">rt</span><span class="o">/</span><span class="n">rosout</span><span class="o">&lt;/</span><span class="n">topic</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">topic</span><span class="o">&gt;*/</span><span class="n">gateway</span><span class="o">/*&lt;/</span><span class="n">topic</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>To sign a new policy file <em>permissions.p7s</em> from the updated XML file <em>permissions.xml</em>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">openssl</span> <span class="n">smime</span> <span class="o">-</span><span class="n">sign</span> <span class="o">-</span><span class="n">text</span> <span class="o">-</span><span class="ow">in</span> <span class="n">permissions</span><span class="o">.</span><span class="n">xml</span> <span class="o">-</span><span class="n">out</span> <span class="n">permissions</span><span class="o">.</span><span class="n">p7s</span> <span class="o">--</span><span class="n">signer</span> <span class="n">permissions_ca</span><span class="o">.</span><span class="n">cert</span><span class="o">.</span><span class="n">pem</span> <span class="o">-</span><span class="n">inkey</span> <span class="o">~/</span><span class="n">ros2_ws</span><span class="o">/</span><span class="n">sros2_keys</span><span class="o">/</span><span class="n">private</span><span class="o">/</span><span class="n">permissions_ca</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">pem</span>
+</pre></div>
+</div>
+<p>With the updated permissions, remapping the <em>battery</em> topic will fail.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">run</span> <span class="n">afs</span> <span class="n">gateway</span> <span class="o">--</span><span class="n">ros</span><span class="o">-</span><span class="n">args</span> <span class="o">--</span><span class="n">enclave</span> <span class="o">/</span><span class="n">afs</span><span class="o">/</span><span class="n">gateway</span> <span class="o">--</span><span class="n">remap</span> <span class="o">/</span><span class="n">afs</span><span class="o">/</span><span class="n">battery</span><span class="o">:=/</span><span class="n">afs</span><span class="o">/</span><span class="n">not_battery</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="demo-with-pvs2c-generated-code">
+<h2>Demo with PVS2C-generated Code<a class="headerlink" href="#demo-with-pvs2c-generated-code" title="Link to this heading">¶</a></h2>
+<p>This demo shows how to use PVS2C-generated codes in the step function.
+The <cite>src</cite> directory contains the code generated by PVS2C from the <cite>*.pvs</cite> files formalizing AES encryption/decryption with a proof of the invertibility of AES.
+The PVS files are included for reference, but they would require the “strings” branch of the development version of PVS from <a class="reference external" href="https://github.com/SRI-CSL/pvs">https://github.com/SRI-CSL/pvs</a> as well as the NASA PVSLib library from <a class="reference external" href="https://github.com/nasa/pvslib">https://github.com/nasa/pvslib</a>.
+The <cite>.c</cite> and <cite>.h</cite> files generated from the PVS prelude theories and the ones in the directory.
+The C files depend on the GMP library being available as well as standard libraries such as
+stdio, stdlib, inttypes, stdbool, stdarg, string, fcntl, math, sys/mman, sys/stat.h, and sys/types.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libgmp3</span><span class="o">-</span><span class="n">dev</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">radler</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">pvs</span><span class="o">/</span><span class="n">src</span>
+<span class="n">cc</span> <span class="o">-</span><span class="n">O3</span> <span class="o">-</span><span class="n">Wall</span> <span class="o">-</span><span class="n">shared</span> <span class="o">-</span><span class="n">o</span> <span class="n">libRijndael</span><span class="o">.</span><span class="n">so</span> <span class="n">pvslib</span><span class="o">.</span><span class="n">c</span> <span class="n">finite_sequences_c</span><span class="o">.</span><span class="n">c</span> <span class="n">integer_bv_ops_c</span><span class="o">.</span><span class="n">c</span> <span class="n">bv_c</span><span class="o">.</span><span class="n">c</span> <span class="n">bit_c</span><span class="o">.</span><span class="n">c</span> <span class="n">file_c</span><span class="o">.</span><span class="n">c</span> <span class="n">bytestrings_c</span><span class="o">.</span><span class="n">c</span> <span class="n">gen_strings_c</span><span class="o">.</span><span class="n">c</span> <span class="n">strings_c</span><span class="o">.</span><span class="n">c</span> <span class="n">ordinals_c</span><span class="o">.</span><span class="n">c</span> <span class="n">ordstruct_adt_c</span><span class="o">.</span><span class="n">c</span> <span class="n">integertypes_c</span><span class="o">.</span><span class="n">c</span> <span class="n">exp2_c</span><span class="o">.</span><span class="n">c</span> <span class="n">euclidean_division_c</span><span class="o">.</span><span class="n">c</span> <span class="n">real_defs_c</span><span class="o">.</span><span class="n">c</span> <span class="n">Rijndael_c</span><span class="o">.</span><span class="n">c</span> <span class="n">bytevectors_c</span><span class="o">.</span><span class="n">c</span> <span class="n">hex_c</span><span class="o">.</span><span class="n">c</span> <span class="n">simplifications_c</span><span class="o">.</span><span class="n">c</span> <span class="n">Rijndael_m</span><span class="o">.</span><span class="n">c</span> <span class="o">-</span><span class="n">lgmp</span> <span class="o">-</span><span class="n">fPIC</span>
+<span class="n">sudo</span> <span class="n">mv</span> <span class="n">libRijndael</span><span class="o">.</span><span class="n">so</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">x86_64</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">gnu</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>To compile and execute:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">radler</span>
+<span class="o">./</span><span class="n">radler</span><span class="o">.</span><span class="n">sh</span>  <span class="o">--</span><span class="n">ws_dir</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ros2_ws</span><span class="o">/</span><span class="n">src</span> <span class="nb">compile</span> <span class="n">examples</span><span class="o">/</span><span class="n">pvs</span><span class="o">/</span><span class="n">aes</span><span class="o">.</span><span class="n">radl</span> <span class="o">--</span><span class="n">plant</span> <span class="n">plant</span> <span class="o">--</span><span class="n">ROS</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ros2_ws</span>
+<span class="n">colcon</span> <span class="n">build</span>
+<span class="n">source</span> <span class="n">source</span> <span class="n">install</span><span class="o">/</span><span class="n">setup</span><span class="o">.</span><span class="n">bash</span>
+<span class="o">./</span><span class="n">install</span><span class="o">/</span><span class="n">aes</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">Rijndael</span>
+<span class="o">./</span><span class="n">install</span><span class="o">/</span><span class="n">aes</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">Consumer</span>
+</pre></div>
+</div>
+<p>To test the generated C code at a shell (Refer <cite>src/README</cite> for the sample run.):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">radler</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">pvs</span><span class="o">/</span><span class="n">src</span>
+<span class="n">cc</span> <span class="o">-</span><span class="n">O3</span> <span class="o">-</span><span class="n">Wall</span> <span class="o">-</span><span class="n">o</span> <span class="n">Rijndael</span> <span class="n">pvslib</span><span class="o">.</span><span class="n">c</span> <span class="n">finite_sequences_c</span><span class="o">.</span><span class="n">c</span> <span class="n">integer_bv_ops_c</span><span class="o">.</span><span class="n">c</span> <span class="n">bv_c</span><span class="o">.</span><span class="n">c</span> <span class="n">bit_c</span><span class="o">.</span><span class="n">c</span> <span class="n">file_c</span><span class="o">.</span><span class="n">c</span> <span class="n">bytestrings_c</span><span class="o">.</span><span class="n">c</span> <span class="n">gen_strings_c</span><span class="o">.</span><span class="n">c</span> <span class="n">strings_c</span><span class="o">.</span><span class="n">c</span> <span class="n">ordinals_c</span><span class="o">.</span><span class="n">c</span> <span class="n">ordstruct_adt_c</span><span class="o">.</span><span class="n">c</span> <span class="n">integertypes_c</span><span class="o">.</span><span class="n">c</span> <span class="n">exp2_c</span><span class="o">.</span><span class="n">c</span> <span class="n">euclidean_division_c</span><span class="o">.</span><span class="n">c</span> <span class="n">real_defs_c</span><span class="o">.</span><span class="n">c</span> <span class="n">Rijndael_c</span><span class="o">.</span><span class="n">c</span> <span class="n">bytevectors_c</span><span class="o">.</span><span class="n">c</span> <span class="n">hex_c</span><span class="o">.</span><span class="n">c</span> <span class="n">simplifications_c</span><span class="o">.</span><span class="n">c</span> <span class="n">Rijndael_m</span><span class="o">.</span><span class="n">c</span> <span class="o">-</span><span class="n">lgmp</span>
+</pre></div>
+</div>
+</section>
+<section id="demos-using-ar-drone-on-ros">
+<h2>Demos using AR.Drone on ROS<a class="headerlink" href="#demos-using-ar-drone-on-ros" title="Link to this heading">¶</a></h2>
 <div class="line-block">
 <div class="line">Demos are available for three types of AR.Drone drivers: Demo #1 with <strong>ardronelib</strong>
 (AR.Drone sdk), Demo #2 with <strong>ardrone_autonomy</strong> (ROS driver), and Demo #3 with <strong>ps_drone</strong> (Python).</div>
@@ -210,33 +595,34 @@ The <strong>landing</strong> node provides altitude-based landing, e.g., landing
 <div class="line">Demo #3 consists of two nodes <strong>sridrone</strong> and <strong>led</strong> to perform object detection using TensorFlow.
 The <strong>sridrone</strong> node publishes <strong>object_detection</strong> and subscribes to <strong>led_anim</strong> to generate signals that indicate certain objects (e.g., person, dog, cat, or teddy bear) being detected.</div>
 </div>
-<a class="reference internal image-reference" href="sridrone_rqt_graph.png"><img alt="sridrone_rqt_graph.png" src="sridrone_rqt_graph.png" style="height: 300px;" /></a>
+<a class="reference internal image-reference" href="sridrone_rqt_graph.png"><img alt="sridrone_rqt_graph.png" src="sridrone_rqt_graph.png" style="height: 300px;" />
+</a>
 <p>This application uses code snippets from the following open source projects.</p>
 <ul class="simple">
-<li>ROS driver for Parrot AR-Drone 1.0 and 2.0 quadrocopters
-<a class="reference external" href="https://github.com/AutonomyLab/ardrone_autonomy">https://github.com/AutonomyLab/ardrone_autonomy</a></li>
-<li>Modified ARDroneLib based on official ARDroneSDK 2.0.1
-<a class="reference external" href="https://github.com/AutonomyLab/ardronelib">https://github.com/AutonomyLab/ardronelib</a></li>
-<li>AR.FreeFlight/AR.Drone 2.0 SDK
-<a class="reference external" href="https://github.com/yolanother/AR.FreeFlight">https://github.com/yolanother/AR.FreeFlight</a></li>
-<li>OpenCV
-<a class="reference external" href="https://github.com/opencv/opencv">https://github.com/opencv/opencv</a></li>
-<li>TensorFlow object detection
-<a class="reference external" href="https://github.com/tensorflow/models/tree/master/research/object_detection">https://github.com/tensorflow/models/tree/master/research/object_detection</a></li>
-<li>PS-Drone
-<a class="reference external" href="http://www.playsheep.de/drone">http://www.playsheep.de/drone</a></li>
+<li><p>ROS driver for Parrot AR-Drone 1.0 and 2.0 quadrocopters
+<a class="reference external" href="https://github.com/AutonomyLab/ardrone_autonomy">https://github.com/AutonomyLab/ardrone_autonomy</a></p></li>
+<li><p>Modified ARDroneLib based on official ARDroneSDK 2.0.1
+<a class="reference external" href="https://github.com/AutonomyLab/ardronelib">https://github.com/AutonomyLab/ardronelib</a></p></li>
+<li><p>AR.FreeFlight/AR.Drone 2.0 SDK
+<a class="reference external" href="https://github.com/yolanother/AR.FreeFlight">https://github.com/yolanother/AR.FreeFlight</a></p></li>
+<li><p>OpenCV
+<a class="reference external" href="https://github.com/opencv/opencv">https://github.com/opencv/opencv</a></p></li>
+<li><p>TensorFlow object detection
+<a class="reference external" href="https://github.com/tensorflow/models/tree/master/research/object_detection">https://github.com/tensorflow/models/tree/master/research/object_detection</a></p></li>
+<li><p>PS-Drone
+<a class="reference external" href="http://www.playsheep.de/drone">http://www.playsheep.de/drone</a></p></li>
 </ul>
 <p>Some additional links:</p>
 <ul class="simple">
-<li>AR.Drone Developer Guide
-<a class="reference external" href="http://www.msh-tools.com/ardrone/ARDrone_Developer_Guide.pdf">http://www.msh-tools.com/ardrone/ARDrone_Developer_Guide.pdf</a></li>
-<li>Parrot developer site for SDK
-<a class="reference external" href="http://developer.parrot.com/docs/SDK3/#how-to-build-the-sdk">http://developer.parrot.com/docs/SDK3/#how-to-build-the-sdk</a></li>
-<li>Control the AR.Drone LEDs
-<a class="reference external" href="http://gauth.fr/2011/09/control-the-ar-drone-leds/">http://gauth.fr/2011/09/control-the-ar-drone-leds/</a></li>
+<li><p>AR.Drone Developer Guide
+<a class="reference external" href="http://www.msh-tools.com/ardrone/ARDrone_Developer_Guide.pdf">http://www.msh-tools.com/ardrone/ARDrone_Developer_Guide.pdf</a></p></li>
+<li><p>Parrot developer site for SDK
+<a class="reference external" href="http://developer.parrot.com/docs/SDK3/#how-to-build-the-sdk">http://developer.parrot.com/docs/SDK3/#how-to-build-the-sdk</a></p></li>
+<li><p>Control the AR.Drone LEDs
+<a class="reference external" href="http://gauth.fr/2011/09/control-the-ar-drone-leds/">http://gauth.fr/2011/09/control-the-ar-drone-leds/</a></p></li>
 </ul>
 <p>For Demos #1 and #2, OpenCV is required to find line with the Hough transform. In <em>.radl</em> file, edit <em>opencv_houghline</em> to enable line detection.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">opencv</span><span class="o">/</span><span class="n">opencv</span><span class="o">.</span><span class="n">git</span> <span class="ow">or</span> <span class="n">download</span> <span class="n">source</span> <span class="kn">from</span> <span class="nn">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">opencv</span><span class="o">/</span><span class="n">opencv</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">tag</span><span class="o">/</span><span class="mf">3.4</span><span class="o">.</span><span class="mi">2</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">opencv</span><span class="o">/</span><span class="n">opencv</span><span class="o">.</span><span class="n">git</span> <span class="ow">or</span> <span class="n">download</span> <span class="n">source</span> <span class="kn">from</span> <span class="nn">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">opencv</span><span class="o">/</span><span class="n">opencv</span><span class="o">/</span><span class="n">releases</span><span class="o">/</span><span class="n">tag</span><span class="o">/</span><span class="mf">3.4.2</span>
 <span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">opencv</span>
 <span class="n">mkdir</span> <span class="n">build</span>
 <span class="n">cd</span> <span class="n">build</span>
@@ -245,11 +631,11 @@ The <strong>sridrone</strong> node publishes <strong>object_detection</strong> a
 <span class="n">sudo</span> <span class="n">make</span> <span class="n">install</span>
 </pre></div>
 </div>
-<div class="section" id="demo-1-with-sridrone-ardronelib">
-<h3>Demo #1 with sridrone_ardronelib<a class="headerlink" href="#demo-1-with-sridrone-ardronelib" title="Permalink to this headline">¶</a></h3>
+<section id="demo-1-with-sridrone-ardronelib">
+<h3>Demo #1 with sridrone_ardronelib<a class="headerlink" href="#demo-1-with-sridrone-ardronelib" title="Link to this heading">¶</a></h3>
 <p>Compile up-to-date ardronelib sdk.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libsdl1</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="n">dev</span>
-<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libgtk2</span><span class="o">.</span><span class="mi">0</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libsdl1</span><span class="mf">.2</span><span class="o">-</span><span class="n">dev</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">libgtk2</span><span class="mf">.0</span>
 <span class="n">git</span> <span class="n">submodule</span> <span class="n">update</span> <span class="o">--</span><span class="n">init</span> <span class="o">--</span><span class="n">recursive</span>
 <span class="n">cd</span> <span class="n">examples</span><span class="o">/</span><span class="n">drone</span><span class="o">/</span><span class="n">sridrone_ardronelib</span><span class="o">/</span><span class="n">ardronelib</span>
 <span class="n">make</span>
@@ -282,9 +668,9 @@ your drone’s IP if needed.</p>
 <span class="o">./</span><span class="n">landing</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="demo-2-with-sridrone-ardrone-autonomy">
-<h3>Demo #2 with sridrone_ardrone_autonomy<a class="headerlink" href="#demo-2-with-sridrone-ardrone-autonomy" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="demo-2-with-sridrone-ardrone-autonomy">
+<h3>Demo #2 with sridrone_ardrone_autonomy<a class="headerlink" href="#demo-2-with-sridrone-ardrone-autonomy" title="Link to this heading">¶</a></h3>
 <p>Download and install ROS ardrone_driver from
 <a class="reference external" href="https://github.com/AutonomyLab/ardrone_autonomy.git">https://github.com/AutonomyLab/ardrone_autonomy.git</a>.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">ros</span><span class="o">-</span><span class="n">indigo</span><span class="o">-</span><span class="n">ardrone</span><span class="o">-</span><span class="n">autonomy</span>
@@ -308,7 +694,7 @@ export CPLUS_INCLUDE_PATH=~/catkin_ws/devel/include
 </div>
 <p>Note. Use <em>-ip ${Your Drone’s IP address}</em> if your drone does not have
 the default IP address.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rosrun</span> <span class="n">ardrone_autonomy</span> <span class="n">ardrone_driver</span> <span class="o">-</span><span class="n">ip</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.</span><span class="n">xxx</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rosrun</span> <span class="n">ardrone_autonomy</span> <span class="n">ardrone_driver</span> <span class="o">-</span><span class="n">ip</span> <span class="mf">192.168.1</span><span class="o">.</span><span class="n">xxx</span>
 </pre></div>
 </div>
 <p>Run the sridrone_ardrone_autonomy example.</p>
@@ -323,14 +709,14 @@ the default IP address.</p>
 </pre></div>
 </div>
 <p>You can also run ros <strong>image_view</strong> node to check the camera feed or record it.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rosrun</span> <span class="n">image_view</span> <span class="n">image_view</span> <span class="n">image</span><span class="p">:</span><span class="o">=/</span><span class="n">ardrone</span><span class="o">/</span><span class="n">front</span><span class="o">/</span><span class="n">image_raw</span>
-<span class="n">rosrun</span> <span class="n">image_view</span> <span class="n">image_view</span> <span class="n">image</span><span class="p">:</span><span class="o">=/</span><span class="n">ardrone</span><span class="o">/</span><span class="n">bottom</span><span class="o">/</span><span class="n">image_raw</span>
-<span class="n">rosrun</span> <span class="n">image_view</span> <span class="n">video_recorder</span> <span class="n">image</span><span class="p">:</span><span class="o">=</span><span class="s2">&quot;/ardrone/front/image_raw&quot;</span> <span class="n">_filename</span><span class="p">:</span><span class="o">=</span><span class="s2">&quot;/tmp/video_front_camera.avi&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rosrun</span> <span class="n">image_view</span> <span class="n">image_view</span> <span class="n">image</span><span class="o">:=/</span><span class="n">ardrone</span><span class="o">/</span><span class="n">front</span><span class="o">/</span><span class="n">image_raw</span>
+<span class="n">rosrun</span> <span class="n">image_view</span> <span class="n">image_view</span> <span class="n">image</span><span class="o">:=/</span><span class="n">ardrone</span><span class="o">/</span><span class="n">bottom</span><span class="o">/</span><span class="n">image_raw</span>
+<span class="n">rosrun</span> <span class="n">image_view</span> <span class="n">video_recorder</span> <span class="n">image</span><span class="o">:=</span><span class="s2">&quot;/ardrone/front/image_raw&quot;</span> <span class="n">_filename</span><span class="o">:=</span><span class="s2">&quot;/tmp/video_front_camera.avi&quot;</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="demo-3-object-detection-with-ps-drone-and-tensorflow">
-<h3>Demo #3 object detection with PS-Drone and TensorFlow<a class="headerlink" href="#demo-3-object-detection-with-ps-drone-and-tensorflow" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="demo-3-object-detection-with-ps-drone-and-tensorflow">
+<h3>Demo #3 object detection with PS-Drone and TensorFlow<a class="headerlink" href="#demo-3-object-detection-with-ps-drone-and-tensorflow" title="Link to this heading">¶</a></h3>
 <p>Install Python OpenCV2.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">opencv</span>
 </pre></div>
@@ -344,7 +730,7 @@ the default IP address.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python3</span><span class="o">-</span><span class="n">pip</span>
 <span class="n">sudo</span> <span class="n">pip3</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">pip</span>
 <span class="n">sudo</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="n">setuptools</span>
-<span class="n">sudo</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="o">--</span><span class="n">target</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="o">.</span><span class="mi">7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span> <span class="n">tensorflow</span>
+<span class="n">sudo</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">--</span><span class="n">upgrade</span> <span class="o">--</span><span class="n">target</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python2</span><span class="mf">.7</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span> <span class="n">tensorflow</span>
 <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">--</span><span class="n">fix</span><span class="o">-</span><span class="n">missing</span> <span class="n">python</span><span class="o">-</span><span class="n">matplotlib</span>
 </pre></div>
 </div>
@@ -417,30 +803,31 @@ your drone’s IP if needed.</p>
 </div>
 <p>Even though the models can detect multiple objects simultaneously, <strong>led_anim</strong> topic only considers the object with the highest score.
 Led lights are blinking green (or red) when person (or teddy bear) is detected with the highest score. When dog (or cat) is detected with the highest score, the right (or left) led lights turn red.</p>
-</div>
-</div>
-<div class="section" id="demos-using-raspberry-pi-2-b">
-<h2>Demos using Raspberry Pi 2/B+<a class="headerlink" href="#demos-using-raspberry-pi-2-b" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="demos-using-raspberry-pi-2-b">
+<h2>Demos using Raspberry Pi 2/B+<a class="headerlink" href="#demos-using-raspberry-pi-2-b" title="Link to this heading">¶</a></h2>
 <div class="line-block">
 <div class="line">The demo consists of two nodes <strong>led</strong>, and
 <strong>button</strong>, and one topic <strong>button_status</strong>. The <strong>button</strong> node publishes <strong>button_status</strong> and
 the <strong>led</strong> node
 subscribes to it to turn on the led light when the button is pressed.</div>
 </div>
-<a class="reference internal image-reference" href="raspberrypi_rqt_graph.png"><img alt="raspberrypi_rqt_graph.png" src="raspberrypi_rqt_graph.png" style="height: 70px;" /></a>
+<a class="reference internal image-reference" href="raspberrypi_rqt_graph.png"><img alt="raspberrypi_rqt_graph.png" src="raspberrypi_rqt_graph.png" style="height: 70px;" />
+</a>
 <p>Some additional links:</p>
 <ul class="simple">
-<li>Raspberry Pi WiFi connection
-<a class="reference external" href="https://learn.adafruit.com/adafruits-raspberry-pi-lesson-3-network-setup/setting-up-wifi-with-raspbian">https://learn.adafruit.com/adafruits-raspberry-pi-lesson-3-network-setup/setting-up-wifi-with-raspbian</a></li>
-<li>RPi easy SD card setup
-<a class="reference external" href="http://elinux.org/RPi_Easy_SD_Card_Setup">http://elinux.org/RPi_Easy_SD_Card_Setup</a></li>
-<li>Raspberry Pi GPIO
-<a class="reference external" href="https://www.raspberrypi.org/documentation/usage/gpio-plus-and-raspi2/">https://www.raspberrypi.org/documentation/usage/gpio-plus-and-raspi2/</a></li>
-<li>Python on Debian Wheezy
-<a class="reference external" href="http://www.extellisys.com/articles/python-on-debian-wheezy">http://www.extellisys.com/articles/python-on-debian-wheezy</a></li>
+<li><p>Raspberry Pi WiFi connection
+<a class="reference external" href="https://learn.adafruit.com/adafruits-raspberry-pi-lesson-3-network-setup/setting-up-wifi-with-raspbian">https://learn.adafruit.com/adafruits-raspberry-pi-lesson-3-network-setup/setting-up-wifi-with-raspbian</a></p></li>
+<li><p>RPi easy SD card setup
+<a class="reference external" href="http://elinux.org/RPi_Easy_SD_Card_Setup">http://elinux.org/RPi_Easy_SD_Card_Setup</a></p></li>
+<li><p>Raspberry Pi GPIO
+<a class="reference external" href="https://www.raspberrypi.org/documentation/usage/gpio-plus-and-raspi2/">https://www.raspberrypi.org/documentation/usage/gpio-plus-and-raspi2/</a></p></li>
+<li><p>Python on Debian Wheezy
+<a class="reference external" href="http://www.extellisys.com/articles/python-on-debian-wheezy">http://www.extellisys.com/articles/python-on-debian-wheezy</a></p></li>
 </ul>
-<div class="section" id="preparing-your-raspberry-pi">
-<h3>Preparing your Raspberry Pi<a class="headerlink" href="#preparing-your-raspberry-pi" title="Permalink to this headline">¶</a></h3>
+<section id="preparing-your-raspberry-pi">
+<h3>Preparing your Raspberry Pi<a class="headerlink" href="#preparing-your-raspberry-pi" title="Link to this heading">¶</a></h3>
 <p>On your host Linux machine, insert the microSD card that comes with Raspberry Pi to extract its disk image.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lsblk</span>
 <span class="n">sudo</span> <span class="n">dd</span> <span class="n">bs</span><span class="o">=</span><span class="mi">4</span><span class="n">M</span> <span class="k">if</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdb</span> <span class="o">|</span> <span class="n">gzip</span> <span class="o">&gt;</span> <span class="n">raspbian</span><span class="o">.</span><span class="n">img</span><span class="o">.</span><span class="n">gz</span>
@@ -455,14 +842,14 @@ subscribes to it to turn on the led light when the button is pressed.</div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">raspi</span><span class="o">-</span><span class="n">config</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="preparing-led-and-button">
-<h3>Preparing LED and Button<a class="headerlink" href="#preparing-led-and-button" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="preparing-led-and-button">
+<h3>Preparing LED and Button<a class="headerlink" href="#preparing-led-and-button" title="Link to this heading">¶</a></h3>
 <p>Understand GPIO on Raspberry Pi. We use GPIO 4 and 17 for the LED output and for the Button input, respectively.</p>
 <p>We use GPIOClass from <a class="reference external" href="http://www.hertaville.com/introduction-to-accessing-the-raspberry-pis-gpio-in-c.html">http://www.hertaville.com/introduction-to-accessing-the-raspberry-pis-gpio-in-c.html</a>.</p>
-</div>
-<div class="section" id="installing-radler-on-raspberry-pi">
-<h3>Installing Radler on Raspberry Pi<a class="headerlink" href="#installing-radler-on-raspberry-pi" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="installing-radler-on-raspberry-pi">
+<h3>Installing Radler on Raspberry Pi<a class="headerlink" href="#installing-radler-on-raspberry-pi" title="Link to this heading">¶</a></h3>
 <p>Install Python 3.4 on the Raspberry Pi.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sudo apt-get install libncurses5-dev libncursesw5-dev libreadline6-dev
 tar -zxf /path/to/your/Python-3.4.3.tgz
@@ -474,8 +861,8 @@ export PATH=$PATH:/usr/local/opt/python-3.4.3/bin
 </pre></div>
 </div>
 <p>Install tarjan and pyyaml on the Raspberry Pi.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">pip3</span><span class="o">.</span><span class="mi">4</span> <span class="n">install</span> <span class="n">tarjan</span>
-<span class="n">sudo</span> <span class="n">pip3</span><span class="o">.</span><span class="mi">4</span> <span class="n">install</span> <span class="n">pyyaml</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">pip3</span><span class="mf">.4</span> <span class="n">install</span> <span class="n">tarjan</span>
+<span class="n">sudo</span> <span class="n">pip3</span><span class="mf">.4</span> <span class="n">install</span> <span class="n">pyyaml</span>
 </pre></div>
 </div>
 <p>Install ROS Indigo on the Raspberry Pi.</p>
@@ -486,19 +873,19 @@ export PATH=$PATH:/usr/local/opt/python-3.4.3/bin
 </pre></div>
 </div>
 <p>CMake 2.8.12 or higher is required on the Raspberry Pi.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">cmake</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">files</span><span class="o">/</span><span class="n">v3</span><span class="o">.</span><span class="mi">2</span><span class="o">/</span><span class="n">cmake</span><span class="o">-</span><span class="mf">3.2</span><span class="o">.</span><span class="mf">2.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
-<span class="n">tar</span> <span class="n">xf</span> <span class="n">cmake</span><span class="o">-</span><span class="mf">3.2</span><span class="o">.</span><span class="mf">2.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
-<span class="n">cd</span> <span class="n">cmake</span><span class="o">-</span><span class="mf">3.2</span><span class="o">.</span><span class="mi">2</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">cmake</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">files</span><span class="o">/</span><span class="n">v3</span><span class="mf">.2</span><span class="o">/</span><span class="n">cmake</span><span class="o">-</span><span class="mf">3.2.2</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">tar</span> <span class="n">xf</span> <span class="n">cmake</span><span class="o">-</span><span class="mf">3.2.2</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">cd</span> <span class="n">cmake</span><span class="o">-</span><span class="mf">3.2.2</span>
 <span class="o">./</span><span class="n">configure</span>
 <span class="n">make</span>
 <span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">checkinstall</span>
 <span class="n">sudo</span> <span class="n">checkinstall</span>
-<span class="n">dpkg</span> <span class="o">-</span><span class="n">i</span> <span class="o">~/</span><span class="n">cmake</span><span class="o">-</span><span class="mf">3.2</span><span class="o">.</span><span class="mi">2</span><span class="o">/</span><span class="n">cmake_3</span><span class="o">.</span><span class="mf">2.2</span><span class="o">-</span><span class="mi">1</span><span class="n">_armhf</span><span class="o">.</span><span class="n">deb</span>
+<span class="n">dpkg</span> <span class="o">-</span><span class="n">i</span> <span class="o">~/</span><span class="n">cmake</span><span class="o">-</span><span class="mf">3.2.2</span><span class="o">/</span><span class="n">cmake_3</span><span class="mf">.2.2</span><span class="o">-</span><span class="mi">1</span><span class="n">_armhf</span><span class="o">.</span><span class="n">deb</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="run-the-demo-on-raspberry-pi">
-<h3>Run the demo on Raspberry Pi<a class="headerlink" href="#run-the-demo-on-raspberry-pi" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="run-the-demo-on-raspberry-pi">
+<h3>Run the demo on Raspberry Pi<a class="headerlink" href="#run-the-demo-on-raspberry-pi" title="Link to this heading">¶</a></h3>
 <p>Run ROS master on the Raspberry Pi.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">ROS_MASTER_URI</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">localhost</span><span class="p">:</span><span class="mi">11311</span>
 <span class="n">roscore</span>
@@ -521,30 +908,32 @@ export PATH=$PATH:/usr/local/opt/python-3.4.3/bin
 <span class="o">./</span><span class="n">button</span>
 </pre></div>
 </div>
-</div>
-</div>
-<div class="section" id="demos-using-android">
-<h2>Demos using Android<a class="headerlink" href="#demos-using-android" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="demos-using-android">
+<h2>Demos using Android<a class="headerlink" href="#demos-using-android" title="Link to this heading">¶</a></h2>
 <p>Demo #1 implements sensing (of GPS, compass, touch screen) and controlling (of speaker volume) of Android device via ROS-enabled Android application using Gradle-Android studio environment.
 This demo is sensing GPS, compass, and touch screen coordinate from Android device, and publishing those under <strong>android_gps</strong>, <strong>android_compass</strong>, and <strong>android_touch</strong> topics, respectively.
 Radler nodes (named as <strong>gps</strong>, <strong>compass</strong>, and <strong>touch</strong> on the workstation side) are subscribing to corresponding topics and publishing them in Radler world.
 The <strong>controller</strong> Radler node subscribes to topics from <strong>gps</strong>, <strong>compass</strong>, and <strong>touch</strong> Radler nodes, and controls volume of the Android ringtone by publishing ROS topic.</p>
-<a class="reference internal image-reference" href="sensor_pubsub_rqt_graph.png"><img alt="sensor_pubsub_rqt_graph.png" src="sensor_pubsub_rqt_graph.png" style="height: 340px;" /></a>
+<a class="reference internal image-reference" href="sensor_pubsub_rqt_graph.png"><img alt="sensor_pubsub_rqt_graph.png" src="sensor_pubsub_rqt_graph.png" style="height: 340px;" />
+</a>
 <p>Demo #2 implements touchscreen event detection via <code class="docutils literal notranslate"><span class="pre">getevent</span></code> system command and displays on the window of terminal emulator application.</p>
-<a class="reference internal image-reference" href="touch_detector_rqt_graph.png"><img alt="touch_detector_rqt_graph.png" src="touch_detector_rqt_graph.png" style="height: 70px;" /></a>
+<a class="reference internal image-reference" href="touch_detector_rqt_graph.png"><img alt="touch_detector_rqt_graph.png" src="touch_detector_rqt_graph.png" style="height: 70px;" />
+</a>
 <p>Some additional links:</p>
 <ul class="simple">
-<li>Rosjava/android_core
-<a class="reference external" href="https://github.com/rosjava/android_core">https://github.com/rosjava/android_core</a></li>
-<li>Using native ROS code on Android
-<a class="reference external" href="http://wiki.ros.org/android_ndk">http://wiki.ros.org/android_ndk</a></li>
-<li>Android Studio
-<a class="reference external" href="https://developer.android.com/studio">https://developer.android.com/studio</a></li>
-<li>Android NDK
-<a class="reference external" href="https://developer.android.com/ndk">https://developer.android.com/ndk</a></li>
+<li><p>Rosjava/android_core
+<a class="reference external" href="https://github.com/rosjava/android_core">https://github.com/rosjava/android_core</a></p></li>
+<li><p>Using native ROS code on Android
+<a class="reference external" href="http://wiki.ros.org/android_ndk">http://wiki.ros.org/android_ndk</a></p></li>
+<li><p>Android Studio
+<a class="reference external" href="https://developer.android.com/studio">https://developer.android.com/studio</a></p></li>
+<li><p>Android NDK
+<a class="reference external" href="https://developer.android.com/ndk">https://developer.android.com/ndk</a></p></li>
 </ul>
-<div class="section" id="demo-1-sensing-and-controlling-of-android-device-via-ros-enabled-android-application-using-gradle-android-studio-environment">
-<h3>Demo #1 Sensing and controlling of Android device via ROS-enabled Android application using Gradle-Android studio environment<a class="headerlink" href="#demo-1-sensing-and-controlling-of-android-device-via-ros-enabled-android-application-using-gradle-android-studio-environment" title="Permalink to this headline">¶</a></h3>
+<section id="demo-1-sensing-and-controlling-of-android-device-via-ros-enabled-android-application-using-gradle-android-studio-environment">
+<h3>Demo #1 Sensing and controlling of Android device via ROS-enabled Android application using Gradle-Android studio environment<a class="headerlink" href="#demo-1-sensing-and-controlling-of-android-device-via-ros-enabled-android-application-using-gradle-android-studio-environment" title="Link to this heading">¶</a></h3>
 <p>Our example included in android_core directory is based on the tutorial example (android_tutorial_pubsub) from
 <a class="reference external" href="https://github.com/rosjava/android_core">https://github.com/rosjava/android_core</a>.</p>
 <p>Install Android studio, and import android_core project to compile/generate/install signed apk file via Android studio (recommended).</p>
@@ -570,12 +959,12 @@ The <strong>controller</strong> Radler node subscribes to topics from <strong>gp
 <p>For ease of testing, USB tethering can be used. Note that USB tethering is not required for deployment.
 Enable USB tethering mode on your Android device. <code class="docutils literal notranslate"><span class="pre">ifconfig</span></code> on your workstation will show you the <code class="docutils literal notranslate"><span class="pre">usb0</span></code> interface.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">usb0</span>  <span class="n">Link</span> <span class="n">encap</span><span class="p">:</span><span class="n">Ethernet</span>  <span class="n">HWaddr</span> <span class="n">xx</span><span class="p">:</span><span class="n">xx</span><span class="p">:</span><span class="n">xx</span><span class="p">:</span><span class="n">xx</span><span class="p">:</span><span class="n">xx</span><span class="p">:</span><span class="n">xx</span>
-      <span class="n">inet</span> <span class="n">addr</span><span class="p">:</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.11</span>  <span class="n">Bcast</span><span class="p">:</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.255</span>  <span class="n">Mask</span><span class="p">:</span><span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+      <span class="n">inet</span> <span class="n">addr</span><span class="p">:</span><span class="mf">192.168.42.11</span>  <span class="n">Bcast</span><span class="p">:</span><span class="mf">192.168.42.255</span>  <span class="n">Mask</span><span class="p">:</span><span class="mf">255.255.255.0</span>
 </pre></div>
 </div>
 <p>Set environment variables on your workstation.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">ROS_MASTER_URI</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.11</span><span class="p">:</span><span class="mi">11311</span>
-<span class="n">export</span> <span class="n">ROS_HOSTNAME</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.11</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">ROS_MASTER_URI</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168.42.11</span><span class="p">:</span><span class="mi">11311</span>
+<span class="n">export</span> <span class="n">ROS_HOSTNAME</span><span class="o">=</span><span class="mf">192.168.42.11</span>
 </pre></div>
 </div>
 <p>Run ROS master on your workstation.</p>
@@ -603,9 +992,9 @@ Enable USB tethering mode on your Android device. <code class="docutils literal 
 </div>
 <p>When you start <strong>PubSubTutorial</strong> application on your Android device, enter <em>Master_URI</em> as your workstation IP (<em>192.168.42.11</em> in this demo).
 You can now observe your compass and GPS coordinates on the top of the screen. When you touch the screen, the ringtone sound will be played with volume that is proportional to the ratio of current x-coordinate and screen width.</p>
-</div>
-<div class="section" id="demo-2-touchscreen-event-detector-using-android-ndk">
-<h3>Demo #2 Touchscreen event detector using Android NDK<a class="headerlink" href="#demo-2-touchscreen-event-detector-using-android-ndk" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="demo-2-touchscreen-event-detector-using-android-ndk">
+<h3>Demo #2 Touchscreen event detector using Android NDK<a class="headerlink" href="#demo-2-touchscreen-event-detector-using-android-ndk" title="Link to this heading">¶</a></h3>
 <p>Prepare build environment to build native ROS nodes using the Android NDK as described in <a class="reference external" href="http://wiki.ros.org/android_ndk/Tutorials/BuildingNativeROSPackages">http://wiki.ros.org/android_ndk/Tutorials/BuildingNativeROSPackages</a>. <em>do_docker.sh</em> takes some time to complete.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">ekumenlabs</span><span class="o">/</span><span class="n">roscpp_android</span><span class="o">.</span><span class="n">git</span>
 <span class="n">cd</span> <span class="n">roscpp_android</span>
@@ -625,8 +1014,8 @@ The <em>android_ip</em> is your Android device’s IP (<em>192.168.42.129</em> i
 </pre></div>
 </div>
 <p>Set environment variables on your workstation.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">ROS_MASTER_URI</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.11</span><span class="p">:</span><span class="mi">11311</span>
-<span class="n">export</span> <span class="n">ROS_HOSTNAME</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.11</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">ROS_MASTER_URI</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168.42.11</span><span class="p">:</span><span class="mi">11311</span>
+<span class="n">export</span> <span class="n">ROS_HOSTNAME</span><span class="o">=</span><span class="mf">192.168.42.11</span>
 </pre></div>
 </div>
 <p>Run ROS master on your workstation.</p>
@@ -649,8 +1038,8 @@ The <em>android_ip</em> is your Android device’s IP (<em>192.168.42.129</em> i
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">adb</span> <span class="n">shell</span>
 <span class="n">su</span>
 <span class="n">mount</span> <span class="o">-</span><span class="n">o</span> <span class="n">rw</span><span class="p">,</span><span class="n">remount</span> <span class="o">/</span>
-<span class="n">export</span> <span class="n">ROS_MASTER_URI</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.11</span><span class="p">:</span><span class="mi">11311</span>
-<span class="n">export</span> <span class="n">ROS_HOSTNAME</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.129</span>
+<span class="n">export</span> <span class="n">ROS_MASTER_URI</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168.42.11</span><span class="p">:</span><span class="mi">11311</span>
+<span class="n">export</span> <span class="n">ROS_HOSTNAME</span><span class="o">=</span><span class="mf">192.168.42.129</span>
 <span class="n">cd</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">data</span>
 <span class="o">./</span><span class="n">touch</span>
 </pre></div>
@@ -658,33 +1047,33 @@ The <em>android_ip</em> is your Android device’s IP (<em>192.168.42.129</em> i
 <p>Run <strong>detector</strong> Radler node.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">adb</span> <span class="n">shell</span>
 <span class="n">su</span>
-<span class="n">export</span> <span class="n">ROS_MASTER_URI</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.11</span><span class="p">:</span><span class="mi">11311</span>
-<span class="n">export</span> <span class="n">ROS_HOSTNAME</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.129</span>
+<span class="n">export</span> <span class="n">ROS_MASTER_URI</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168.42.11</span><span class="p">:</span><span class="mi">11311</span>
+<span class="n">export</span> <span class="n">ROS_HOSTNAME</span><span class="o">=</span><span class="mf">192.168.42.129</span>
 <span class="n">cd</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">data</span>
 <span class="o">./</span><span class="n">detector</span>
 </pre></div>
 </div>
 <p>Alternatively, run Radler node on your Android device. Download an Android application (.apk) for Terminal Emulator for Android (e.g., <a class="reference external" href="https://github.com/jackpal/Android-Terminal-Emulator">https://github.com/jackpal/Android-Terminal-Emulator</a>), and run it on your Android device. On the terminal emulator, run the following commands.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">su</span>
-<span class="n">export</span> <span class="n">ROS_MASTER_URI</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.11</span><span class="p">:</span><span class="mi">11311</span>
-<span class="n">export</span> <span class="n">ROS_HOSTNAME</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">42.129</span>
+<span class="n">export</span> <span class="n">ROS_MASTER_URI</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168.42.11</span><span class="p">:</span><span class="mi">11311</span>
+<span class="n">export</span> <span class="n">ROS_HOSTNAME</span><span class="o">=</span><span class="mf">192.168.42.129</span>
 <span class="n">cd</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">data</span>
 <span class="o">./</span><span class="n">detector</span>
 </pre></div>
 </div>
 <p>Now you will see <strong>O</strong> on both windows (i.e., Android Terminal Emulator and ADB shell) when you touch your Android’s screen. Otherwise <strong>X</strong> will be displayed.</p>
-</div>
-</div>
-</div>
-<div class="section" id="radler-language-specification">
-<h1>Radler language specification<a class="headerlink" href="#radler-language-specification" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="file-constraints">
-<h2>File constraints<a class="headerlink" href="#file-constraints" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+</section>
+<section id="radler-language-specification">
+<h1>Radler language specification<a class="headerlink" href="#radler-language-specification" title="Link to this heading">¶</a></h1>
+<section id="file-constraints">
+<h2>File constraints<a class="headerlink" href="#file-constraints" title="Link to this heading">¶</a></h2>
 <p>A radl description file is a text file, preferably encoded in utf8, with
 extension “.radl”. Such a file is called in short a radl file.</p>
-</div>
-<div class="section" id="meta-syntax-rules">
-<h2>Meta syntax rules<a class="headerlink" href="#meta-syntax-rules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="meta-syntax-rules">
+<h2>Meta syntax rules<a class="headerlink" href="#meta-syntax-rules" title="Link to this heading">¶</a></h2>
 <p>A radl file define a module whose name is the file name. A module is a
 set of value declarations. A declaration may be an alias, used to
 declare a value equal to another one but with a new name. The name of a
@@ -693,8 +1082,8 @@ value. The type of a value may also be omitted, note that if the type is
 ambiguous, the inference will choose one. When defining a class field,
 one may declare a new value or refer to another value by its
 identifier.</p>
-<div class="section" id="grammar">
-<h3>Grammar<a class="headerlink" href="#grammar" title="Permalink to this headline">¶</a></h3>
+<section id="grammar">
+<h3>Grammar<a class="headerlink" href="#grammar" title="Link to this heading">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>module := decl*
 decl := alias | NAME? (&#39;:&#39; TYPE)? TYPEVALUE | NAME? (&#39;:&#39; CLASS)? class_value
 alias := NAME = identifier
@@ -705,9 +1094,9 @@ identifier := root_name | identifier &#39;.&#39; NAME
 root_name := NAME
 </pre></div>
 </div>
-</div>
-<div class="section" id="grammar-terminals">
-<h3>Grammar terminals<a class="headerlink" href="#grammar-terminals" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="grammar-terminals">
+<h3>Grammar terminals<a class="headerlink" href="#grammar-terminals" title="Link to this heading">¶</a></h3>
 <p>The <code class="docutils literal notranslate"><span class="pre">NAME</span></code> terminal is a spaceless word beginning with a letter which
 may contain numbers and underscore (the regex
 <code class="docutils literal notranslate"><span class="pre">[a-zA-Z][a-zA-Z0-9_]*</span></code>). <code class="docutils literal notranslate"><span class="pre">NAME</span></code> is also restricted not to be a
@@ -721,53 +1110,53 @@ declarations of the form</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&#39;class&#39; CLASS (FIELDNAME (TYPE|CLASS) (&#39;*&#39;|&#39;+&#39;|&#39;?&#39;)?)*
 </pre></div>
 </div>
-</div>
-<div class="section" id="keywords">
-<h3>Keywords<a class="headerlink" href="#keywords" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="keywords">
+<h3>Keywords<a class="headerlink" href="#keywords" title="Link to this heading">¶</a></h3>
 <p>Keywords are all <code class="docutils literal notranslate"><span class="pre">TYPE</span></code>, <code class="docutils literal notranslate"><span class="pre">CLASS</span></code> and <code class="docutils literal notranslate"><span class="pre">FIELDNAME</span></code> plus the
 <code class="docutils literal notranslate"><span class="pre">extra_keywords</span></code> entry of
 <a class="reference external" href="https://github.com/SRI-CSL/radler/blob/master/radler/radlr/language.py">language.py</a>.</p>
-</div>
-<div class="section" id="white-spaces">
-<h3>White spaces<a class="headerlink" href="#white-spaces" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="white-spaces">
+<h3>White spaces<a class="headerlink" href="#white-spaces" title="Link to this heading">¶</a></h3>
 <p>The syntax requires all terminals to be whitespace separated. A whitespace is any number greater than 1 of space, tabulation and end of line.</p>
-</div>
-<div class="section" id="comments">
-<h3>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="comments">
+<h3>Comments<a class="headerlink" href="#comments" title="Link to this heading">¶</a></h3>
 <p>After <code class="docutils literal notranslate"><span class="pre">#</span></code>, any character is discarded up to the end of line.</p>
-</div>
-</div>
-<div class="section" id="identifier-scoping-rules">
-<h2>Identifier scoping rules<a class="headerlink" href="#identifier-scoping-rules" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="scoping-regions">
-<h3>Scoping regions<a class="headerlink" href="#scoping-regions" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="identifier-scoping-rules">
+<h2>Identifier scoping rules<a class="headerlink" href="#identifier-scoping-rules" title="Link to this heading">¶</a></h2>
+<section id="scoping-regions">
+<h3>Scoping regions<a class="headerlink" href="#scoping-regions" title="Link to this heading">¶</a></h3>
 <p>A file <code class="docutils literal notranslate"><span class="pre">MODULE</span></code>.radl defines an implicit scoping region for its
 content whose name is <code class="docutils literal notranslate"><span class="pre">MODULE</span></code>. Sub-regions are defined by class
 values. A class value declaration defines one and only one nested
 scoping region, syntactically delimited by matching braces, whose name
 is the declaration <code class="docutils literal notranslate"><span class="pre">NAME</span></code>.</p>
-</div>
-<div class="section" id="local-unicity-of-names">
-<h3>Local unicity of names<a class="headerlink" href="#local-unicity-of-names" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="local-unicity-of-names">
+<h3>Local unicity of names<a class="headerlink" href="#local-unicity-of-names" title="Link to this heading">¶</a></h3>
 <p>Inside each region (not comprising its sub-regions), <code class="docutils literal notranslate"><span class="pre">NAME</span></code> of each
 declarations are unique. Moreover, each module name <code class="docutils literal notranslate"><span class="pre">MODULE</span></code> is
 ensured to be unique.</p>
-</div>
-<div class="section" id="global-unicity-of-qualified-names">
-<h3>Global unicity of qualified names<a class="headerlink" href="#global-unicity-of-qualified-names" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="global-unicity-of-qualified-names">
+<h3>Global unicity of qualified names<a class="headerlink" href="#global-unicity-of-qualified-names" title="Link to this heading">¶</a></h3>
 <p>A qualified name (qname) is an identifier whose <code class="docutils literal notranslate"><span class="pre">root_name</span></code> is a
 module name. By unicity of module names and declaration names, a qname
 defines a value uniquely.</p>
-</div>
-<div class="section" id="resolution-of-identifiers-to-qualified-names">
-<h3>Resolution of identifiers to qualified names<a class="headerlink" href="#resolution-of-identifiers-to-qualified-names" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="resolution-of-identifiers-to-qualified-names">
+<h3>Resolution of identifiers to qualified names<a class="headerlink" href="#resolution-of-identifiers-to-qualified-names" title="Link to this heading">¶</a></h3>
 <p>When resolving an identifier, the first step is the resolution of its
 <code class="docutils literal notranslate"><span class="pre">root_name</span></code>, which is matched with the closest enclosing scoping region
 or in the last resort to another module name. At that point, the
 <code class="docutils literal notranslate"><span class="pre">root_name</span></code> is replaced by the qualified name of its matching region
 and the identifier becomes a qualified name.</p>
-<div class="section" id="example">
-<h4>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h4>
+<section id="example">
+<h4>Example<a class="headerlink" href="#example" title="Link to this heading">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">----</span> <span class="n">file</span><span class="p">:</span> <span class="n">module1</span><span class="o">.</span><span class="n">radl</span> <span class="o">----</span>
 <span class="n">x</span> <span class="p">:</span> <span class="n">int32</span> <span class="mi">0</span>
 <span class="n">s</span> <span class="p">:</span> <span class="n">struct</span> <span class="p">{</span> <span class="n">FIELDS</span> <span class="n">x</span> <span class="p">:</span> <span class="n">int32</span> <span class="mi">42</span> <span class="p">}</span>
@@ -803,15 +1192,15 @@ and replacing it to get <code class="docutils literal notranslate"><span class="
 <code class="docutils literal notranslate"><span class="pre">module2.s.x</span></code>, <code class="docutils literal notranslate"><span class="pre">module2.x</span></code>, and <code class="docutils literal notranslate"><span class="pre">module1.s.x</span></code>, the <code class="docutils literal notranslate"><span class="pre">root_name</span></code> is
 found to be a module name meaning that these identifiers are already
 qualified names.</p>
-</div>
-</div>
-<div class="section" id="shadowing">
-<h3>Shadowing<a class="headerlink" href="#shadowing" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="shadowing">
+<h3>Shadowing<a class="headerlink" href="#shadowing" title="Link to this heading">¶</a></h3>
 <p>While using qualified names for identifiers permit to overcome most
 possible shadowings, a region will shadow any module with identical
 name.</p>
-<div class="section" id="id1">
-<h4>Example<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<section id="id1">
+<h4>Example<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span> <span class="n">file</span><span class="p">:</span> <span class="n">module3</span><span class="o">.</span><span class="n">radl</span> <span class="o">---</span>
 
 <span class="n">module1</span> <span class="p">:</span> <span class="n">struct</span> <span class="p">{</span> <span class="n">FIELDS</span>
@@ -826,13 +1215,13 @@ name.</p>
 the struct named <code class="docutils literal notranslate"><span class="pre">module1</span></code> shadows the actual module <code class="docutils literal notranslate"><span class="pre">module1</span></code>.
 Note that in this example, since <code class="docutils literal notranslate"><span class="pre">module3.module1.x</span></code> isn’t
 declared, the compiler will complain that it is missing.</p>
-</div>
-</div>
-</div>
-<div class="section" id="radler-language">
-<h2>Radler language<a class="headerlink" href="#radler-language" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="logical-level">
-<h3>Logical level<a class="headerlink" href="#logical-level" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+</section>
+<section id="radler-language">
+<h2>Radler language<a class="headerlink" href="#radler-language" title="Link to this heading">¶</a></h2>
+<section id="logical-level">
+<h3>Logical level<a class="headerlink" href="#logical-level" title="Link to this heading">¶</a></h3>
 <p>The two main classes used to describe the logical level are node and
 topic. Their full definitions may be found in
 <a class="reference external" href="https://github.com/SRI-CSL/radler/blob/master/radler/radlr/language.py">language.py</a>. The most
@@ -849,8 +1238,8 @@ important elements are:</p>
            <span class="nb">bool</span><span class="o">/</span><span class="n">struct</span><span class="o">/</span><span class="n">array</span><span class="o">/</span><span class="n">duration</span><span class="o">/</span><span class="n">time</span> <span class="o">+</span>
 </pre></div>
 </div>
-<div class="section" id="nodes">
-<h4>Nodes<a class="headerlink" href="#nodes" title="Permalink to this headline">¶</a></h4>
+<section id="nodes">
+<h4>Nodes<a class="headerlink" href="#nodes" title="Link to this heading">¶</a></h4>
 <p>When creating a node, Radler will construct one instance of the
 provided C++ class (the <code class="docutils literal notranslate"><span class="pre">CXX</span></code> field). The step method of this
 instance will be called at a fixed frequency defined by the node’s
@@ -859,36 +1248,36 @@ to have a worst case execution time no greater than the one described
 here in the <code class="docutils literal notranslate"><span class="pre">WCET</span></code> field. At each call, the step function is
 provided with the messages received from its subscriptions and is
 required to write the messages it has to publish.</p>
-</div>
-<div class="section" id="topics">
-<h4>Topics<a class="headerlink" href="#topics" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="topics">
+<h4>Topics<a class="headerlink" href="#topics" title="Link to this heading">¶</a></h4>
 <p>A topic (defined uniquely by its name) is a purely logical way to
 define point-to-point communications between one producer and
 multiple consumers. There can be exactly one node
 publishing to a topic while  many  nodes can subscribe to
 it.</p>
-</div>
-</div>
-<div class="section" id="external-files-and-path">
-<h3>External files and <code class="docutils literal notranslate"><span class="pre">PATH</span></code><a class="headerlink" href="#external-files-and-path" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="file-reference">
-<h4>File reference<a class="headerlink" href="#file-reference" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="external-files-and-path">
+<h3>External files and <code class="docutils literal notranslate"><span class="pre">PATH</span></code><a class="headerlink" href="#external-files-and-path" title="Link to this heading">¶</a></h3>
+<section id="file-reference">
+<h4>File reference<a class="headerlink" href="#file-reference" title="Link to this heading">¶</a></h4>
 <p>An external file is described by a string representing its path. This
 path may be absolute (for example “/etc/example.cfg”) or relative
 (“src/defs.h”). Relative paths are resolved relatively to the working
 directory of the scoping region. Absolute path files are not
 recommended, but may be useful in very specific cases.</p>
-</div>
-<div class="section" id="working-directory-of-a-region-path-and-module-base-path">
-<h4>Working directory of a region, <code class="docutils literal notranslate"><span class="pre">PATH</span></code> and <code class="docutils literal notranslate"><span class="pre">MODULE_BASE_PATH</span></code><a class="headerlink" href="#working-directory-of-a-region-path-and-module-base-path" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="working-directory-of-a-region-path-and-module-base-path">
+<h4>Working directory of a region, <code class="docutils literal notranslate"><span class="pre">PATH</span></code> and <code class="docutils literal notranslate"><span class="pre">MODULE_BASE_PATH</span></code><a class="headerlink" href="#working-directory-of-a-region-path-and-module-base-path" title="Link to this heading">¶</a></h4>
 <p>If a <code class="docutils literal notranslate"><span class="pre">PATH</span></code> field exists in a region, it is used to set the working
 directory of this region relatively to the parent region’s working
 directory. The module working directory is the directory of the
 module file except when it is redefined by the <code class="docutils literal notranslate"><span class="pre">MODULE_BASE_PATH</span></code>
 of the <code class="docutils literal notranslate"><span class="pre">module_settings</span></code> value.</p>
-</div>
-<div class="section" id="id2">
-<h4>Example<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="id2">
+<h4>Example<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">----</span> <span class="n">file</span><span class="p">:</span> <span class="n">path1</span><span class="o">.</span><span class="n">radl</span> <span class="o">----</span>
 <span class="n">n</span><span class="p">:</span> <span class="n">node</span> <span class="p">{</span>
     <span class="n">PATH</span> <span class="s2">&quot;nodes/example&quot;</span>
@@ -914,21 +1303,21 @@ and the file referred by “n.cpp” is
 </div>
 <p>By adding this <code class="docutils literal notranslate"><span class="pre">module_settings</span></code> value, “n.cpp” refers to
 “/usr/pathexample/nodes/example/src/n.cpp”.</p>
-</div>
-</div>
-<div class="section" id="libraries">
-<h3>Libraries<a class="headerlink" href="#libraries" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="libraries">
+<h3>Libraries<a class="headerlink" href="#libraries" title="Link to this heading">¶</a></h3>
 <p>Any user code needing libraries has to be declared as using a library
 with the <code class="docutils literal notranslate"><span class="pre">LIB</span></code> field. This field allows two forms of libraries,
 <code class="docutils literal notranslate"><span class="pre">cmake_library</span></code> and <code class="docutils literal notranslate"><span class="pre">static_library</span></code>.</p>
-<div class="section" id="static-library">
-<h4>Static library<a class="headerlink" href="#static-library" title="Permalink to this headline">¶</a></h4>
+<section id="static-library">
+<h4>Static library<a class="headerlink" href="#static-library" title="Link to this heading">¶</a></h4>
 <p>Static libraries are of the simplest form, gathering a set of source
 files in their <code class="docutils literal notranslate"><span class="pre">CXX</span></code> field while the library header files are found
 in the <code class="docutils literal notranslate"><span class="pre">HEADER_PATHS</span></code> paths.</p>
-</div>
-<div class="section" id="cmake-library">
-<h4>Cmake library<a class="headerlink" href="#cmake-library" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="cmake-library">
+<h4>Cmake library<a class="headerlink" href="#cmake-library" title="Link to this heading">¶</a></h4>
 <p>The cmake library enables the use of arbitrarily complex libraries
 since it is a user defined cmake script. The <code class="docutils literal notranslate"><span class="pre">CMAKE_MODULE</span></code> field
 provide the cmake module name used to find it in the working
@@ -940,26 +1329,26 @@ defining respectively the libraries to be linked against and the
 include directories. Both variable names can be specified if their
 naming doesn’t follow this convention, respectively with the fields
 <code class="docutils literal notranslate"><span class="pre">CMAKE_VAR_LIBRARIES</span></code> and <code class="docutils literal notranslate"><span class="pre">CMAKE_VAR_INCLUDE_DIRS</span></code>.</p>
-</div>
-</div>
-<div class="section" id="typing">
-<h3>Typing<a class="headerlink" href="#typing" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="inference">
-<h4>Inference<a class="headerlink" href="#inference" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="typing">
+<h3>Typing<a class="headerlink" href="#typing" title="Link to this heading">¶</a></h3>
+<section id="inference">
+<h4>Inference<a class="headerlink" href="#inference" title="Link to this heading">¶</a></h4>
 <p>When a value is type annotated, it is checked to be of this type. If no
 type annotation is provided, the kind of the value is extracted from
 the ones possible in the value declaration context. If there is an
 ambiguity, it chooses the first relevant one in the order of declaration
 in <a class="reference external" href="https://github.com/SRI-CSL/radler/blob/master/radler/radlr/language.py">language.py</a>.</p>
-</div>
-<div class="section" id="checking">
-<h4>Checking<a class="headerlink" href="#checking" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="checking">
+<h4>Checking<a class="headerlink" href="#checking" title="Link to this heading">¶</a></h4>
 <p>User values are checked to be correct with their type with the
 function <code class="docutils literal notranslate"><span class="pre">check_type</span></code> found in
 <a class="reference external" href="https://github.com/SRI-CSL/radler/blob/master/radler/radlr/language.py">language.py</a>.</p>
-</div>
-<div class="section" id="subtyping">
-<h4>Subtyping<a class="headerlink" href="#subtyping" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="subtyping">
+<h4>Subtyping<a class="headerlink" href="#subtyping" title="Link to this heading">¶</a></h4>
 <p>Subtyping allows for example to use a 16bits integer (<code class="docutils literal notranslate"><span class="pre">int16</span></code>)
 where a 32bits integer is required (<code class="docutils literal notranslate"><span class="pre">int32</span></code>). For now, subtyping is
 only done on <code class="docutils literal notranslate"><span class="pre">sized_types</span></code> by allowing a type to be used in a
@@ -967,38 +1356,38 @@ bigger version. <code class="docutils literal notranslate"><span class="pre">siz
 <a class="reference external" href="https://github.com/SRI-CSL/radler/blob/master/radler/radlr/language.py">language.py</a>. User values
 are checked to fit the type’s size with the function
 <code class="docutils literal notranslate"><span class="pre">check_type_size</span></code>.</p>
-</div>
-</div>
-</div>
-<div class="section" id="user-code">
-<h2>User code<a class="headerlink" href="#user-code" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="compilation">
-<h3>Compilation<a class="headerlink" href="#compilation" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="include-directories">
-<h4>Include directories<a class="headerlink" href="#include-directories" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+</section>
+<section id="user-code">
+<h2>User code<a class="headerlink" href="#user-code" title="Link to this heading">¶</a></h2>
+<section id="compilation">
+<h3>Compilation<a class="headerlink" href="#compilation" title="Link to this heading">¶</a></h3>
+<section id="include-directories">
+<h4>Include directories<a class="headerlink" href="#include-directories" title="Link to this heading">¶</a></h4>
 <p>The generated code is setup so that user code is compiled with the
 necessary include folders, i.e., the specified library header folders
 and the working directory of the file references.</p>
-</div>
-<div class="section" id="compiler-definitions">
-<h4>Compiler definitions<a class="headerlink" href="#compiler-definitions" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="compiler-definitions">
+<h4>Compiler definitions<a class="headerlink" href="#compiler-definitions" title="Link to this heading">¶</a></h4>
 <p>The user code is compiled with the following definitions:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">IN_RADL_GENERATED_CONTEXT</span></code> : The basic definition to detect if the code is compiled within Radler compilation chain.</li>
-<li><code class="docutils literal notranslate"><span class="pre">RADL_NODE_NAME</span></code> : The name of the current radl node.</li>
-<li><code class="docutils literal notranslate"><span class="pre">RADL_NODE_QNAME</span></code> : Which is set to the node qname (with dot separators, for example “<code class="docutils literal notranslate"><span class="pre">modulename.nodename</span></code>”).</li>
-<li><code class="docutils literal notranslate"><span class="pre">RADL_MODULE_NAME</span></code> : The name of the current radl module.</li>
-<li><code class="docutils literal notranslate"><span class="pre">RADL_MODULE</span></code> : A pointer to the current module ast root.</li>
-<li><code class="docutils literal notranslate"><span class="pre">RADL_HEADER</span></code> : The radl generated header to be included by the user code (defining input and output data types).</li>
-<li><code class="docutils literal notranslate"><span class="pre">RADL_STATE</span></code> : The radl default name to be used for the C state type (if not specified in the radl file).</li>
-<li><code class="docutils literal notranslate"><span class="pre">RADL_STEP_FUN</span></code> : The default name to be used for the C step function (if not specified in the radl file).</li>
-<li><code class="docutils literal notranslate"><span class="pre">RADL_INIT_FUN</span></code> : The default name to be used for the C init function (if not specified in the radl file).</li>
-<li><code class="docutils literal notranslate"><span class="pre">RADL_FINISH_FUN</span></code> : The default name to be used for the C finish function (if not specified in the radl file).</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IN_RADL_GENERATED_CONTEXT</span></code> : The basic definition to detect if the code is compiled within Radler compilation chain.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RADL_NODE_NAME</span></code> : The name of the current radl node.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RADL_NODE_QNAME</span></code> : Which is set to the node qname (with dot separators, for example “<code class="docutils literal notranslate"><span class="pre">modulename.nodename</span></code>”).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RADL_MODULE_NAME</span></code> : The name of the current radl module.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RADL_MODULE</span></code> : A pointer to the current module ast root.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RADL_HEADER</span></code> : The radl generated header to be included by the user code (defining input and output data types).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RADL_STATE</span></code> : The radl default name to be used for the C state type (if not specified in the radl file).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RADL_STEP_FUN</span></code> : The default name to be used for the C step function (if not specified in the radl file).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RADL_INIT_FUN</span></code> : The default name to be used for the C init function (if not specified in the radl file).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RADL_FINISH_FUN</span></code> : The default name to be used for the C finish function (if not specified in the radl file).</p></li>
 </ul>
-</div>
-</div>
-<div class="section" id="c-node-definition">
-<h3>C++ node definition<a class="headerlink" href="#c-node-definition" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="c-node-definition">
+<h3>C++ node definition<a class="headerlink" href="#c-node-definition" title="Link to this heading">¶</a></h3>
 <p>Each node is a Mealy machine. The user provide a class which will be
 instantiated with the default constructor to generate an instance
 representing the state of the machine. Then, the <code class="docutils literal notranslate"><span class="pre">step</span></code> method of this
@@ -1009,45 +1398,45 @@ signature of the <code class="docutils literal notranslate"><span class="pre">st
 </div>
 <p>The four argument types are structures defined in the generated header
 file.</p>
-<div class="section" id="the-input-structure-radl-in-t">
-<h4>The input structure <code class="docutils literal notranslate"><span class="pre">radl_in_t</span></code><a class="headerlink" href="#the-input-structure-radl-in-t" title="Permalink to this headline">¶</a></h4>
+<section id="the-input-structure-radl-in-t">
+<h4>The input structure <code class="docutils literal notranslate"><span class="pre">radl_in_t</span></code><a class="headerlink" href="#the-input-structure-radl-in-t" title="Link to this heading">¶</a></h4>
 <p>This structure has one field per subscription of the node. The field
 name is the radl name of the subscription. Each field is in turn a
 structure reflecting the topic of the subscription, whose fields are
 the name of the radl topic <code class="docutils literal notranslate"><span class="pre">FIELDS</span></code>.</p>
-</div>
-<div class="section" id="the-output-structure-radl-out-t">
-<h4>The output structure <code class="docutils literal notranslate"><span class="pre">radl_out_t</span></code><a class="headerlink" href="#the-output-structure-radl-out-t" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="the-output-structure-radl-out-t">
+<h4>The output structure <code class="docutils literal notranslate"><span class="pre">radl_out_t</span></code><a class="headerlink" href="#the-output-structure-radl-out-t" title="Link to this heading">¶</a></h4>
 <p>It is similar to the input structure except that is is used by the
 step function to publish its publications. To this effect, the step
 function has to fill the output structure.</p>
-</div>
-<div class="section" id="the-flag-structures-radl-in-flags-t-radl-out-flags-t">
-<h4>The flag structures <code class="docutils literal notranslate"><span class="pre">radl_in_flags_t</span></code>, <code class="docutils literal notranslate"><span class="pre">radl_out_flags_t</span></code><a class="headerlink" href="#the-flag-structures-radl-in-flags-t-radl-out-flags-t" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="the-flag-structures-radl-in-flags-t-radl-out-flags-t">
+<h4>The flag structures <code class="docutils literal notranslate"><span class="pre">radl_in_flags_t</span></code>, <code class="docutils literal notranslate"><span class="pre">radl_out_flags_t</span></code><a class="headerlink" href="#the-flag-structures-radl-in-flags-t-radl-out-flags-t" title="Link to this heading">¶</a></h4>
 <p>Similarly to the input and output structures, these have a field for
 each subscription (resp. publication). The type of each field is a
 <code class="docutils literal notranslate"><span class="pre">radl_flags_t</span></code> as described in
 <a class="reference external" href="https://github.com/SRI-CSL/radler/blob/master/radl_lib/include/radl_flags.h">radl_flags.h</a>.</p>
-</div>
-</div>
-<div class="section" id="id3">
-<h3>C node definition<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="id3">
+<h3>C node definition<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
 <p>This is the same as the C++ case, except that instead of a class, the user needs to
 provide 4 things. To describe them, we use the default names provided by
 radl, but those may be decided in the radl file.</p>
 <ul class="simple">
-<li>A state type, that we call <code class="docutils literal notranslate"><span class="pre">RADL_STATE</span></code> here</li>
-<li>An init function of signature : <code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">RADL_INIT_FUN(RADL_STATE</span> <span class="pre">*)</span></code></li>
-<li>A step function of signature :
-<code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">RADL_STEP_FUN(RADL_STATE</span> <span class="pre">*,</span> <span class="pre">const</span> <span class="pre">radl_in_t*,</span> <span class="pre">const</span> <span class="pre">radl_inflags_t*,</span> <span class="pre">radl_out_t*,</span> <span class="pre">radl_outflags_t*)</span></code></li>
-<li>A finish function of signature :
-<code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">RADL_FINISH_FUN(RADL_STATE</span> <span class="pre">*)</span></code></li>
+<li><p>A state type, that we call <code class="docutils literal notranslate"><span class="pre">RADL_STATE</span></code> here</p></li>
+<li><p>An init function of signature : <code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">RADL_INIT_FUN(RADL_STATE</span> <span class="pre">*)</span></code></p></li>
+<li><p>A step function of signature :
+<code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">RADL_STEP_FUN(RADL_STATE</span> <span class="pre">*,</span> <span class="pre">const</span> <span class="pre">radl_in_t*,</span> <span class="pre">const</span> <span class="pre">radl_inflags_t*,</span> <span class="pre">radl_out_t*,</span> <span class="pre">radl_outflags_t*)</span></code></p></li>
+<li><p>A finish function of signature :
+<code class="docutils literal notranslate"><span class="pre">void</span> <span class="pre">RADL_FINISH_FUN(RADL_STATE</span> <span class="pre">*)</span></code></p></li>
 </ul>
-</div>
-<div class="section" id="the-flags">
-<h3>The flags<a class="headerlink" href="#the-flags" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="computation-of-the-output-flags">
-<h4>Computation of the output flags<a class="headerlink" href="#computation-of-the-output-flags" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="the-flags">
+<h3>The flags<a class="headerlink" href="#the-flags" title="Link to this heading">¶</a></h3>
+<section id="computation-of-the-output-flags">
+<h4>Computation of the output flags<a class="headerlink" href="#computation-of-the-output-flags" title="Link to this heading">¶</a></h4>
 <p>The main idea of flags is to have some Boolean metadata attached to
 messages, which by default propagate through nodes. To this effect,
 the default value of the output flags of each publication of a node
@@ -1065,9 +1454,9 @@ while the preset output flags are provided to the step function to
 give it a chance to turn on or off the desired flags. So, if the step
 function doesn’t change the output flags, they will propagate the
 input flags.</p>
-</div>
-<div class="section" id="computation-of-the-input-flag-radl-stale">
-<h4>Computation of the input flag <code class="docutils literal notranslate"><span class="pre">radl_STALE</span></code><a class="headerlink" href="#computation-of-the-input-flag-radl-stale" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="computation-of-the-input-flag-radl-stale">
+<h4>Computation of the input flag <code class="docutils literal notranslate"><span class="pre">radl_STALE</span></code><a class="headerlink" href="#computation-of-the-input-flag-radl-stale" title="Link to this heading">¶</a></h4>
 <p>The so-called stale flag has the broad meaning that its associated
 value isn’t “fresh”. More precisely, it either means that the
 publisher of the value flagged it as stale (by automatic propagation
@@ -1076,9 +1465,9 @@ the step function. In the latter case, the step function gets the
 same input value (the mailbox hasn’t changed) but it is flagged as
 stale. To check if a subscription <code class="docutils literal notranslate"><span class="pre">s</span></code> is stale, one simply calls
 <code class="docutils literal notranslate"><span class="pre">radl_is_stale(in_flags-&gt;s)</span></code> which returns a Boolean.</p>
-</div>
-<div class="section" id="computation-of-the-input-flag-radl-timeout">
-<h4>Computation of the input flag <code class="docutils literal notranslate"><span class="pre">radl_TIMEOUT</span></code><a class="headerlink" href="#computation-of-the-input-flag-radl-timeout" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="computation-of-the-input-flag-radl-timeout">
+<h4>Computation of the input flag <code class="docutils literal notranslate"><span class="pre">radl_TIMEOUT</span></code><a class="headerlink" href="#computation-of-the-input-flag-radl-timeout" title="Link to this heading">¶</a></h4>
 <p>The so-called timeout flag has the broad meaning that its associated
 value has violated the timing constraints. More precisely, it either
 means that the publisher of the value flagged it as timeout (by
@@ -1087,9 +1476,9 @@ message since period of the publisher plus the maxlatency. In the
 latter case, timing constraints are exceeded and something unexpected
 is happening. To check if a subscription <code class="docutils literal notranslate"><span class="pre">s</span></code> is timeout, one simply
 calls <code class="docutils literal notranslate"><span class="pre">radl_is_timeout(in_flags-&gt;s)</span></code> which returns a Boolean.</p>
-</div>
-<div class="section" id="turning-off-on-output-flags">
-<h4>Turning off/on output flags<a class="headerlink" href="#turning-off-on-output-flags" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="turning-off-on-output-flags">
+<h4>Turning off/on output flags<a class="headerlink" href="#turning-off-on-output-flags" title="Link to this heading">¶</a></h4>
 <p>The function <code class="docutils literal notranslate"><span class="pre">radl_turn_on</span></code> is used to turn on a flag. For example
 to turn on the stale flag of the publication <code class="docutils literal notranslate"><span class="pre">p</span></code>, we would do:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">radl_turn_on</span><span class="p">(</span><span class="n">rald_STALE</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">out_flags</span><span class="o">-&gt;</span><span class="n">p</span><span class="p">);</span>
@@ -1097,43 +1486,43 @@ to turn on the stale flag of the publication <code class="docutils literal notra
 </div>
 <p>To turn off flags, the similar function <code class="docutils literal notranslate"><span class="pre">rald_turn_off</span></code> should be
 used.</p>
-</div>
-</div>
-<div class="section" id="introspection">
-<h3>Introspection<a class="headerlink" href="#introspection" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="introspection">
+<h3>Introspection<a class="headerlink" href="#introspection" title="Link to this heading">¶</a></h3>
 <p>To allow more robust and generic user code, it is possible to access
 values defined in the radl description.</p>
-<div class="section" id="modules-root-entries">
-<h4>Modules root entries<a class="headerlink" href="#modules-root-entries" title="Permalink to this headline">¶</a></h4>
+<section id="modules-root-entries">
+<h4>Modules root entries<a class="headerlink" href="#modules-root-entries" title="Link to this heading">¶</a></h4>
 <p>The generic way of doing so is to use the generated module root ast
 access functions. For example if we want to read the radl value of
 qname <code class="docutils literal notranslate"><span class="pre">module1.x</span></code>, one will first call the <code class="docutils literal notranslate"><span class="pre">radlast_module1</span></code>
 function to get to the module root entry.</p>
-</div>
-<div class="section" id="shortcuts">
-<h4>Shortcuts<a class="headerlink" href="#shortcuts" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="shortcuts">
+<h4>Shortcuts<a class="headerlink" href="#shortcuts" title="Link to this heading">¶</a></h4>
 <p>Instead of needing to know the current module name and call the
 corresponding root ast access function, one can use the provided
 macro <code class="docutils literal notranslate"><span class="pre">RADL_MODULE</span></code>. When writing a step function, one can directly
 access the node it is used in by using the <code class="docutils literal notranslate"><span class="pre">RADL_THIS</span></code> macro.</p>
-</div>
-<div class="section" id="field-access">
-<h4>Field access<a class="headerlink" href="#field-access" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="field-access">
+<h4>Field access<a class="headerlink" href="#field-access" title="Link to this heading">¶</a></h4>
 <p>The generic rule is that fields of values are the names of the
 declared value inside this value. This name is in turn</p>
 <ul class="simple">
-<li>a pointer to the value (the generic case)</li>
-<li>the value itself (for a <code class="docutils literal notranslate"><span class="pre">topic</span></code>, a <code class="docutils literal notranslate"><span class="pre">struct</span></code> or inside them).</li>
+<li><p>a pointer to the value (the generic case)</p></li>
+<li><p>the value itself (for a <code class="docutils literal notranslate"><span class="pre">topic</span></code>, a <code class="docutils literal notranslate"><span class="pre">struct</span></code> or inside them).</p></li>
 </ul>
-</div>
-<div class="section" id="the-defs-field">
-<h4>The <code class="docutils literal notranslate"><span class="pre">DEFS</span></code> field<a class="headerlink" href="#the-defs-field" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="the-defs-field">
+<h4>The <code class="docutils literal notranslate"><span class="pre">DEFS</span></code> field<a class="headerlink" href="#the-defs-field" title="Link to this heading">¶</a></h4>
 <p>To allow the user to define values which are not radl relevant, but
 that should be statically defined and shared, we added the <code class="docutils literal notranslate"><span class="pre">DEFS</span></code>
 field in the <code class="docutils literal notranslate"><span class="pre">node</span></code> and <code class="docutils literal notranslate"><span class="pre">topic</span></code> classes.</p>
-</div>
-<div class="section" id="id4">
-<h4>Example<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="id4">
+<h4>Example<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h4>
 <p>Consider the following radl description:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">----</span> <span class="n">file</span><span class="p">:</span> <span class="n">introspec</span><span class="o">.</span><span class="n">radl</span> <span class="o">----</span>
 <span class="n">x</span> <span class="p">:</span> <span class="n">int32</span> <span class="mi">1</span>
@@ -1182,19 +1571,21 @@ writing the step function of <code class="docutils literal notranslate"><span cl
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RADL_THIS</span><span class="o">-&gt;</span><span class="n">s</span><span class="o">.</span><span class="n">z</span>
 </pre></div>
 </div>
-</div>
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
+</section>
 
 
+            <div class="clearer"></div>
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="#">Table Of Contents</a></h3>
-  <ul>
+  <div>
+    <h3><a href="#">Table of Contents</a></h3>
+    <ul>
 <li><a class="reference internal" href="#">Introduction</a><ul>
 <li><a class="reference internal" href="#getting-started">Getting Started</a><ul>
 <li><a class="reference internal" href="#to-install">To install</a></li>
@@ -1203,6 +1594,7 @@ writing the step function of <code class="docutils literal notranslate"><span cl
 <li><a class="reference internal" href="#run">Run</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#to-test-with-docker-image">To test with Docker image</a></li>
 </ul>
 </li>
 </ul>
@@ -1221,8 +1613,13 @@ writing the step function of <code class="docutils literal notranslate"><span cl
 </li>
 <li><a class="reference internal" href="#examples">Examples</a><ul>
 <li><a class="reference internal" href="#pubsub">Pubsub</a></li>
-<li><a class="reference internal" href="#house-thermo">House_thermo</a></li>
+<li><a class="reference internal" href="#room-temperature-regulation">Room Temperature Regulation</a></li>
 <li><a class="reference internal" href="#controller-gateway">Controller_Gateway</a></li>
+<li><a class="reference internal" href="#advanced-fail-safe-of-arducopter-using-mavros">Advanced Fail Safe of Arducopter using MAVROS</a><ul>
+<li><a class="reference internal" href="#demo-with-sros2">Demo with SROS2</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#demo-with-pvs2c-generated-code">Demo with PVS2C-generated Code</a></li>
 <li><a class="reference internal" href="#demos-using-ar-drone-on-ros">Demos using AR.Drone on ROS</a><ul>
 <li><a class="reference internal" href="#demo-1-with-sridrone-ardronelib">Demo #1 with sridrone_ardronelib</a></li>
 <li><a class="reference internal" href="#demo-2-with-sridrone-ardrone-autonomy">Demo #2 with sridrone_ardrone_autonomy</a></li>
@@ -1326,6 +1723,7 @@ writing the step function of <code class="docutils literal notranslate"><span cl
 </li>
 </ul>
 
+  </div>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -1333,18 +1731,16 @@ writing the step function of <code class="docutils literal notranslate"><span cl
             rel="nofollow">Show Source</a></li>
     </ul>
    </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
         </div>
       </div>
       <div class="clearer"></div>
@@ -1355,12 +1751,13 @@ writing the step function of <code class="docutils literal notranslate"><span cl
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
-        <li class="nav-item nav-item-0"><a href="#">radler 1.0 documentation</a> &#187;</li> 
+        <li class="nav-item nav-item-0"><a href="#">radler 2.0 documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Introduction</a></li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2016, SRI International.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.2.
+    &#169; Copyright 2016, SRI International.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.3.7.
     </div>
   </body>
 </html>
