@@ -33,6 +33,8 @@ from radler.radlr.gen_utils.user_sources import    gather_node_user_file
 from radler.radlr.rast import AstVisitor, follow_links
 from radler.radlr.ros.rosnode import gennode
 
+import re
+
 def app(d, templates):
     for (s,t) in templates.items():
         v = t.format(**d)
@@ -149,7 +151,7 @@ target_link_libraries({node_target}
 rosidl_target_interfaces({node_target}
       {module} "rosidl_typesupport_cpp")
 
-#ament_target_dependencies({node_target} {module})
+ament_target_dependencies({node_target} {ament_target_dep})
 """
 }
 
@@ -180,6 +182,8 @@ def _from_node(visitor, node, d):
     d['node_sources'] += srcs
     d['node_libs'] = libs
     d['node_find_libs'] = find_libs
+
+    d['ament_target_dep'] = " ".join(re.findall(r'find_package\((\w+)', find_libs))
 
     target_link_libs = ''
     target_link_libs += '${{{0}_LIBRARIES}}\n'.format(qn.cmake_ast(nodemodule))
