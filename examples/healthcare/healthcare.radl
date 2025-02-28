@@ -1,0 +1,112 @@
+sensor_msgs : cmake_library {
+  CMAKE_MODULE "sensor_msgs"
+  CMAKE_VAR_LIBRARIES "sensor_msgs_LIBRARIES"
+  CMAKE_VAR_INCLUDE_DIRS "sensor_msgs_INCLUDE_DIRS"
+}
+
+ros_healthcare_msg : cmake_library {
+  CMAKE_MODULE "ros_healthcare_msg"
+  CMAKE_VAR_LIBRARIES "ros_healthecare_msg_LIBRARIES"
+  CMAKE_VAR_INCLUDE_DIRS "ros_healthcare_msg_INCLUDE_DIRS"
+}
+
+std_msgs : cmake_library {
+  CMAKE_MODULE "std_msgs"
+  CMAKE_VAR_LIBRARIES "std_msgs_LIBRARIES"
+  CMAKE_VAR_INCLUDE_DIRS "std_msgs_INCLUDE_DIRS"
+}
+
+heart_rate : topic {
+  FIELDS
+    hr : float32 0
+}
+
+resp_rate : topic {
+  FIELDS
+    rr : int32 0
+}
+
+imu_vec : topic {
+  FIELDS
+    x : int32 0
+    y : int32 0
+    z : int32 0
+}
+
+ecg_default : array { SIZE 60 TYPE "int32" VALUES 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 60 }
+
+ecg_lead : topic {
+  FIELDS 
+    ecg = ecg_default
+}
+
+hr_warn : topic {
+  FIELDS
+    val : bool false
+}
+
+gateway : node {
+  SUBSCRIBES 
+    hr { TOPIC heart_rate MAXLATENCY 100msec }
+    rr { TOPIC resp_rate MAXLATENCY 100msec }
+    imu { TOPIC imu_vec MAXLATENCY 100msec }
+    ecg { TOPIC ecg_lead MAXLATENCY 100msec }
+  PUBLISHES
+    hr_warning { TOPIC hr_warn }
+  PERIOD 100msec
+  PATH "src"
+  CXX { HEADER "gateway.h" FILENAME "gateway.cpp" CLASS "Gateway" LIB sensor_msgs ros_healthcare_msg std_msgs }
+} 
+
+hr_sensor : node {
+  PUBLISHES
+    hr { TOPIC heart_rate }
+  PERIOD 100msec
+  PATH "src"
+  CXX { HEADER "hr_sensor.h" FILENAME "hr_sensor.cpp" CLASS "HR_Sensor" }
+} 
+
+rr_sensor : node {
+  PUBLISHES
+    rr { TOPIC resp_rate }
+  PERIOD 100msec
+  PATH "src"
+  CXX { HEADER "rr_sensor.h" FILENAME "rr_sensor.cpp" CLASS "RR_Sensor" }
+}
+
+imu_sensor : node {
+  PUBLISHES
+    imu { TOPIC imu_vec }
+  PERIOD 100msec
+  PATH "src"
+  CXX { HEADER "imu_sensor.h" FILENAME "imu_sensor.cpp" CLASS "IMU_Sensor" }
+}
+
+ecg_sensor : node {
+  PUBLISHES
+    ecg { TOPIC ecg_lead }
+  PERIOD 100msec
+  PATH "src"
+  CXX { HEADER "ecg_sensor.h" FILENAME "ecg_sensor.cpp" CLASS "ECG_Sensor" }
+}
+
+hr_display : node {
+  SUBSCRIBES 
+    hr_warning { TOPIC hr_warn MAXLATENCY 100msec }
+  PERIOD 100msec
+  PATH "src"
+  CXX { HEADER "hr_display.h" FILENAME "hr_display.cpp" CLASS "HR_Display" }
+} 
+
+plant : plant {
+  MACHINES
+    machine1 {
+      OS linux {
+        NODES_UID 1000
+        IMG "linux.img"
+        IP 192.168.1.202
+        NODES
+          gateway hr_sensor rr_sensor imu_sensor ecg_sensor hr_display 
+      }
+    }
+}
