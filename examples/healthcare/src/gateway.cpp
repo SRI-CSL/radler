@@ -36,7 +36,7 @@ void Gateway::step(const radl_in_t* i, const radl_in_flags_t* i_f, radl_out_t* o
     hr_msg.hr = hr;
     hr_pub->publish(hr_msg);
     cout << "HR : " << hr_msg.hr ;
-	  if (hr > 98) {
+    if (hr > 98) {
       cout << " <----- HIGH " << endl;
       o->hr_warning->val = true;
     }
