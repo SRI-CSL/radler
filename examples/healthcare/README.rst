@@ -14,7 +14,7 @@ Within the container::
   colcon build
   source install/local_setup.bash
   xterm -e "ros2 run healthcare gateway" &      # execute radler gateway  
-  xterm -e "ros2 run healthcare hr_sensor" &    # execute radler nodes
+  xterm -e "ros2 run healthcare hr_sensor" &    # execute radler nodes, e.g., hr_sensor
   ros2 run dashboard dashboard                  # execute ros4health dashboard 
 
 Troubleshooting 
@@ -24,7 +24,7 @@ Troubleshooting
 
 xhost: unable to open display "host.docker.internal:0"
 
-### Steps to Fix
+**Steps to Fix:**
 
   1. Open Xquartz settings, go to the Security tab
   2. Make sure “Authenticate connections” is unchecked and “Allow connections from network clients” is checked
