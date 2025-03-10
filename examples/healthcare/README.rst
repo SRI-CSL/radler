@@ -16,3 +16,16 @@ Within the container::
   xterm -e "ros2 run healthcare gateway" &      # execute radler gateway  
   xterm -e "ros2 run healthcare hr_sensor" &    # execute radler nodes
   ros2 run dashboard dashboard                  # execute ros4health dashboard 
+
+Troubleshooting 
+---------------
+
+**Error Message:**
+
+xhost: unable to open display "host.docker.internal:0"
+
+### Steps to Fix
+
+  1. Open Xquartz settings, go to the Security tab
+  2. Make sure “Authenticate connections” is unchecked and “Allow connections from network clients” is checked
+  3. Restart Xquartz
