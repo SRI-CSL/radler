@@ -1,31 +1,30 @@
 System Overview
 ---------------
 
-This demo shows the Radler code generation and its execution with the **ros4healthcare** package.  
+This demo shows the Radler code generation and its execution with the `ros4healthcare <https://github.com/SCAI-Lab/ros4healthcare.git>`_ package.  
 
 Radler architecture consists of the logical and physical parts. The logical part is specified in terms of node and topic similar to ROS. The nodes execute independently and periodically, and subscribe from and publish to topics.
 A physical specification is provided by a value of type plant. 
 
 In this use case, six *Radler* nodes (shown as ellipses) communicate via five *Radler* topics 
 (shown as rectangles under ``/healthcare``) and several *ROS* topics 
-(``/rr``, ``/hr``, ``/imu``, ``/ecg`` for respiration rate, heart rate, IMU, 
+(``/rr``, ``/hr``, ``/imu``, and ``/ecg`` for respiration rate, heart rate, IMU, 
 and ECG, respectively).
 
 .. image:: healthcare_rqt.png
-  :width: 600
+  :width: 700
 
 - **Gateway Node**:
 
-  Subscribes to four topics (``heart_rate``, ``resp_rate``, ``imu_vec``,
+  Subscribes to four topics (``heart_rate``, ``resp_rate``, ``imu_vec``, and 
   ``ecg_lead``), executes its step function to check if the heart rate is within
   the normal range, and publishes to the ``hr_warn`` Radler topic to signal
   the ``hr_display`` node. It also publishes to ROS message types
-  ``/rr``, ``/hr``, ``/imu``, ``/ecg`` defined in the **ros4healthcare** package.
+  ``/rr``, ``/hr``, ``/imu``, and ``/ecg`` defined in the *ros4healthcare* package.
 
 - **Sensor Nodes**:
 
-  Publish to ``resp_rate``, ``heart_rate``, ``imu_vec``, and ``ecg_lead``,
-  respectively. These nodes simulate physical sensors by generating data points.
+  Publish to ``resp_rate``, ``heart_rate``, ``imu_vec``, and ``ecg_lead``, respectively. These nodes simulate physical sensors by generating data points.
 
 - **HR Display Node**:
 
@@ -36,11 +35,11 @@ and ECG, respectively).
 
   Shown as ``/rqt_gui_py_node_73058`` in the rqt graph above. It acts as
   a dashboard, as shown below, subscribing to several ROS topics (e.g.,
-  ``/rr``, ``/hr``, ``/imu``, ``/ecg``) to visualize them. For more details, refer to
+  ``/rr``, ``/hr``, ``/imu``, and ``/ecg``) to visualize them. For more details, refer to
   `ros4healthcare <https://github.com/SCAI-Lab/ros4healthcare.git>`_.
 
 .. image:: healthcare_dashboard.png
-  :width: 600
+  :width: 500
 
 Excerpt from the example system’s RADL description below:
 
@@ -75,9 +74,9 @@ fixed frequency defined by the node’s period (the ``PERIOD`` field). At
 each call, the step function is provided with the messages received from
 its subscriptions and is required to write the messages that it has to
 publish (the ``SUBSCRIBES`` and ``PUBLISHES`` fields). A topic is
-uniquely defined by its name. For example, ``heart_rate``,
+uniquely defined by its name. For example, ``heart_rate``, ``rest_rate``, 
 ``imu_vec``, and ``ecg_lead`` topics are referenced as
-``hr``, ``imu``, and ``ecg``, respectively. The ``gateway`` node publishes to the
+``hr``, ``rr``, ``imu``, and ``ecg``, respectively. The ``gateway`` node publishes to the
 ``hr_warn`` topic, which is referenced as ``hr_warning``, and the ``hr_display``
 node subscribes to that topic. A topic is a purely logical way of defining
 point-to-point communications between one producer and multiple
