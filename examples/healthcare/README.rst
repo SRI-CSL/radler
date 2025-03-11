@@ -13,6 +13,7 @@ and ECG, respectively).
 
 .. image:: healthcare_rqt.png
   :width: 700
+  :align: center
 
 - **Gateway Node**:
 
@@ -40,6 +41,7 @@ and ECG, respectively).
 
 .. image:: healthcare_dashboard.png
   :width: 500
+  :align: center
 
 Excerpt from the example system’s RADL description below:
 
