@@ -107,7 +107,7 @@ by switching on/off state of the heater. The flag structures
 (``radl_inflags_t*, radl_outflags_t*``) can be used to check if a
 subscription, e.g., ``thermometer_temp``, is stale or timeout by calling
 ``radl_is_stale(iflag->thermometer_temp)`` or
-``radl _is_timeout(iflag->thermometer_temp)``, respectively. These
+``radl_is_timeout(iflag->thermometer_temp)``, respectively. These
 Boolean metadata attached to messages are by default propagate through
 nodes unless the explicitly being turned off (``radl_turn_off``).
 
