@@ -6,7 +6,7 @@ sensor_msgs : cmake_library {
 
 ros_healthcare_msg : cmake_library {
   CMAKE_MODULE "ros_healthcare_msg"
-  CMAKE_VAR_LIBRARIES "ros_healthecare_msg_LIBRARIES"
+  CMAKE_VAR_LIBRARIES "ros_healthcare_msg_LIBRARIES"
   CMAKE_VAR_INCLUDE_DIRS "ros_healthcare_msg_INCLUDE_DIRS"
 }
 
