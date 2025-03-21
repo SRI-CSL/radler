@@ -161,7 +161,7 @@ def _type_term(node, mk, expected):
         # check size
         if expected_size and len(values) != int(expected_size._val):
             print("This array is of size {} when {} is expected."
-                  "".format(len(values), expected_size._val), node._location)
+                  "".format(len(values), expected_size._val))
             pad = int(expected_size._val) - len(values)
             values.extend([values[0]] * pad)
         # use first element if no expected_elem_t is found
