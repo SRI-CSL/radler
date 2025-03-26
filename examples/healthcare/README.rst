@@ -148,10 +148,17 @@ producing the executables.
 To test with Docker 
 -------------------
 
-To build and run the radler/healthcare docker container::
+To build the radler/healthcare docker container::
 
   docker build -t radler/healthcare .
+
+To run (on macOS):: 
+
   docker run -it -e DISPLAY=host.docker.internal:0 radler/healthcare bash
+
+To run (on Xubuntu):: 
+
+  sudo docker run -it -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=:0 radler/healthcare bash # Xubuntu
 
 Within the container::
 
