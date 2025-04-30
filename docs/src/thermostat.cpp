@@ -1,5 +1,5 @@
-
 #include "thermostat.h"
+#include <iostream>
 
 Thermostat::Thermostat() {
   this->set_temp = 75.0;
@@ -23,5 +23,6 @@ void Thermostat::step(const radl_in_t * in, const radl_in_flags_t* inflags,
   } else {
     out->heater_switch->switch_on = this->status;
   } 
+  std::cout << "Switch : " << out->heater_switch->switch_on << std::endl;
 }
 

@@ -22,6 +22,7 @@ Examples
 .. include:: ../examples/controller_gateway/README.rst			
 .. include:: ../examples/ardupilot/README.rst
 .. include:: ../examples/pvs/README.rst
+.. include:: ../examples/healthcare/README.rst
 .. include:: ../examples/drone/README.rst	
 .. include:: ../examples/raspberrypi/README.rst			
 .. include:: ../examples/android/README.rst			

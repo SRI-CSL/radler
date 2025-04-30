@@ -86,7 +86,9 @@
 <section id="to-test-with-docker-image">
 <h3>To test with Docker image<a class="headerlink" href="#to-test-with-docker-image" title="Link to this heading">¶</a></h3>
 <p>To build the radler/ros2 docker image:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">radler</span><span class="o">/</span><span class="n">docker</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">docker</span><span class="o">-</span><span class="n">buildx</span>
+<span class="n">export</span> <span class="n">DOCKER_BUILDKIT</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">radler</span><span class="o">/</span><span class="n">docker</span>
 <span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">radler</span><span class="o">/</span><span class="n">ros2</span> <span class="o">.</span>
 </pre></div>
 </div>
@@ -99,11 +101,14 @@
 <p>You can stop everything by typing Ctrl-C.</p>
 <p>To try SROS2 (<a class="reference external" href="https://github.com/ros2/sros2/blob/foxy/SROS2_Linux.md">https://github.com/ros2/sros2/blob/foxy/SROS2_Linux.md</a>), start a container for both talker and listener nodes:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">env</span><span class="o">-</span><span class="n">file</span> <span class="n">sros_env</span><span class="o">.</span><span class="n">list</span> <span class="o">--</span><span class="n">rm</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">t</span> <span class="n">radler</span><span class="o">/</span><span class="n">ros2</span><span class="p">:</span><span class="n">latest</span> <span class="n">bash</span>
+<span class="n">docker</span> <span class="n">ps</span>                               <span class="c1"># to retrieve the CONTAINER_ID</span>
+<span class="n">docker</span> <span class="n">exec</span> <span class="o">-</span><span class="n">it</span> <span class="n">CONTAINER_ID</span> <span class="n">bash</span>       <span class="c1"># to get into the container&#39;s shell</span>
 </pre></div>
 </div>
 <p>Inside of the container, run listener and talker nodes with security feature on:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">run</span> <span class="n">demo_nodes_py</span> <span class="n">listener</span> <span class="o">--</span><span class="n">ros</span><span class="o">-</span><span class="n">args</span> <span class="o">--</span><span class="n">enclave</span> <span class="o">/</span><span class="n">talker_listener</span><span class="o">/</span><span class="n">listener</span>
-<span class="n">ros2</span> <span class="n">run</span> <span class="n">demo_nodes_py</span> <span class="n">talker</span> <span class="o">--</span><span class="n">ros</span><span class="o">-</span><span class="n">args</span> <span class="o">--</span><span class="n">enclave</span> <span class="o">/</span><span class="n">talker_listener</span><span class="o">/</span><span class="n">talker</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">pkg</span> <span class="n">executables</span>                    <span class="c1"># to check pkg/node available</span>
+<span class="n">ros2</span> <span class="n">run</span> <span class="n">pubsub</span> <span class="n">listener</span> <span class="o">--</span><span class="n">ros</span><span class="o">-</span><span class="n">args</span> <span class="o">--</span><span class="n">enclave</span> <span class="o">/</span><span class="n">talker_listener</span><span class="o">/</span><span class="n">listener</span>
+<span class="n">ros2</span> <span class="n">run</span> <span class="n">pubsub</span> <span class="n">talker</span> <span class="o">--</span><span class="n">ros</span><span class="o">-</span><span class="n">args</span> <span class="o">--</span><span class="n">enclave</span> <span class="o">/</span><span class="n">talker_listener</span><span class="o">/</span><span class="n">talker</span>
 </pre></div>
 </div>
 <p>To run the above talker_listener demo on two containers, start one container c1:</p>
@@ -126,11 +131,11 @@
 </div>
 <p>Inside of the container c2, untar talker keys and run talker node:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tar</span> <span class="n">zxvf</span> <span class="n">talker</span><span class="o">.</span><span class="n">tgz</span>
-<span class="n">ros2</span> <span class="n">run</span> <span class="n">demo_nodes_py</span> <span class="n">talker</span> <span class="o">--</span><span class="n">ros</span><span class="o">-</span><span class="n">args</span> <span class="o">--</span><span class="n">enclave</span> <span class="o">/</span><span class="n">talker_listener</span><span class="o">/</span><span class="n">talker</span>
+<span class="n">ros2</span> <span class="n">run</span> <span class="n">pubsub</span> <span class="n">talker</span> <span class="o">--</span><span class="n">ros</span><span class="o">-</span><span class="n">args</span> <span class="o">--</span><span class="n">enclave</span> <span class="o">/</span><span class="n">talker_listener</span><span class="o">/</span><span class="n">talker</span>
 </pre></div>
 </div>
 <p>Inside of the container c1, run listener node:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">run</span> <span class="n">demo_nodes_py</span> <span class="n">listener</span> <span class="o">--</span><span class="n">ros</span><span class="o">-</span><span class="n">args</span> <span class="o">--</span><span class="n">enclave</span> <span class="o">/</span><span class="n">talker_listener</span><span class="o">/</span><span class="n">listener</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ros2</span> <span class="n">run</span> <span class="n">pubsub</span> <span class="n">listener</span> <span class="o">--</span><span class="n">ros</span><span class="o">-</span><span class="n">args</span> <span class="o">--</span><span class="n">enclave</span> <span class="o">/</span><span class="n">talker_listener</span><span class="o">/</span><span class="n">listener</span>
 </pre></div>
 </div>
 </section>
@@ -328,7 +333,7 @@ by switching on/off state of the heater. The flag structures
 (<code class="docutils literal notranslate"><span class="pre">radl_inflags_t*,</span> <span class="pre">radl_outflags_t*</span></code>) can be used to check if a
 subscription, e.g., <code class="docutils literal notranslate"><span class="pre">thermometer_temp</span></code>, is stale or timeout by calling
 <code class="docutils literal notranslate"><span class="pre">radl_is_stale(iflag-&gt;thermometer_temp)</span></code> or
-<code class="docutils literal notranslate"><span class="pre">radl</span> <span class="pre">_is_timeout(iflag-&gt;thermometer_temp)</span></code>, respectively. These
+<code class="docutils literal notranslate"><span class="pre">radl_is_timeout(iflag-&gt;thermometer_temp)</span></code>, respectively. These
 Boolean metadata attached to messages are by default propagate through
 nodes unless the explicitly being turned off (<code class="docutils literal notranslate"><span class="pre">radl_turn_off</span></code>).</p>
 <p>A physical specification is provided by a value of type plant:</p>
@@ -421,6 +426,19 @@ Radler build process generates the glue code for scheduling, communication, and 
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vagrant</span> <span class="n">ssh</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;sim_vehicle.py -v ArduCopter --console --map -m --out=127.0.0.1:14550&quot;</span>
 </pre></div>
 </div>
+<p>If you encounter the DISPLAY error (e.g., xterm: Xt error: Can’t open display: 0.0), edit the <em>/etc/ssh/sshd_config</em> file.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">X11Forwarding</span> <span class="n">yes</span>
+</pre></div>
+</div>
+<p>If you encounter the following error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Connect</span> <span class="n">tcp</span><span class="p">:</span><span class="mf">127.0.0.1</span><span class="p">:</span><span class="mi">5760</span> <span class="n">source_system</span><span class="o">=</span><span class="mi">255</span>
+<span class="n">Failed</span> <span class="n">to</span> <span class="n">connect</span> <span class="n">to</span> <span class="n">tcp</span><span class="p">:</span><span class="mf">127.0.0.1</span><span class="p">:</span><span class="mi">5760</span> <span class="p">:</span> <span class="p">[</span><span class="n">Errno</span> <span class="mi">111</span><span class="p">]</span> <span class="n">Connection</span> <span class="n">refused</span>
+</pre></div>
+</div>
+<p>Consider adding a delay before starting mavproxy. The <em>-N</em> option below skips the build. More options can be found in the <em>/vagrant/Tools/autotest/sim_vehicle.py</em> file.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sim_vehicle</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">v</span> <span class="n">ArduCopter</span> <span class="o">--</span><span class="n">console</span> <span class="o">--</span><span class="nb">map</span> <span class="o">-</span><span class="n">m</span> <span class="o">--</span><span class="n">out</span><span class="o">=</span><span class="mf">127.0.0.1</span><span class="p">:</span><span class="mi">14550</span> <span class="o">-</span><span class="n">N</span> <span class="o">-</span><span class="n">d</span> <span class="mi">5</span>
+</pre></div>
+</div>
 <p>Connect MAVROS with SITL.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vagrant</span> <span class="n">ssh</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;ros2 launch mavros apm.launch.py&quot;</span>
 </pre></div>
@@ -440,10 +458,10 @@ The battery status topic published in the ROS side is subscribed by the gateway 
 <span class="n">takeoff</span> <span class="mi">30</span>
 </pre></div>
 </div>
-<p>On the map (bottom left window), create a target position with altitude, then observe the Arducopter flying to the target.</p>
+<p>On the map (bottom left window), create a target position with altitude (or simply use a command <em>position x y z</em>), then observe the Arducopter flying to the target.</p>
 <a class="reference internal image-reference" href="takeoff.png"><img alt="takeoff.png" src="takeoff.png" style="height: 300px;" />
 </a>
-<p>When the battery level hits below threshold (i.e., 90%) the mode change to return to takeoff location is published by battery node. The gateway node subscribes from it and calls ROS service to set custom mode of the Arducopter. Note that the mode change to RTL on the simulator side.</p>
+<p>When the battery level hits below threshold (i.e., 90%) the mode change to return to takeoff location is published by battery node. The gateway node subscribes from it and calls ROS service to set custom mode of the Arducopter. Note that the mode change to RTL on the simulator side. The battery level can also be checked with the command <em>bat</em> on the console, and can be reset with the command <em>batreset</em>.</p>
 <p>On the map window of below snapshot, one can observe that the Arducopter heading to the takeoff location.</p>
 <p>The altitude value on the ground control console indicates that the Arducopter landing to the takeoff location.</p>
 <a class="reference internal image-reference" href="rtl.png"><img alt="rtl.png" src="rtl.png" style="height: 300px;" />
@@ -574,6 +592,176 @@ stdio, stdlib, inttypes, stdbool, stdarg, string, fcntl, math, sys/mman, sys/sta
 <span class="n">cc</span> <span class="o">-</span><span class="n">O3</span> <span class="o">-</span><span class="n">Wall</span> <span class="o">-</span><span class="n">o</span> <span class="n">Rijndael</span> <span class="n">pvslib</span><span class="o">.</span><span class="n">c</span> <span class="n">finite_sequences_c</span><span class="o">.</span><span class="n">c</span> <span class="n">integer_bv_ops_c</span><span class="o">.</span><span class="n">c</span> <span class="n">bv_c</span><span class="o">.</span><span class="n">c</span> <span class="n">bit_c</span><span class="o">.</span><span class="n">c</span> <span class="n">file_c</span><span class="o">.</span><span class="n">c</span> <span class="n">bytestrings_c</span><span class="o">.</span><span class="n">c</span> <span class="n">gen_strings_c</span><span class="o">.</span><span class="n">c</span> <span class="n">strings_c</span><span class="o">.</span><span class="n">c</span> <span class="n">ordinals_c</span><span class="o">.</span><span class="n">c</span> <span class="n">ordstruct_adt_c</span><span class="o">.</span><span class="n">c</span> <span class="n">integertypes_c</span><span class="o">.</span><span class="n">c</span> <span class="n">exp2_c</span><span class="o">.</span><span class="n">c</span> <span class="n">euclidean_division_c</span><span class="o">.</span><span class="n">c</span> <span class="n">real_defs_c</span><span class="o">.</span><span class="n">c</span> <span class="n">Rijndael_c</span><span class="o">.</span><span class="n">c</span> <span class="n">bytevectors_c</span><span class="o">.</span><span class="n">c</span> <span class="n">hex_c</span><span class="o">.</span><span class="n">c</span> <span class="n">simplifications_c</span><span class="o">.</span><span class="n">c</span> <span class="n">Rijndael_m</span><span class="o">.</span><span class="n">c</span> <span class="o">-</span><span class="n">lgmp</span>
 </pre></div>
 </div>
+<section id="system-overview">
+<h3>System Overview<a class="headerlink" href="#system-overview" title="Link to this heading">¶</a></h3>
+<p>This demo shows the Radler code generation and its execution with the <a class="reference external" href="https://github.com/SCAI-Lab/ros4healthcare.git">ros4healthcare</a> package.</p>
+<p>Radler architecture consists of the logical and physical parts. The logical part is specified in terms of node and topic similar to ROS. The nodes execute independently and periodically, and subscribe from and publish to topics.
+A physical specification is provided by a value of type plant.</p>
+<p>In this use case, six <em>Radler</em> nodes (shown as ellipses) communicate via five <em>Radler</em> topics
+(shown as rectangles under <code class="docutils literal notranslate"><span class="pre">/healthcare</span></code>) and several <em>ROS</em> topics
+(<code class="docutils literal notranslate"><span class="pre">/rr</span></code>, <code class="docutils literal notranslate"><span class="pre">/hr</span></code>, <code class="docutils literal notranslate"><span class="pre">/imu</span></code>, and <code class="docutils literal notranslate"><span class="pre">/ecg</span></code> for respiration rate, heart rate, IMU,
+and ECG, respectively).</p>
+<a class="reference internal image-reference" href="healthcare_rqt.png"><img alt="healthcare_rqt.png" class="align-center" src="healthcare_rqt.png" style="width: 700px;" />
+</a>
+<ul>
+<li><p><strong>Gateway Node</strong>:</p>
+<p>Subscribes to four topics (<code class="docutils literal notranslate"><span class="pre">heart_rate</span></code>, <code class="docutils literal notranslate"><span class="pre">resp_rate</span></code>, <code class="docutils literal notranslate"><span class="pre">imu_vec</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">ecg_lead</span></code>), executes its step function to check if the heart rate is within
+the normal range, and publishes to the <code class="docutils literal notranslate"><span class="pre">hr_warn</span></code> Radler topic to signal
+the <code class="docutils literal notranslate"><span class="pre">hr_display</span></code> node. It also publishes to ROS message types
+<code class="docutils literal notranslate"><span class="pre">/rr</span></code>, <code class="docutils literal notranslate"><span class="pre">/hr</span></code>, <code class="docutils literal notranslate"><span class="pre">/imu</span></code>, and <code class="docutils literal notranslate"><span class="pre">/ecg</span></code> defined in the <em>ros4healthcare</em> package.</p>
+</li>
+<li><p><strong>Sensor Nodes</strong>:</p>
+<p>Publish to <code class="docutils literal notranslate"><span class="pre">resp_rate</span></code>, <code class="docutils literal notranslate"><span class="pre">heart_rate</span></code>, <code class="docutils literal notranslate"><span class="pre">imu_vec</span></code>, and <code class="docutils literal notranslate"><span class="pre">ecg_lead</span></code>, respectively. These nodes simulate physical sensors by generating data points.</p>
+</li>
+<li><p><strong>HR Display Node</strong>:</p>
+<p>Subscribes to <code class="docutils literal notranslate"><span class="pre">hr_warn</span></code>; executes its step function every 100 milliseconds
+to display any warning signal.</p>
+</li>
+<li><p><strong>Dashboard Node</strong>:</p>
+<p>Shown as <code class="docutils literal notranslate"><span class="pre">/rqt_gui_py_node_73058</span></code> in the rqt graph above. It acts as
+a dashboard, as shown below, subscribing to several ROS topics (e.g.,
+<code class="docutils literal notranslate"><span class="pre">/rr</span></code>, <code class="docutils literal notranslate"><span class="pre">/hr</span></code>, <code class="docutils literal notranslate"><span class="pre">/imu</span></code>, and <code class="docutils literal notranslate"><span class="pre">/ecg</span></code>) to visualize them. For more details, refer to
+<a class="reference external" href="https://github.com/SCAI-Lab/ros4healthcare.git">ros4healthcare</a>.</p>
+</li>
+</ul>
+<a class="reference internal image-reference" href="healthcare_dashboard.png"><img alt="healthcare_dashboard.png" class="align-center" src="healthcare_dashboard.png" style="width: 500px;" />
+</a>
+<p>Excerpt from the example system’s RADL description below:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">heart_rate</span> <span class="p">:</span> <span class="n">topic</span> <span class="p">{</span> <span class="n">FIELDS</span> <span class="n">hr</span> <span class="p">:</span> <span class="n">float32</span> <span class="mi">0</span> <span class="p">}</span>
+<span class="n">resp_rate</span> <span class="p">:</span> <span class="n">topic</span> <span class="p">{</span> <span class="n">FIELDS</span> <span class="n">rr</span> <span class="p">:</span> <span class="n">int32</span> <span class="mi">0</span> <span class="p">}</span>
+<span class="n">imu_vec</span> <span class="p">:</span> <span class="n">topic</span> <span class="p">{</span> <span class="n">FIELDS</span> <span class="n">x</span> <span class="p">:</span> <span class="n">int32</span> <span class="mi">0</span> <span class="n">y</span> <span class="p">:</span> <span class="n">int32</span> <span class="mi">0</span> <span class="n">z</span> <span class="p">:</span> <span class="n">int32</span> <span class="mi">0</span> <span class="p">}</span>
+<span class="n">ecg_default</span> <span class="p">:</span> <span class="n">array</span> <span class="p">{</span> <span class="n">SIZE</span> <span class="mi">60</span> <span class="n">TYPE</span> <span class="s2">&quot;int32&quot;</span> <span class="n">VALUES</span> <span class="mi">1</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">60</span> <span class="p">}</span>
+<span class="n">ecg_lead</span> <span class="p">:</span> <span class="n">topic</span> <span class="p">{</span> <span class="n">FIELDS</span> <span class="n">ecg</span> <span class="o">=</span> <span class="n">ecg_default</span> <span class="p">}</span>
+
+<span class="n">hr_warn</span> <span class="p">:</span> <span class="n">topic</span> <span class="p">{</span> <span class="n">FIELDS</span> <span class="n">val</span> <span class="p">:</span> <span class="nb">bool</span> <span class="n">false</span> <span class="p">}</span>
+
+<span class="n">gateway</span> <span class="p">:</span> <span class="n">node</span> <span class="p">{</span>
+  <span class="n">SUBSCRIBES</span>
+    <span class="n">hr</span> <span class="p">{</span> <span class="n">TOPIC</span> <span class="n">heart_rate</span> <span class="n">MAXLATENCY</span> <span class="mi">100</span><span class="n">msec</span> <span class="p">}</span>
+    <span class="n">rr</span> <span class="p">{</span> <span class="n">TOPIC</span> <span class="n">resp_rate</span> <span class="n">MAXLATENCY</span> <span class="mi">100</span><span class="n">msec</span> <span class="p">}</span>
+    <span class="n">imu</span> <span class="p">{</span> <span class="n">TOPIC</span> <span class="n">imu_vec</span> <span class="n">MAXLATENCY</span> <span class="mi">100</span><span class="n">msec</span> <span class="p">}</span>
+    <span class="n">ecg</span> <span class="p">{</span> <span class="n">TOPIC</span> <span class="n">ecg_lead</span> <span class="n">MAXLATENCY</span> <span class="mi">100</span><span class="n">msec</span> <span class="p">}</span>
+  <span class="n">PUBLISHES</span>
+    <span class="n">hr_warning</span> <span class="p">{</span> <span class="n">TOPIC</span> <span class="n">hr_warn</span> <span class="p">}</span>
+  <span class="n">PERIOD</span> <span class="mi">100</span><span class="n">msec</span>
+  <span class="n">PATH</span> <span class="s2">&quot;src&quot;</span>
+  <span class="n">CXX</span> <span class="p">{</span> <span class="n">HEADER</span> <span class="s2">&quot;gateway.h&quot;</span> <span class="n">FILENAME</span> <span class="s2">&quot;gateway.cpp&quot;</span> <span class="n">CLASS</span> <span class="s2">&quot;Gateway&quot;</span> <span class="n">LIB</span> <span class="n">sensor_msgs</span> <span class="n">ros_healthcare_msg</span> <span class="n">std_msgs</span> <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A node is described with fields such as <code class="docutils literal notranslate"><span class="pre">PERIOD</span></code>, <code class="docutils literal notranslate"><span class="pre">PUBLISHES</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">SUBSCRIBES</span></code>. When the <code class="docutils literal notranslate"><span class="pre">gateway</span></code> node is created, Radler
+constructs one instance of the provided C++ class specified in the
+<code class="docutils literal notranslate"><span class="pre">CXX</span></code> field. The step function of this instance will be called at a
+fixed frequency defined by the node’s period (the <code class="docutils literal notranslate"><span class="pre">PERIOD</span></code> field). At
+each call, the step function is provided with the messages received from
+its subscriptions and is required to write the messages that it has to
+publish (the <code class="docutils literal notranslate"><span class="pre">SUBSCRIBES</span></code> and <code class="docutils literal notranslate"><span class="pre">PUBLISHES</span></code> fields). A topic is
+uniquely defined by its name. For example, <code class="docutils literal notranslate"><span class="pre">heart_rate</span></code>, <code class="docutils literal notranslate"><span class="pre">rest_rate</span></code>,
+<code class="docutils literal notranslate"><span class="pre">imu_vec</span></code>, and <code class="docutils literal notranslate"><span class="pre">ecg_lead</span></code> topics are referenced as
+<code class="docutils literal notranslate"><span class="pre">hr</span></code>, <code class="docutils literal notranslate"><span class="pre">rr</span></code>, <code class="docutils literal notranslate"><span class="pre">imu</span></code>, and <code class="docutils literal notranslate"><span class="pre">ecg</span></code>, respectively. The <code class="docutils literal notranslate"><span class="pre">gateway</span></code> node publishes to the
+<code class="docutils literal notranslate"><span class="pre">hr_warn</span></code> topic, which is referenced as <code class="docutils literal notranslate"><span class="pre">hr_warning</span></code>, and the <code class="docutils literal notranslate"><span class="pre">hr_display</span></code>
+node subscribes to that topic. A topic is a purely logical way of defining
+point-to-point communications between one producer and multiple
+consumers. The communication occurs via bounded latency channel (the <code class="docutils literal notranslate"><span class="pre">MAXLATENCY</span></code>
+field) for each topic.</p>
+<p>Below code segment shows the step function of the <code class="docutils literal notranslate"><span class="pre">gateway</span></code> node,
+that is provided by the user (C++ class specified in the <code class="docutils literal notranslate"><span class="pre">CXX</span></code> field
+under the directory specified in the <code class="docutils literal notranslate"><span class="pre">PATH</span></code> field, as being
+exemplified in the RADL description above).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Gateway::Gateway()
+{
+  node = rclcpp::Node::make_shared(&quot;gateway&quot;);
+
+  hr_pub = node-&gt;create_publisher&lt;ros_healthcare_msg::msg::HR&gt;(&quot;hr&quot;, rclcpp::SensorDataQoS());
+  //...
+}
+void Gateway::step(const radl_in_t* i, const radl_in_flags_t* i_f, radl_out_t* o, radl_out_flags_t* o_f)
+{
+  double hr = i-&gt;hr-&gt;hr;
+  int rr = i-&gt;rr-&gt;rr;
+
+  if (!radl_is_stale(i_f-&gt;hr) &amp;&amp; !radl_is_timeout(i_f-&gt;hr)) {
+    rclcpp::spin_some(node);
+    ros_healthcare_msg::msg::HR hr_msg;
+    hr_msg.hr = hr;
+    hr_pub-&gt;publish(hr_msg);
+    if (hr &gt; 98)
+      o-&gt;hr_warning-&gt;val = true;
+    else if (hr &lt; 62)
+      o-&gt;hr_warning-&gt;val = true;
+    else
+      o-&gt;hr_warning-&gt;val = false;
+  }
+  //...
+}
+</pre></div>
+</div>
+<p>A class is instantiated with the default constructor to create an
+instance representing the state of the Mealy machine. Subsequently, the
+step function of this instance is invoked to execute one step of the
+machine. The signature of the step function should specify the input
+(<code class="docutils literal notranslate"><span class="pre">radl_in_t*</span></code>) and output (<code class="docutils literal notranslate"><span class="pre">radl_out_t*</span></code>) structures define the
+node’s subscription and publication, respectively. In the example, the
+step function of the <code class="docutils literal notranslate"><span class="pre">gateway</span></code> node checks whether the sensed heart rate is within the normal range and, if necessary,
+publishes a corresponding topic to signal a warning.
+Note that the <code class="docutils literal notranslate"><span class="pre">gateway</span></code> node forwards back-and-forth messages between Radler and ROS worlds by creating a ROS publisher in its
+constructor.  It publishes <code class="docutils literal notranslate"><span class="pre">ros_healthcare_msg</span></code> to the corresponding ROS topic and also publishes <code class="docutils literal notranslate"><span class="pre">hr_warning</span></code> to the Radler topic.
+The flag structures
+(<code class="docutils literal notranslate"><span class="pre">radl_inflags_t*,</span> <span class="pre">radl_outflags_t*</span></code>) can be used to check if a
+subscription is stale or timeout by calling
+<code class="docutils literal notranslate"><span class="pre">radl_is_stale(iflag-&gt;hr)</span></code> or
+<code class="docutils literal notranslate"><span class="pre">radl_is_timeout(iflag-&gt;hr)</span></code>, respectively. By default, these
+Boolean metadata attached to messages are propagated through
+nodes unless the explicitly being turned off (<code class="docutils literal notranslate"><span class="pre">radl_turn_off</span></code>).</p>
+</section>
+<section id="radl-and-build-process">
+<h3>RADL and Build Process<a class="headerlink" href="#radl-and-build-process" title="Link to this heading">¶</a></h3>
+<p>A system consisting of these nodes was defined using a <em>RADL</em> description, with
+user code in each node’s step function. The <em>Radler</em> build process generates
+“glue code” for scheduling, communications, and failure detection, ultimately
+producing the executables.</p>
+</section>
+<section id="to-test-with-docker">
+<h3>To test with Docker<a class="headerlink" href="#to-test-with-docker" title="Link to this heading">¶</a></h3>
+<p>To build the radler/healthcare docker container:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">radler</span><span class="o">/</span><span class="n">healthcare</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>To run (on macOS):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="o">-</span><span class="n">e</span> <span class="n">DISPLAY</span><span class="o">=</span><span class="n">host</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">internal</span><span class="p">:</span><span class="mi">0</span> <span class="n">radler</span><span class="o">/</span><span class="n">healthcare</span> <span class="n">bash</span>
+</pre></div>
+</div>
+<p>To run (on Xubuntu):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">docker</span> <span class="n">run</span> <span class="o">-</span><span class="n">it</span> <span class="o">-</span><span class="n">v</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/.</span><span class="n">X11</span><span class="o">-</span><span class="n">unix</span><span class="p">:</span><span class="o">/</span><span class="n">tmp</span><span class="o">/.</span><span class="n">X11</span><span class="o">-</span><span class="n">unix</span> <span class="o">-</span><span class="n">e</span> <span class="n">DISPLAY</span><span class="o">=</span><span class="p">:</span><span class="mi">0</span> <span class="n">radler</span><span class="o">/</span><span class="n">healthcare</span> <span class="n">bash</span>
+</pre></div>
+</div>
+<p>Within the container:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~/</span><span class="n">radler</span><span class="o">/</span>
+<span class="o">./</span><span class="n">radler</span><span class="o">.</span><span class="n">sh</span> <span class="o">--</span><span class="n">ws_dir</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ros2_ws</span><span class="o">/</span><span class="n">src</span> <span class="nb">compile</span> <span class="n">examples</span><span class="o">/</span><span class="n">healthcare</span><span class="o">/</span><span class="n">healthcare</span><span class="o">.</span><span class="n">radl</span> <span class="o">--</span><span class="n">plant</span> <span class="n">plant</span> <span class="o">--</span><span class="n">ROS</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ros2_ws</span><span class="o">/</span>
+<span class="n">colcon</span> <span class="n">build</span>
+<span class="n">source</span> <span class="n">install</span><span class="o">/</span><span class="n">local_setup</span><span class="o">.</span><span class="n">bash</span>
+<span class="n">xterm</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;ros2 run healthcare gateway&quot;</span> <span class="o">&amp;</span>      <span class="c1"># execute radler gateway</span>
+<span class="n">xterm</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;ros2 run healthcare hr_sensor&quot;</span> <span class="o">&amp;</span>    <span class="c1"># execute radler nodes, e.g., hr_sensor</span>
+<span class="n">ros2</span> <span class="n">run</span> <span class="n">dashboard</span> <span class="n">dashboard</span>                  <span class="c1"># execute ros4health dashboard</span>
+</pre></div>
+</div>
+</section>
+<section id="troubleshooting">
+<h3>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">¶</a></h3>
+<p><strong>Error Message:</strong></p>
+<p>xhost: unable to open display “host.docker.internal:0”</p>
+<p><strong>Steps to Fix:</strong></p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>Open Xquartz settings, go to the Security tab</p></li>
+<li><p>Make sure “Authenticate connections” is unchecked and “Allow connections from network clients” is checked</p></li>
+<li><p>Restart Xquartz</p></li>
+</ol>
+</div></blockquote>
+</section>
 </section>
 <section id="demos-using-ar-drone-on-ros">
 <h2>Demos using AR.Drone on ROS<a class="headerlink" href="#demos-using-ar-drone-on-ros" title="Link to this heading">¶</a></h2>
@@ -1200,8 +1388,8 @@ qualified names.</p>
 <p>While using qualified names for identifiers permit to overcome most
 possible shadowings, a region will shadow any module with identical
 name.</p>
-<section id="id1">
-<h4>Example<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h4>
+<section id="id2">
+<h4>Example<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">---</span> <span class="n">file</span><span class="p">:</span> <span class="n">module3</span><span class="o">.</span><span class="n">radl</span> <span class="o">---</span>
 
 <span class="n">module1</span> <span class="p">:</span> <span class="n">struct</span> <span class="p">{</span> <span class="n">FIELDS</span>
@@ -1277,8 +1465,8 @@ directory. The module working directory is the directory of the
 module file except when it is redefined by the <code class="docutils literal notranslate"><span class="pre">MODULE_BASE_PATH</span></code>
 of the <code class="docutils literal notranslate"><span class="pre">module_settings</span></code> value.</p>
 </section>
-<section id="id2">
-<h4>Example<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h4>
+<section id="id3">
+<h4>Example<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">----</span> <span class="n">file</span><span class="p">:</span> <span class="n">path1</span><span class="o">.</span><span class="n">radl</span> <span class="o">----</span>
 <span class="n">n</span><span class="p">:</span> <span class="n">node</span> <span class="p">{</span>
     <span class="n">PATH</span> <span class="s2">&quot;nodes/example&quot;</span>
@@ -1420,8 +1608,8 @@ each subscription (resp. publication). The type of each field is a
 <a class="reference external" href="https://github.com/SRI-CSL/radler/blob/master/radl_lib/include/radl_flags.h">radl_flags.h</a>.</p>
 </section>
 </section>
-<section id="id3">
-<h3>C node definition<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<section id="id4">
+<h3>C node definition<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
 <p>This is the same as the C++ case, except that instead of a class, the user needs to
 provide 4 things. To describe them, we use the default names provided by
 radl, but those may be decided in the radl file.</p>
@@ -1522,8 +1710,8 @@ declared value inside this value. This name is in turn</p>
 that should be statically defined and shared, we added the <code class="docutils literal notranslate"><span class="pre">DEFS</span></code>
 field in the <code class="docutils literal notranslate"><span class="pre">node</span></code> and <code class="docutils literal notranslate"><span class="pre">topic</span></code> classes.</p>
 </section>
-<section id="id4">
-<h4>Example<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h4>
+<section id="id5">
+<h4>Example<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h4>
 <p>Consider the following radl description:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">----</span> <span class="n">file</span><span class="p">:</span> <span class="n">introspec</span><span class="o">.</span><span class="n">radl</span> <span class="o">----</span>
 <span class="n">x</span> <span class="p">:</span> <span class="n">int32</span> <span class="mi">1</span>
@@ -1620,7 +1808,13 @@ writing the step function of <code class="docutils literal notranslate"><span cl
 <li><a class="reference internal" href="#demo-with-sros2">Demo with SROS2</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#demo-with-pvs2c-generated-code">Demo with PVS2C-generated Code</a></li>
+<li><a class="reference internal" href="#demo-with-pvs2c-generated-code">Demo with PVS2C-generated Code</a><ul>
+<li><a class="reference internal" href="#system-overview">System Overview</a></li>
+<li><a class="reference internal" href="#radl-and-build-process">RADL and Build Process</a></li>
+<li><a class="reference internal" href="#to-test-with-docker">To test with Docker</a></li>
+<li><a class="reference internal" href="#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#demos-using-ar-drone-on-ros">Demos using AR.Drone on ROS</a><ul>
 <li><a class="reference internal" href="#demo-1-with-sridrone-ardronelib">Demo #1 with sridrone_ardronelib</a></li>
 <li><a class="reference internal" href="#demo-2-with-sridrone-ardrone-autonomy">Demo #2 with sridrone_ardrone_autonomy</a></li>
@@ -1660,7 +1854,7 @@ writing the step function of <code class="docutils literal notranslate"><span cl
 </ul>
 </li>
 <li><a class="reference internal" href="#shadowing">Shadowing</a><ul>
-<li><a class="reference internal" href="#id1">Example</a></li>
+<li><a class="reference internal" href="#id2">Example</a></li>
 </ul>
 </li>
 </ul>
@@ -1674,7 +1868,7 @@ writing the step function of <code class="docutils literal notranslate"><span cl
 <li><a class="reference internal" href="#external-files-and-path">External files and <code class="docutils literal notranslate"><span class="pre">PATH</span></code></a><ul>
 <li><a class="reference internal" href="#file-reference">File reference</a></li>
 <li><a class="reference internal" href="#working-directory-of-a-region-path-and-module-base-path">Working directory of a region, <code class="docutils literal notranslate"><span class="pre">PATH</span></code> and <code class="docutils literal notranslate"><span class="pre">MODULE_BASE_PATH</span></code></a></li>
-<li><a class="reference internal" href="#id2">Example</a></li>
+<li><a class="reference internal" href="#id3">Example</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#libraries">Libraries</a><ul>
@@ -1702,7 +1896,7 @@ writing the step function of <code class="docutils literal notranslate"><span cl
 <li><a class="reference internal" href="#the-flag-structures-radl-in-flags-t-radl-out-flags-t">The flag structures <code class="docutils literal notranslate"><span class="pre">radl_in_flags_t</span></code>, <code class="docutils literal notranslate"><span class="pre">radl_out_flags_t</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id3">C node definition</a></li>
+<li><a class="reference internal" href="#id4">C node definition</a></li>
 <li><a class="reference internal" href="#the-flags">The flags</a><ul>
 <li><a class="reference internal" href="#computation-of-the-output-flags">Computation of the output flags</a></li>
 <li><a class="reference internal" href="#computation-of-the-input-flag-radl-stale">Computation of the input flag <code class="docutils literal notranslate"><span class="pre">radl_STALE</span></code></a></li>
@@ -1715,7 +1909,7 @@ writing the step function of <code class="docutils literal notranslate"><span cl
 <li><a class="reference internal" href="#shortcuts">Shortcuts</a></li>
 <li><a class="reference internal" href="#field-access">Field access</a></li>
 <li><a class="reference internal" href="#the-defs-field">The <code class="docutils literal notranslate"><span class="pre">DEFS</span></code> field</a></li>
-<li><a class="reference internal" href="#id4">Example</a></li>
+<li><a class="reference internal" href="#id5">Example</a></li>
 </ul>
 </li>
 </ul>

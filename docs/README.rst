@@ -34,6 +34,25 @@ Start SITL simulator.
 
   vagrant ssh -c "sim_vehicle.py -v ArduCopter --console --map -m --out=127.0.0.1:14550"
 
+If you encounter the DISPLAY error (e.g., xterm: Xt error: Can’t open display: 0.0), edit the */etc/ssh/sshd_config* file. 
+
+:: 
+
+  X11Forwarding yes
+
+If you encounter the following error:
+
+:: 
+
+  Connect tcp:127.0.0.1:5760 source_system=255
+  Failed to connect to tcp:127.0.0.1:5760 : [Errno 111] Connection refused
+
+Consider adding a delay before starting mavproxy. The *-N* option below skips the build. More options can be found in the */vagrant/Tools/autotest/sim_vehicle.py* file.
+
+:: 
+
+  sim_vehicle.py -v ArduCopter --console --map -m --out=127.0.0.1:14550 -N -d 5  
+
 Connect MAVROS with SITL.
 
 :: 
@@ -61,12 +80,12 @@ On the simulator side (upper right window of below snapshot), change the Arducop
   arm throttle
   takeoff 30
 
-On the map (bottom left window), create a target position with altitude, then observe the Arducopter flying to the target.
+On the map (bottom left window), create a target position with altitude (or simply use a command *position x y z*), then observe the Arducopter flying to the target.
 
 .. image:: ./takeoff.png  
    :height: 300
 
-When the battery level hits below threshold (i.e., 90%) the mode change to return to takeoff location is published by battery node. The gateway node subscribes from it and calls ROS service to set custom mode of the Arducopter. Note that the mode change to RTL on the simulator side.
+When the battery level hits below threshold (i.e., 90%) the mode change to return to takeoff location is published by battery node. The gateway node subscribes from it and calls ROS service to set custom mode of the Arducopter. Note that the mode change to RTL on the simulator side. The battery level can also be checked with the command *bat* on the console, and can be reset with the command *batreset*.
 
 On the map window of below snapshot, one can observe that the Arducopter heading to the takeoff location.
 
